@@ -1,52 +1,139 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
-import Hero from "../components/landing/Hero.astro";
-import Body from "../components/landing/Body.astro";
-import Testimonials from "../components/landing/Testimonials.astro";
-import Features from "../components/landing/Features.astro";
 import { AstroSeo } from "@astrolib/seo";
+
+import Layout from "../layouts/Layout.astro";
+import Biopgraphy from "../components/landing/Biopgraphy.astro";
+import MainProject from "../components/landing/MainProject.astro";
+import { otherprojects } from "../data/otherprojects.json";
+
+const title = `La-lo-go`;
+const description = `La-lo-go | Full-stack developer | If it doesn't exist, code it!`;
+const url = "https://lalogo.dev";
 ---
 
-<!---
-Use AstroSeo in all the pages you want different Seo than the index page
--->
 <AstroSeo
-  title="Michael Andreuzza "
-  description="Michael Andreuzza portfolio"
-  canonical="https://michaelandreuzza.com"
+  title={title}
+  description={description}
+  canonical={url}
   openGraph={{
-    url: "https://michaelandreuzza.com",
-    title: "Michael Andreuzza portfolio",
-    description: "Michael Andreuzza portfolio",
+    url: url,
+    title: title,
+    description: description,
     images: [
       {
-        url: "https://michaelandreuzza.com/opengraph/facebook.png",
-        width: 1200,
-        height: 630,
-        alt: "Social open graph",
-        type: "image/png",
-      },
-      {
-        url: "https://www.michaelandreuzza.com/opengraph/twitter.png",
+        url: "https://www.lalogo.dev/opengraph/twitter.png",
         width: 4096,
         height: 4096,
         alt: "Twitter open graph",
         type: "image/jpeg",
       },
-      { url: "https://michaelandreuzza.com/opengraph/fb.png" },
-      { url: "https://michaelandreuzza.com/opengraph/twitter.png" },
+      { url: "https://lalogo.dev/opengraph/fb.png" },
+      { url: "https://lalogo.dev/opengraph/twitter.png" },
     ],
-    site_name: "Michael Andreuzza portfolio",
+    site_name: title,
   }}
   twitter={{
-    handle: "@Mike_Andreuzza",
-    site: "@Mike_Andreuzza",
+    handle: "@la_lo_go",
+    site: "@la_lo_go",
     cardType: "summary_large_image",
   }}
 />
-<BaseLayout>
-  <Hero />
-  <Body />
-  <Testimonials />
-  <Features />
-</BaseLayout>
+
+<Layout>
+  <!-- Biography -->
+  <div class="my-2">
+    <Biopgraphy />
+  </div>
+
+  <!-- Main projects -->
+  <div class="my-8">
+    <div class="h-0.5 bg-secondary" data-aos="fade-up" data-aos-duration="1000">
+    </div>
+    <h2
+      class="text-secondary text-lg font-medium"
+      data-aos="fade-up"
+      data-aos-duration="1500"
+    >
+      Main <strong>projects</strong>
+    </h2>
+
+    <ul
+      class="mx-auto text-secondary grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-start gap-6 mt-3 lg:mt-20"
+      role="list"
+    >
+      <li class="flow-root" data-aos="fade-up" data-aos-duration="1500">
+        <MainProject
+          number={1}
+          title="Windstatic"
+          description="A set of 161 elements & layouts made with Tailwind Clg:SS and Alpine.js Skillfully designed with an eye for aesthetics, offering an excellent starting point for your upcoming project."
+          url="https://www.windstatic.com/"
+        />
+      </li>
+      <li class="flow-root" data-aos="fade-up" data-aos-duration="2000">
+        <MainProject
+          number={2}
+          title="Windmill Dashboard"
+          description="A multi theme, completely accessible, ready for production dashboard made with Tailwind CSS and Alpine.js."
+          url="https://windmill-dashboard.vercel.app/"
+        />
+      </li>
+      <li class="flow-root" data-aos="fade-up" data-aos-duration="2500">
+        <MainProject
+          number={3}
+          title="Windmill React UI"
+          description="A set of accessible UI components built with Tailwind CSS and React."
+          url="https://windmillui.com/react-ui"
+        />
+      </li>
+      <li class="flow-root" data-aos="fade-up" data-aos-duration="3000">
+        <MainProject
+          number={4}
+          title="Windmill Dashboard React"
+          description="A multi theme, completely accessible, ready for production dashboard made with Tailwind CSS and React."
+          url="https://windmill-dashboard-react.vercel.app/"
+        />
+      </li>
+    </ul>
+  </div>
+
+  <!-- Other projects -->
+  <div class="mb-4">
+    <div class="h-0.5 bg-secondary" data-aos="fade-up" data-aos-duration="1000">
+    </div>
+    <h2
+      class="text-secondary text-lg font-medium"
+      data-aos="fade-up"
+      data-aos-duration="1500"
+    >
+      Other <strong>projects</strong>
+    </h2>
+
+    <ul
+      class="mx-auto grid grid-cols-1 sm:grid-cols-2 text-left divide-y-2 gap-1 divide-primary lg:grid-cols-4 items-start text-primary mt-3"
+    >
+      {
+        otherprojects.map((template, index) => (
+          <>
+            <li
+              class="flow-root col-span-full h-full hover:bg-secondary/20 hover:text-secondary bg-secondary transition-colors duration-200"
+              data-aos="fade-up"
+              data-aos-duration={(index + 1) * 250 + 1000}
+            >
+              <a
+                href={template.url}
+                class="flex flex-col sm:flex-row justify-between gap-6 h-full "
+              >
+                <div class="p-3">
+                  <p class="italic shrink-0">{template.title}</p>
+                </div>
+                <div class="p-3 ">
+                  <p class="text-xs leading-relaxed">{template.description}</p>
+                </div>
+              </a>
+            </li>
+          </>
+        ))
+      }
+    </ul>
+  </div>
+</Layout>

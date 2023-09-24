@@ -7,10 +7,8 @@ module.exports = {
     extend: {
 
       colors: {
-        //white: "#8f9197",
-
-        secondary: "#0000ff",
-        primary: "#fafafa",
+        secondary: "#232727",
+        primary: "#ccece9",
       },
       fontFamily: {
         sans: ["Neue Haas Grotesk Text Pro", ...defaultTheme.fontFamily.sans],

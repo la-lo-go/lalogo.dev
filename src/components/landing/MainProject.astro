@@ -1,0 +1,34 @@
+---
+export interface Props {
+    number: number
+    title: string
+    description: string
+    url: string
+}
+
+const {number, title, description, url} = Astro.props
+
+const numberDisplay = number < 10 ? `0${number}.` : `${number}.`
+---
+
+<a href={url} class="group">
+    <div
+      class="h-full flex flex-col justify-between" 
+    >
+      <p
+        class="group-hover:text-secondary/80 text-9xl font-bold lg:rotate-90 lg:-translate-x-16 lg:mb-8 transition-color duration-200 ease-in"
+      >
+        {numberDisplay}
+      </p>
+      <p
+        class="group-hover:text-secondary/80 group-hover:underline italic shrink-0 transition-color duration-200 ease-in"
+      >
+        {title}
+      </p>
+      <p
+        class="group-hover:text-secondary/80 group-hover:underline text-xs mt-3 leading-relaxed transition-color duration-200 ease-in"
+      >
+        {description} ↗
+      </p>
+    </div>
+  </a>

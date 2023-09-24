@@ -1,3 +1,7 @@
+# IDEs
+.vscode/
+.idea/
+
 # build output
 dist/
 
@@ -17,3 +21,4 @@ pnpm-debug.log*
 
 # macOS-specific files
 .DS_Store
+/public/manfred/manfred.json
