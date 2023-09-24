@@ -1,51 +1,44 @@
 ---
+import PersonalLogo from "./Personal-Logo.astro";
 import SocialIcons from "./SocialIcons.astro";
 ---
 
-<header>
-  <div
-    class="max-w-5xl mx-auto"
-    data-aos="fade-up"
-    data-aos-duration="2000"
-  >
-    <div class="text-secondary">
-      <svg
-        viewBox="0 0 1721 574"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg "
-      >
-        <path
-          d="M0.333,0.333l114.667,0l-0,458.667l286.667,0l-0,-458.667l516,0l-0,458.667l286.666,0l0,-458.667l516,0l0,573.334l-286.666,-0l-0,-114.667l172,-0l-0,-344l-286.667,-0l-0,458.667l-516,-0l-0,-229.334l-172,0l-0,-114.666l172,-0l-0,-114.667l-286.667,-0l0,458.667l-516,-0l0,-573.334Z"
-          fill="currentColor"></path>
-      </svg>
+<header
+  class="flex flex-row md:flex-col gap-4 justify-between max-md:items-end mb-8"
+>
+  <PersonalLogo />
+
+  <div class="space-y-2">
+    <div
+      class="flex flex-col md:flex-row gap-3 justify-between items-center text-lg text-secondary"
+      data-aos="fade-up"
+      data-aos-duration="1500"
+    >
+      <div class="text-center font-normal quote">
+        <i>"If it doesn't exist, code it!"</i>
+      </div>
+
+      <SocialIcons />
     </div>
-  </div>
 
-  <div class="mb-8">
-    <div class="mt-3 space-y-2">
-      <div
-        class="flex flex-col md:flex-row gap-3 justify-between items-center text-lg text-secondary font-bold"
-        data-aos="fade-up"
-        data-aos-duration="1500"
-      >
-        <div class="text-center font-normal">
-          <i>"If it doesn't exist, code it!"</i>
-        </div>
-
-        <div class="flex gap-3 items-center">
-          <SocialIcons />
-        </div>
-      </div>
-
-      <!-- Lines -->
-      <div
-        class="h-1.5 bg-secondary"
-        data-aos="fade-up"
-        data-aos-duration="2000"
-      >
-      </div>
-      <div class="h-3 bg-secondary" data-aos="fade-up" data-aos-duration="2500">
-      </div>
+    <!-- Lines -->
+    <div
+      class="h-1.5 bg-secondary max-sm:hidden"
+      data-aos="fade-up"
+      data-aos-duration="2000"
+    >
+    </div>
+    <div
+      class="h-3 bg-secondary max-sm:hidden"
+      data-aos="fade-up"
+      data-aos-duration="2500"
+    >
     </div>
   </div>
 </header>
+
+<style>
+  .quote {
+    text-wrap: balanced;
+  }
+</style>
