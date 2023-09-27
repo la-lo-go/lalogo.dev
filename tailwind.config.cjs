@@ -9,6 +9,7 @@ module.exports = {
       colors: {
         secondary: "#232727",
         primary: "#ccece9",
+        gray: "#e5fffd",
       },
       fontFamily: {
         sans: ["Neue Haas Grotesk Text Pro", ...defaultTheme.fontFamily.sans],

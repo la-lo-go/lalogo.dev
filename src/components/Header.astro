@@ -1,4 +1,5 @@
 ---
+import Lines from "./Lines.astro";
 import PersonalLogo from "./Personal-Logo.astro";
 import SocialIcons from "./SocialIcons.astro";
 ---
@@ -21,24 +22,6 @@ import SocialIcons from "./SocialIcons.astro";
       <SocialIcons />
     </div>
 
-    <!-- Lines -->
-    <div
-      class="h-1.5 bg-secondary max-sm:hidden"
-      data-aos="fade-up"
-      data-aos-duration="2000"
-    >
-    </div>
-    <div
-      class="h-3 bg-secondary max-sm:hidden"
-      data-aos="fade-up"
-      data-aos-duration="2500"
-    >
-    </div>
+    <Lines />
   </div>
 </header>
-
-<style>
-  .quote {
-    text-wrap: balanced;
-  }
-</style>

@@ -4,6 +4,7 @@ import { AstroSeo } from "@astrolib/seo";
 import Layout from "../layouts/Layout.astro";
 import Biopgraphy from "../components/landing/Biopgraphy.astro";
 import MainProject from "../components/landing/MainProject.astro";
+import OtherProject from "../components/landing/Other-Project.astro";
 import { otherprojects } from "../data/otherprojects.json";
 
 const title = `La-lo-go`;
@@ -41,12 +42,12 @@ const url = "https://lalogo.dev";
 
 <Layout>
   <!-- Biography -->
-  <div class="my-2">
+  <section class="my-2">
     <Biopgraphy />
-  </div>
+  </section>
 
   <!-- Main projects -->
-  <div class="my-8">
+  <section class="my-8">
     <div class="h-0.5 bg-secondary" data-aos="fade-up" data-aos-duration="1000">
     </div>
     <h2
@@ -94,10 +95,10 @@ const url = "https://lalogo.dev";
         />
       </li>
     </ul>
-  </div>
+  </section>
 
   <!-- Other projects -->
-  <div class="mb-4">
+  <section class="mb-4">
     <div class="h-0.5 bg-secondary" data-aos="fade-up" data-aos-duration="1000">
     </div>
     <h2
@@ -114,26 +115,13 @@ const url = "https://lalogo.dev";
       {
         otherprojects.map((template, index) => (
           <>
-            <li
-              class="flow-root col-span-full h-full hover:bg-secondary/20 hover:text-secondary bg-secondary transition-colors duration-200"
-              data-aos="fade-up"
-              data-aos-duration={(index + 1) * 250 + 1000}
-            >
-              <a
-                href={template.url}
-                class="flex flex-col sm:flex-row justify-between gap-6 h-full "
-              >
-                <div class="p-3">
-                  <p class="italic shrink-0">{template.title}</p>
-                </div>
-                <div class="p-3 ">
-                  <p class="text-xs leading-relaxed">{template.description}</p>
-                </div>
-              </a>
-            </li>
+            <OtherProject
+              index={index}
+              template={template}
+            />
           </>
         ))
       }
     </ul>
-  </div>
+  </sect>
 </Layout>
