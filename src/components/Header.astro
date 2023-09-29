@@ -1,11 +1,11 @@
 ---
 import Lines from "./Lines.astro";
 import PersonalLogo from "./Personal-Logo.astro";
-import SocialIcons from "./SocialIcons.astro";
+import SocialIcons from "./Social-Icons.astro";
 ---
 
 <header
-  class="flex flex-row md:flex-col gap-4 justify-between max-md:items-end mb-8"
+  class="grid grid-cols-2 sm:flex sm:flex-row md:flex-col gap-4 justify-between max-md:items-end mb-8"
 >
   <PersonalLogo />
 
@@ -15,7 +15,7 @@ import SocialIcons from "./SocialIcons.astro";
       data-aos="fade-up"
       data-aos-duration="1500"
     >
-      <div class="text-center font-normal quote">
+      <div class="text-center font-normal max-sm:order-3 max-sm:w-full">
         <i>"If it doesn't exist, code it!"</i>
       </div>
 
