@@ -3,9 +3,10 @@ import { AstroSeo } from "@astrolib/seo";
 
 import Layout from "../layouts/Layout.astro";
 import Biopgraphy from "../components/landing/Biopgraphy.astro";
-import MainProject from "../components/landing/MainProject.astro";
+import MainProjects from "../components/landing/Main-Projects.astro";
 import OtherProject from "../components/landing/Other-Project.astro";
-import { otherprojects } from "../data/otherprojects.json";
+import { otherprojects } from "../data/otherProjects.json";
+import OtherProjects from "../components/landing/Other-Projects.astro";
 
 const title = `La-lo-go`;
 const description = `La-lo-go | Full-stack developer | If it doesn't exist, code it!`;
@@ -41,87 +42,9 @@ const url = "https://lalogo.dev";
 />
 
 <Layout>
-  <!-- Biography -->
-  <section class="my-2">
-    <Biopgraphy />
-  </section>
+  <Biopgraphy />
 
-  <!-- Main projects -->
-  <section class="my-8">
-    <div class="h-0.5 bg-secondary" data-aos="fade-up" data-aos-duration="1000">
-    </div>
-    <h2
-      class="text-secondary text-lg font-medium"
-      data-aos="fade-up"
-      data-aos-duration="1500"
-    >
-      Main <strong>projects</strong>
-    </h2>
+  <MainProjects />
 
-    <ul
-      class="mx-auto text-secondary grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-start gap-6 mt-3 lg:mt-20"
-      role="list"
-    >
-      <li class="flow-root" data-aos="fade-up" data-aos-duration="1500">
-        <MainProject
-          number={1}
-          title="Windstatic"
-          description="A set of 161 elements & layouts made with Tailwind Clg:SS and Alpine.js Skillfully designed with an eye for aesthetics, offering an excellent starting point for your upcoming project."
-          url="https://www.windstatic.com/"
-        />
-      </li>
-      <li class="flow-root" data-aos="fade-up" data-aos-duration="2000">
-        <MainProject
-          number={2}
-          title="Windmill Dashboard"
-          description="A multi theme, completely accessible, ready for production dashboard made with Tailwind CSS and Alpine.js."
-          url="https://windmill-dashboard.vercel.app/"
-        />
-      </li>
-      <li class="flow-root" data-aos="fade-up" data-aos-duration="2500">
-        <MainProject
-          number={3}
-          title="Windmill React UI"
-          description="A set of accessible UI components built with Tailwind CSS and React."
-          url="https://windmillui.com/react-ui"
-        />
-      </li>
-      <li class="flow-root" data-aos="fade-up" data-aos-duration="3000">
-        <MainProject
-          number={4}
-          title="Windmill Dashboard React"
-          description="A multi theme, completely accessible, ready for production dashboard made with Tailwind CSS and React."
-          url="https://windmill-dashboard-react.vercel.app/"
-        />
-      </li>
-    </ul>
-  </section>
-
-  <!-- Other projects -->
-  <section class="mb-4">
-    <div class="h-0.5 bg-secondary" data-aos="fade-up" data-aos-duration="1000">
-    </div>
-    <h2
-      class="text-secondary text-lg font-medium"
-      data-aos="fade-up"
-      data-aos-duration="1500"
-    >
-      Other <strong>projects</strong>
-    </h2>
-
-    <ul
-      class="mx-auto grid grid-cols-1 sm:grid-cols-2 text-left divide-y-2 gap-1 divide-primary lg:grid-cols-4 items-start text-primary mt-3"
-    >
-      {
-        otherprojects.map((template, index) => (
-          <>
-            <OtherProject
-              index={index}
-              template={template}
-            />
-          </>
-        ))
-      }
-    </ul>
-  </sect>
+  <OtherProjects/>
 </Layout>

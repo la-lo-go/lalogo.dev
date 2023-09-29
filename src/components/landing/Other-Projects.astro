@@ -1,0 +1,30 @@
+---
+import OtherProject from "./Other-Project.astro";
+
+import { otherProjects } from "../../data/otherProjects.json";
+---
+
+<section class="mb-4">
+  <div class="h-0.5 bg-secondary" data-aos="fade-up" data-aos-duration="1000">
+  </div>
+  <h2
+    class="text-secondary text-lg font-medium"
+    data-aos="fade-up"
+    data-aos-duration="1500"
+  >
+    Other <strong>projects</strong>
+  </h2>
+
+  <ul
+    class="mx-auto grid grid-cols-1 sm:grid-cols-2 text-left divide-y-2 gap-1 divide-primary lg:grid-cols-4 items-start text-primary mt-3"
+    role="list"
+  >
+    {
+      otherProjects.map((template, index) => (
+        <>
+          <OtherProject index={index} template={template} />
+        </>
+      ))
+    }
+  </>
+</section>

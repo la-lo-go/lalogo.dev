@@ -1,39 +1,30 @@
-export interface Template {
-  url: string;
-  description: string;
-  title: string;
-};
-const svgdoodles: Template = {
-  url: "https://www.svgdoodles.com/",
-  description: " A free collection of 208 super duper SVG Doodles to spice up your online and offline designs!",
-  title: "SVG Doodles"
-};
-const svggradients: Template = {
-  url: "https://www.svggradients.com/",
-  description: " A free collection of SVG Mesh gradients to use in your design tool or HTML!",
-  title: "SVG Gradients"
-};
-const quicksetup: Template = {
-  url: "https://www.figma.com/community/plugin/1074647052897925336",
-  description: " This amazing plugin lets you create empty pages and dividers, no matter what subscription.",
-  title: "Quick Setup"
-};
-const vscodethemes: Template = {
-  url: "https://marketplace.visualstudio.com/publishers/wicked-labs",
-  description: " A collection of 7 VS Code themes",
-  title: "VS Code Themes"
-};
-const flabbergasted: Template = {
-  url: "https://marketplace.visualstudio.com/publishers/wicked-labs",
-  description: "My newsletter about tech news and articles, tools and tips for UI Designers & Developers.",
-  title: "Flabbergasted"
-};
-export const byName = {
-  svgdoodles,
-  svggradients,
-    quicksetup,
-    vscodethemes,
-  flabbergasted
+import type { ProjectTemplate } from "../types/ProjectTemplate";
 
+const netflixEnhaced: ProjectTemplate = {
+  title: "Netflix Enhanced",
+  description:
+  "Browser extension to blur posible spoilers and autoskip intros",
+  url: "https://github.com/la-lo-go/netflix-enhanced",
 };
-export const otherprojects = Object.values(byName);
+
+const Images2Stickers: ProjectTemplate = {
+  title: "Images To Stickers",
+  description:
+  "Create Whatsapp and iMessage stickers packs automatically",
+  url: "https://github.com/la-lo-go/images-2-stickers",
+};
+
+const twitterUserScraper: ProjectTemplate = {
+  title: "Twitter User Scraper",
+  description:
+  "Backup the follows and followers of twitter users on MEGA of and see the changes between the old and the new copies",
+  url: "https://github.com/la-lo-go/twitter-user-scraper",
+};
+
+export const byName = {
+  netflixEnhaced,
+  Images2Stickers,
+  twitterUserScraper,
+};
+
+export const otherProjects = Object.values(byName);
