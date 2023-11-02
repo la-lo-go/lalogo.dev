@@ -1,20 +1,18 @@
 ---
 type Props = {
-    index: number;
-    template: {
-        title: string;
-        description: string;
-        url: string;
-    };
+  index?: number;
+  template: {
+    title: string;
+    description: string;
+    url: string;
+  };
 };
 
-const {index, template} = Astro.props;
+const { index, template } = Astro.props;
 ---
 
 <li
   class="flow-root col-span-full h-full hover:bg-secondary/90 hover:text-gray bg-secondary transition-colors duration-200"
-  data-aos="fade-up"
-  data-aos-duration={(index + 1) * 250 + 1000}
 >
   <a
     href={template.url}

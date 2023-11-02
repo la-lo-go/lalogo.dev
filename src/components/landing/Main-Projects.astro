@@ -5,13 +5,8 @@ import { mainProjects } from "../../data/mainProjects.json";
 ---
 
 <section class="my-8">
-  <div class="h-0.5 bg-secondary" data-aos="fade-up" data-aos-duration="1000">
-  </div>
-  <h2
-    class="text-secondary text-lg font-medium"
-    data-aos="fade-up"
-    data-aos-duration="1500"
-  >
+  <div class="h-0.5 bg-secondary"></div>
+  <h2 class="text-secondary text-lg font-medium">
     Main <strong>projects</strong>
   </h2>
 
@@ -19,17 +14,17 @@ import { mainProjects } from "../../data/mainProjects.json";
     class="mx-auto text-secondary grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-start gap-6 mt-3 lg:mt-20"
     role="list"
   >
-  {
-    mainProjects.map((template, index) => (
-      <>
-        <MainProject
-          index={index}
-          title={template.title}
-          description={template.description}
-          url={template.url}
-        />
-      </>
-    ))
-  }
+    {
+      mainProjects.map((template, index) => (
+        <>
+          <MainProject
+            index={index}
+            title={template.title}
+            description={template.description}
+            url={template.url}
+          />
+        </>
+      ))
+    }
   </ul>
 </section>
