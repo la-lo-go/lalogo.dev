@@ -37,4 +37,12 @@ const numberDisplay = index < 10 ? `0${index}.` : `${index}.`;
       theme(colors.primary) 2px 2px,
       #e5fffd 6px 4px;
   }
+
+  @media (min-width: 1024px) {
+    .group:hover .number {
+      text-shadow:
+        theme(colors.primary) 2px -2px,
+        #e5fffd 6px -4px;
+    }
+  }
 </style>
