@@ -6,12 +6,12 @@ import SocialIcons from "./Social-Icons.astro";
 
 <header class="mb-8 w-full">
   <div
-    class="grid grid-flow-col gap-x-4 sm:justify-between sm:flex sm:flex-row md:flex-col max-md:items-end"
+    class="flex gap-x-4 sm:justify-between max-sm:flex-col md:flex-col max-md:items-end max-sm:gap-y-2"
   >
     <PersonalLogo />
 
     <div
-      class="space-y-2 max-sm:w-fit max-sm:h-full max-sm:flex max-sm:items-center max-sm:justify-end max-sm:place-items-end"
+      class="space-y-2 max-sm:w-full max-sm:order-last"
     >
       <div
         class="flex flex-col gap-3 justify-between items-center text-lg text-secondary md:flex-row"
@@ -22,14 +22,15 @@ import SocialIcons from "./Social-Icons.astro";
           <i>"If it doesn't exist, code it!"</i>
         </div>
 
-        <SocialIcons verticalAtSm={true} />
+        <SocialIcons/>
       </div>
 
       <Lines />
     </div>
+
+    <div class="text-center text-lg w-full sm:hidden">
+      <i>"If it doesn't exist, code it!"</i>
+    </div>
   </div>
 
-  <div class="sm:hidden grow text-center mt-4 text-lg">
-    <i>"If it doesn't exist, code it!"</i>
-  </div>
 </header>
