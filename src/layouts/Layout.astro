@@ -70,4 +70,23 @@ import Header from "../components/Header.astro";
       font-family: "IBM Plex Sans", "Neue Haas Grotesk Text Pro", sans-serif;
     }
   }
+
+  p {
+    line-height: 1.75rem;
+  }
+
+  /* Thanks to https://blog.stephaniestimac.com for the idea */
+  :is(p) a {
+    font-weight: bold;
+    background: linear-gradient(#e5fffd, #e5fffd);
+    background-size: 100% 0.5rem;
+    background-repeat: no-repeat;
+    background-position: left bottom;
+    transition: all 0.1s linear 0s;
+    text-decoration: none;
+  }
+
+  :is(p) a:hover {
+    background-size: 100% 100%;
+  }
 </style>
