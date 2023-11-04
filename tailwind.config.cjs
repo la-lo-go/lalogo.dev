@@ -11,9 +11,6 @@ module.exports = {
         primary: "#ccece9",
         gray: "#e5fffd",
       },
-      fontFamily: {
-        sans: ["Neue Haas Grotesk Text Pro", ...defaultTheme.fontFamily.sans],
-      },
     },
   },
 
