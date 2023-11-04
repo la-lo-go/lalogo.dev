@@ -3,7 +3,7 @@ import type { ProjectTemplate } from "../types/ProjectTemplate";
 const Mangateca: ProjectTemplate = {
     title: "Mangateca",
     description: "Web App to read manga in spanish using my API man-go.",
-    url: "https://www.mangateca.vercel.app/"
+    url: "https://mangateca.vercel.app/"
 };
 
 const ManGo: ProjectTemplate = {
