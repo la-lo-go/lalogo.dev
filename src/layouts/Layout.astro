@@ -59,7 +59,33 @@ import Header from "../components/Header.astro";
 </html>
 
 <style is:global>
-  @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700;800;900&display=swap");
+  @font-face {
+    font-family: "IBM Plex Sans";
+    src: url("/public/fonts/IBM_Plex_Sans/IBMPlexSans-Regular.ttf") format("truetype");
+    font-weight: 400; /* Regular */
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: "IBM Plex Sans";
+    src: url("/public/fonts/IBM_Plex_Sans/IBMPlexSans-Bold.ttf") format("truetype");
+    font-weight: 700; /* Bold */
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: "IBM Plex Sans";
+    src: url("/public/fonts/IBM_Plex_Sans/IBMPlexSans-Italic.ttf") format("truetype");
+    font-weight: 400; /* Regular */
+    font-style: italic;
+  }
+
+  @font-face {
+    font-family: "IBM Plex Sans";
+    src: url("/public/fonts/IBM_Plex_Sans/IBMPlexSans-BoldItalic.ttf") format("truetype");
+    font-weight: 700; /* Bold */
+    font-style: italic;
+  }
 
   :root {
     font-family: "IBM Plex Sans", "Neue Haas Grotesk Text Pro", sans-serif;
