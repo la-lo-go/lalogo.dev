@@ -8,6 +8,7 @@
       "@layouts/*": ["src/layouts/*"],
       "@pages/*": ["src/pages/*"],
       "@types/*": ["src/types/*"],
+      "@fonts/*": ["src/fonts/*"],
 		}
 	}
 }
