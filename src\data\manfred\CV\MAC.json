@@ -1,39 +1,4 @@
 {
-  "aboutMe": {
-    "profile": {
-      "name": "Gonzalo",
-      "surnames": "Álvarez Alonso",
-      "title": "If it doesn't exists, code it!",
-      "description": "I'm a developer interested on task automation, bots and every kind of new and exciting technology in general!",
-      "location": {
-        "notes": "Autocompleted using Google Maps API (id: ChIJgTwKgJcpQg0RaSKMYcHeNsQ)",
-        "country": "España",
-        "region": "Comunidad de Madrid",
-        "municipality": "Madrid"
-      }
-    },
-    "recommendations": [
-      {
-        "title": "Logo Desing Portfolio",
-        "type": "other",
-        "URL": "https://www.behance.net/gallery/113051563/Portfolio"
-      }
-    ],
-    "relevantLinks": [
-      {
-        "type": "github",
-        "URL": "https://GitHub.com/la-lo-go"
-      },
-      {
-        "type": "twitter",
-        "URL": "https://twitter.com/la_lo_go"
-      },
-      {
-        "type": "other",
-        "URL": "https://stackoverflow.com/users/16893013/la-lo-go"
-      }
-    ]
-  },
   "experience": {
     "jobs": [
       {
