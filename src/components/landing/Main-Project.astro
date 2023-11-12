@@ -1,10 +1,10 @@
 ---
-import NewTabLink from '@components/NewTabLink.astro';
+import NewTabLink from "@components/NewTabLink.astro";
 export interface Props {
   index: number;
   title: string;
   description: string;
-  url: string;
+  url: string[];
 }
 
 const { index, title, description, url } = Astro.props;
@@ -13,7 +13,7 @@ const numberDisplay = index < 10 ? `0${index}.` : `${index}.`;
 ---
 
 <li class="flow-root">
-  <NewTabLink href={url} className="group">
+  <NewTabLink href={url[0]} className="group">
     <div class="h-full flex flex-col justify-between">
       <p
         class="group-hover:text-secondary/90 text-9xl font-bold lg:rotate-90 lg:-translate-x-16 lg:mb-8 transition-color duration-200 ease-in number"
@@ -26,24 +26,24 @@ const numberDisplay = index < 10 ? `0${index}.` : `${index}.`;
       <p
         class="group-hover:text-secondary/90 group-hover:underline text-xs mt-3 leading-relaxed"
       >
-        {description} ↗
+        {description}
       </p>
     </div>
   </NewTabLink>
-</li>
 
-<style is:global>
-  .group:hover .number {
-    text-shadow:
-      theme(colors.primary) 2px 2px,
-      #e5fffd 6px 4px;
-  }
-
-  @media (min-width: 1024px) {
+  <style is:global>
     .group:hover .number {
       text-shadow:
-        theme(colors.primary) 2px -2px,
-        #e5fffd 6px -4px;
+        theme(colors.primary) 2px 2px,
+        #e5fffd 6px 4px;
     }
-  }
-</style>
+
+    @media (min-width: 1024px) {
+      .group:hover .number {
+        text-shadow:
+          theme(colors.primary) 2px -2px,
+          #e5fffd 6px -4px;
+      }
+    }
+  </style>
+</li>

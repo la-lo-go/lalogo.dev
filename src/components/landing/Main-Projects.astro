@@ -1,7 +1,10 @@
 ---
 import MainProject from "@components/landing/Main-Project.astro";
 
-import { mainProjects } from "@data/mainProjects.json";
+import { GetMainProjects } from "@types/ManfredType";
+
+import manfred from "@data/manfred/CV/MAC.json";
+const mainProjects = GetMainProjects(manfred.experience.projects);
 ---
 
 <section class="my-8">
@@ -12,7 +15,7 @@ import { mainProjects } from "@data/mainProjects.json";
   </h2>
 
   <ul
-    class="mx-auto text-secondary grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-start gap-6 mt-3 lg:mt-20"
+    class="main-projects mx-auto text-secondary grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-start gap-6 mt-3 lg:mt-20"
     role="list"
   >
     {
@@ -29,3 +32,11 @@ import { mainProjects } from "@data/mainProjects.json";
     }
   </ul>
 </section>
+
+<style is:global>
+  @media (min-width: 1024px) {
+    .main-projects.grid > li:nth-child(n + 5) {
+      margin-top: 3rem;
+    }
+  }
+</style>
