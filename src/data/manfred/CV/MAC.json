@@ -41,31 +41,6 @@
     "projects": [
       {
         "details": {
-          "name": "Images 2 Stickers",
-          "description": "Using Python and the .wastickers compressed files format by Viko & Co. convert images to stickers packs for Whatsapp and iMessage",
-          "URL": "https://github.com/la-lo-go/images-2-stickers",
-          "image": {
-            "link": "https://media-asgard.s3.eu-west-1.amazonaws.com/23/06/22/94fabc86-21df-4f73-ad44-4439a72e6921_3b353bfc-71e1-4ebd-8.png",
-            "alt": "3b353bfc-71e1-4ebd-869b-a75c42fb5a35_b356132b-3989-4ec1-8.png"
-          }
-        },
-        "type": "openSource",
-        "roles": [
-          {
-            "name": "Developer",
-            "startDate": "2022-02-01",
-            "competences": [
-              {
-                "name": "Python",
-                "type": "technology"
-              }
-            ],
-            "finishDate": "2022-03-01"
-          }
-        ]
-      },
-      {
-        "details": {
           "name": "qBitTelegram",
           "description": "BitTorrent's client for Telegram to manage easily and securely from anywhere torrent downloading from your server",
           "URL": "https://github.com/la-lo-go/qBitTelegram",
@@ -89,6 +64,43 @@
                 "type": "technology"
               }
             ]
+          }
+        ]
+      },
+      {
+        "details": {
+          "name": "Mangateca",
+          "description": "Web App (developed with [Astro](https://astro.build/) and hosted on Vercel) to read manga in spanish using my API \"Man-go\".\n\nYou can check the public repository [here](https://github.com/la-lo-go/mangateca).",
+          "URL": "https://mangateca.vercel.app",
+          "image": {
+            "link": "https://media-asgard.s3.eu-west-1.amazonaws.com/23/06/22/6fd4a909-2891-4fb8-9eb0-6a5e8e4f053b_icon-vector.svg",
+            "alt": "icon-vector.svg"
+          }
+        },
+        "type": "openSource",
+        "roles": [
+          {
+            "name": "Developer",
+            "startDate": "2023-03-01",
+            "competences": [
+              {
+                "name": "Github",
+                "type": "technology"
+              },
+              {
+                "name": "NodeJS",
+                "type": "technology"
+              },
+              {
+                "name": "Tailwind",
+                "type": "technology"
+              },
+              {
+                "name": "TypeScript",
+                "type": "technology"
+              }
+            ],
+            "finishDate": "2023-06-01"
           }
         ]
       },
@@ -135,43 +147,6 @@
       },
       {
         "details": {
-          "name": "Mangateca",
-          "description": "Web App (developed with [Astro](https://astro.build/) and hosted on Vercel) to read manga in spanish using my API \"Man-go\".\n\nYou can check the public repository [here](https://github.com/la-lo-go/mangateca).",
-          "URL": "https://mangateca.vercel.app",
-          "image": {
-            "link": "https://media-asgard.s3.eu-west-1.amazonaws.com/23/06/22/6fd4a909-2891-4fb8-9eb0-6a5e8e4f053b_icon-vector.svg",
-            "alt": "icon-vector.svg"
-          }
-        },
-        "type": "openSource",
-        "roles": [
-          {
-            "name": "Developer",
-            "startDate": "2023-03-01",
-            "competences": [
-              {
-                "name": "Github",
-                "type": "technology"
-              },
-              {
-                "name": "NodeJS",
-                "type": "technology"
-              },
-              {
-                "name": "Tailwind",
-                "type": "technology"
-              },
-              {
-                "name": "TypeScript",
-                "type": "technology"
-              }
-            ],
-            "finishDate": "2023-06-01"
-          }
-        ]
-      },
-      {
-        "details": {
           "name": "Netflix Enhanced",
           "description": "Browser extension to blur not seen episodes and automatically skip intros",
           "URL": "https://github.com/la-lo-go/netflix-enhanced",
@@ -200,35 +175,6 @@
               }
             ],
             "finishDate": "2023-03-01"
-          }
-        ]
-      },
-      {
-        "details": {
-          "name": "Twitter User Scraper",
-          "description": "Twitter API V1 Python script to backup the follows and followers of twitter users on MEGA and see the changes between the old and the new copies",
-          "URL": "https://github.com/la-lo-go/twitter-user-scraper",
-          "image": {
-            "link": "https://media-asgard.s3.eu-west-1.amazonaws.com/22/10/13/7595c5b3-1c91-496b-972e-29c813ca2fdb_euivkbtxyae46uv.jpeg",
-            "alt": "EuIvkBTXYAE46Uv.jpeg"
-          }
-        },
-        "type": "openSource",
-        "roles": [
-          {
-            "name": "Developer",
-            "startDate": "2021-08-01",
-            "competences": [
-              {
-                "name": "Python",
-                "type": "technology"
-              },
-              {
-                "name": "SQLite",
-                "type": "technology"
-              }
-            ],
-            "finishDate": "2022-06-01"
           }
         ]
       },
@@ -282,6 +228,60 @@
               },
               {
                 "name": "jQuery",
+                "type": "technology"
+              }
+            ],
+            "finishDate": "2022-06-01"
+          }
+        ]
+      },
+      {
+        "details": {
+          "name": "Images 2 Stickers",
+          "description": "Using Python and the .wastickers compressed files format by Viko & Co. convert images to stickers packs for Whatsapp and iMessage",
+          "URL": "https://github.com/la-lo-go/images-2-stickers",
+          "image": {
+            "link": "https://media-asgard.s3.eu-west-1.amazonaws.com/23/06/22/94fabc86-21df-4f73-ad44-4439a72e6921_3b353bfc-71e1-4ebd-8.png",
+            "alt": "3b353bfc-71e1-4ebd-869b-a75c42fb5a35_b356132b-3989-4ec1-8.png"
+          }
+        },
+        "type": "openSource",
+        "roles": [
+          {
+            "name": "Developer",
+            "startDate": "2022-02-01",
+            "competences": [
+              {
+                "name": "Python",
+                "type": "technology"
+              }
+            ],
+            "finishDate": "2022-03-01"
+          }
+        ]
+      },
+      {
+        "details": {
+          "name": "Twitter User Scraper",
+          "description": "Twitter API V1 Python script to backup the follows and followers of twitter users on MEGA and see the changes between the old and the new copies",
+          "URL": "https://github.com/la-lo-go/twitter-user-scraper",
+          "image": {
+            "link": "https://media-asgard.s3.eu-west-1.amazonaws.com/22/10/13/7595c5b3-1c91-496b-972e-29c813ca2fdb_euivkbtxyae46uv.jpeg",
+            "alt": "EuIvkBTXYAE46Uv.jpeg"
+          }
+        },
+        "type": "openSource",
+        "roles": [
+          {
+            "name": "Developer",
+            "startDate": "2021-08-01",
+            "competences": [
+              {
+                "name": "Python",
+                "type": "technology"
+              },
+              {
+                "name": "SQLite",
                 "type": "technology"
               }
             ],
