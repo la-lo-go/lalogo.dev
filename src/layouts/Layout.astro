@@ -6,7 +6,7 @@ import Header from "@components/Header.astro";
 <html lang="en" class="selection:bg-secondary selection:text-secondary">
   <head>
     <meta name="viewport" content="width=device-width" />
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="author" content="Lalogo" />
@@ -56,7 +56,8 @@ import Header from "@components/Header.astro";
 <style is:global>
   @font-face {
     font-family: "IBM Plex Sans";
-    src: url("../fonts/IBM_Plex_Sans/IBMPlexSans-Regular.ttf") format("truetype");
+    src: url("../fonts/IBM_Plex_Sans/IBMPlexSans-Regular.ttf")
+      format("truetype");
     font-weight: 400; /* Regular */
     font-style: normal;
     font-display: swap;
@@ -80,7 +81,8 @@ import Header from "@components/Header.astro";
 
   @font-face {
     font-family: "IBM Plex Sans";
-    src: url("../fonts/IBM_Plex_Sans/IBMPlexSans-BoldItalic.ttf") format("truetype");
+    src: url("../fonts/IBM_Plex_Sans/IBMPlexSans-BoldItalic.ttf")
+      format("truetype");
     font-weight: 700; /* Bold */
     font-style: italic;
     font-display: swap;
@@ -92,7 +94,11 @@ import Header from "@components/Header.astro";
 
   @supports (font-variation-settings: normal) {
     :root {
-      font-family: "IBM Plex Sans", -apple-system, "Segoe UI", sans-serif;
+      font-family:
+        "IBM Plex Sans",
+        -apple-system,
+        "Segoe UI",
+        sans-serif;
     }
   }
 
