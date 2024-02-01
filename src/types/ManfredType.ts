@@ -1,4 +1,5 @@
 import type { ProjectTemplate } from "./ProjectTemplate";
+import { SlugName } from "./Utils";
 
 export interface Manfred {
   experience: Experience;
@@ -75,7 +76,7 @@ export function GetMainProjects(projects: Project[]) {
   const orderedProjects = projects
     .filter((project) => {
       // filter out projects that are not in the main list
-      const name = slugName(project.details.name);
+      const name = SlugName(project.details.name);
       return mainProjectsMap[name];
     })
     .sort((project1, project2) => {
@@ -97,7 +98,7 @@ export function GetOtherProjects(projects: Project[]) {
   }, {} as Record<string, boolean>);
 
   const otherProjects = projects.filter((project) => {
-    const name = slugName(project.details.name);
+    const name = SlugName(project.details.name);
     return !mainProjectsMap[name];
   });
 
@@ -105,7 +106,7 @@ export function GetOtherProjects(projects: Project[]) {
 }
 
 function getProjectIndex(project: Project, mainProjectsNames: string[]) {
-  const name = slugName(project.details.name);
+  const name = SlugName(project.details.name);
   return mainProjectsNames.indexOf(name);
 }
 
@@ -169,8 +170,4 @@ function getTechnologiesFromRoles(roles: Role[]) {
   const enclosed = `(${joined})`;
 
   return enclosed;
-}
-
-function slugName(name: string) {
-  return name.trim().replace(" ", "-").toLowerCase();
 }
