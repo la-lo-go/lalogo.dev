@@ -1,0 +1,199 @@
+<!-- Modified from: https://github.com/markteekman/accessible-astro-components/blob/main/Modal.astro -->
+
+---
+export interface Props {
+  triggerId: string
+  children?: HTMLElement | HTMLElement[]
+}
+
+const { triggerId } = Astro.props
+---
+
+<dialog class="modal" aria-labelledby={triggerId}>
+  <div class="modal__inner">
+    <div class="modal__content">
+      <slot>Modal description.</slot>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  type FocusableElement =
+    | HTMLAnchorElement
+    | HTMLButtonElement
+    | HTMLInputElement
+    | HTMLTextAreaElement
+    | HTMLSelectElement
+    | HTMLDetailsElement
+
+  // variables
+  let modals = document.querySelectorAll<HTMLDialogElement>('.modal')
+
+  // abort controllers for global event listeners
+  let trapFocusController: AbortController | undefined
+  let keydownController: AbortController | undefined
+
+  const getKeyboardFocusableElements = (element: HTMLElement) => {
+    return [
+      ...element.querySelectorAll<FocusableElement>(
+        'a, button, input, textarea, select, details,[tabindex]:not([tabindex="-1"])'
+      ),
+    ].filter((el) => !el.hasAttribute('disabled'))
+  }
+
+  const trapFocus = (event: KeyboardEvent, modal: HTMLDialogElement) => {
+    const focusables = getKeyboardFocusableElements(modal)
+
+    console.log(focusables)
+
+    // These will not be undefined as a modal always has at least one <button>
+    const firstFocusable = focusables[0]!
+    const lastFocusable = focusables[focusables.length - 1]!
+
+    if (document.activeElement === lastFocusable && event.key === 'Tab' && !event.shiftKey) {
+      event.preventDefault()
+      firstFocusable.focus()
+    }
+
+    if (document.activeElement === firstFocusable && event.key === 'Tab' && event.shiftKey) {
+      event.preventDefault()
+      lastFocusable.focus()
+    }
+  }
+
+  const openModal = (modal: HTMLDialogElement) => {
+    const modalInner = modal.querySelector<HTMLDivElement>('.modal__inner')
+
+    modal.showModal()
+
+    trapFocusController = new AbortController()
+    keydownController = new AbortController()
+
+    document.addEventListener('keydown', (e) => trapFocus(e, modal), { signal: trapFocusController.signal })
+    document.body.style.overflow = 'hidden';
+
+    modal.addEventListener(
+      'keydown',
+      (event) => {
+        if (event.key === 'Escape') {
+          closeModal()
+        }
+      },
+      { signal: keydownController.signal }
+    )
+
+    modal.addEventListener(
+      'click',
+      () => {
+        closeModal()
+      },
+      { signal: keydownController.signal }
+    )
+
+    modalInner!.addEventListener(
+      'click',
+      (event) => {
+        event.stopPropagation()
+      },
+      { signal: keydownController.signal }
+    )
+  }
+
+  const closeModal = () => {
+    modals.forEach((modal) => {
+      const modalId = modal.getAttribute('aria-labelledby')
+      const modalTrigger = document.querySelector(`#${modalId}`) as HTMLButtonElement
+      modalTrigger.focus({ preventScroll: true })
+      modal.close()
+      trapFocusController?.abort()
+      keydownController?.abort()
+    })
+  }
+
+  // execution
+  modals.forEach((modal) => {
+    const modalId = modal.getAttribute('aria-labelledby')
+    const modalTrigger = document.querySelector(`#${modalId}`)
+
+    if (!modalTrigger) {
+      throw new Error(`Trigger element not found. \n
+      Did you forget to add a trigger element with id: "${modalId}"?`)
+    }
+
+    modalTrigger.addEventListener('click', () => openModal(modal))
+  })
+
+  // Listen for view transitions
+  document.addEventListener('astro:after-swap', () => {
+    // reset variables
+    modals = document.querySelectorAll<HTMLDialogElement>('.modal')
+
+    // execution
+    modals.forEach((modal) => {
+      const modalId = modal.getAttribute('aria-labelledby')
+      const modalTrigger = document.querySelector(`#${modalId}`)
+
+      if (!modalTrigger) {
+        throw new Error(`Trigger element not found. \n
+      Did you forget to add a trigger element with id: "${modalId}"?`)
+      }
+
+      modalTrigger.addEventListener('click', () => openModal(modal))
+    })
+  })
+</script>
+
+<style is:global>
+  dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
+  dialog:focus-visible {
+    outline: none;
+  }
+
+  :where(.modal) {
+    background-color: theme(colors.gray);
+    border-radius: 0.5rem;
+    padding: 0;
+  }
+
+  .modal__inner {
+    border-radius: 1rem;
+    width: fit-content;
+  }
+
+  .modal__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0;
+  }
+
+  .modal__content a {
+    background-color: theme(colors.gray);
+    padding: 0.5rem 1.5rem;
+    width: 100%;
+    text-decoration: underline;
+  }
+
+  .modal__content a:hover {
+    background-color: theme(colors.primary);
+  }
+
+  /* Animation */
+  dialog[open],
+  dialog[open]::backdrop {
+    animation: fadein 0.2s ease-in-out;
+  }
+
+  @keyframes fadein {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+</style>

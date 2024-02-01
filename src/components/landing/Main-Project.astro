@@ -1,49 +1,71 @@
 ---
 import NewTabLink from "@components/NewTabLink.astro";
+import Modal from "@components/Modal.astro";
+import { SlugName } from '../../types/Utils';
+
 export interface Props {
   index: number;
   title: string;
   description: string;
+  technologies?: string;
   url: string[];
 }
 
-const { index, title, description, url } = Astro.props;
+const { index, title, description, technologies, url } = Astro.props;
 
 const numberDisplay = index < 10 ? `0${index}.` : `${index}.`;
+const triggerId = `modal-${SlugName(title)}`;
 ---
 
-<li class="flow-root">
-  <NewTabLink href={url[0]} className="group">
+<li class="flow-root cursor-pointer select-none">
+  <div id={triggerId} class="group">
     <div class="h-full flex flex-col justify-between">
       <p
         class="group-hover:text-secondary/90 text-9xl font-bold lg:rotate-90 lg:-translate-x-16 lg:mb-8 transition-color duration-200 ease-in number"
       >
         {numberDisplay}
       </p>
-      <p class="group-hover:text-secondary/90 group-hover:underline shrink-0">
+      <h3
+        class="group-hover:text-secondary/90 font-semibold group-hover:underline shrink-0"
+      >
         {title}
-      </p>
+      </h3>
       <p
         class="group-hover:text-secondary/90 group-hover:underline text-xs mt-3 leading-relaxed"
       >
         {description}
       </p>
+      <p
+        class="group-hover:text-secondary/90 group-hover:underline text-xs italic mt-1 leading-relaxed"
+      >
+        {technologies}
+      </p>
     </div>
-  </NewTabLink>
+  </div>
+</li>
 
-  <style is:global>
+<Modal triggerId={triggerId}>
+  {
+    url.map((singleUrl) => (
+      <NewTabLink href={singleUrl} className="focus:outline-none">
+        <p class="p-2 focus:outline-none">{singleUrl}</p>
+      </NewTabLink>
+    ))
+  }
+</Modal>
+
+<style is:global>
+  .group:hover .number {
+    text-shadow:
+      theme(colors.primary) 2px 2px,
+      #e5fffd 6px 4px;
+  }
+
+  @media (min-width: 1024px) {
     .group:hover .number {
       text-shadow:
-        theme(colors.primary) 2px 2px,
-        #e5fffd 6px 4px;
+        theme(colors.primary) 2px -2px,
+        #e5fffd 6px -4px;
     }
-
-    @media (min-width: 1024px) {
-      .group:hover .number {
-        text-shadow:
-          theme(colors.primary) 2px -2px,
-          #e5fffd 6px -4px;
-      }
-    }
-  </style>
-</li>
+  }
+</style>

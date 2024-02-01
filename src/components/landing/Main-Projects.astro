@@ -1,5 +1,6 @@
 ---
 import MainProject from "@components/landing/Main-Project.astro";
+import Modal from "@components/Modal.astro";
 
 import { GetMainProjects } from "@types/ManfredType";
 
@@ -25,6 +26,7 @@ const mainProjects = GetMainProjects(manfred.experience.projects);
             index={index}
             title={template.title}
             description={template.description}
+            technologies={template.technologies}
             url={template.url}
           />
         </>
@@ -32,11 +34,3 @@ const mainProjects = GetMainProjects(manfred.experience.projects);
     }
   </ul>
 </section>
-
-<style is:global>
-  @media (min-width: 1024px) {
-    .main-projects.grid > li:nth-child(n + 5) {
-      margin-top: 3rem;
-    }
-  }
-</style>

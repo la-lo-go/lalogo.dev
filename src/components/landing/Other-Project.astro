@@ -1,5 +1,8 @@
 ---
-import NewTabLink from '@components/NewTabLink.astro';
+import NewTabLink from "@components/NewTabLink.astro";
+import Modal from "@components/Modal.astro";
+import { SlugName } from "../../types/Utils";
+
 type Props = {
   template: {
     title: string;
@@ -8,24 +11,37 @@ type Props = {
   };
 };
 
-const {template } = Astro.props;
+const { template } = Astro.props;
+const triggerId = `modal-${SlugName(template.title)}`;
 ---
 
 <li
-  class="flow-root col-span-full h-full hover:bg-secondary/90 hover:text-gray bg-secondary transition-colors duration-200"
+  class="flow-root col-span-full h-full hover:bg-secondary/90 hover:text-gray bg-secondary transition-colors duration-200 select-none cursor-pointer"
 >
-  <NewTabLink
-    href={template.url[0]}
-    className="flex flex-col sm:flex-row justify-between gap-6 max-sm:gap-2 h-full align-middle sm:items-center"
+  <div
+    id={triggerId}
+    class="flex flex-col sm:flex-row justify-between gap-6 max-sm:gap-2 h-full align-middle sm:items-center"
   >
     <div class="p-3">
       <p class="italic shrink-0">{template.title}</p>
     </div>
     <div class="p-3 sm:max-w-[65%]">
-      <p class="text-xs leading-relaxed sm:text-right">{template.description}</p>
+      <p class="text-xs leading-relaxed sm:text-right">
+        {template.description}
+      </p>
     </div>
-  </NewTabLink>
+  </div>
 </li>
+
+<Modal triggerId={triggerId}>
+  {
+    template.url.map((singleUrl) => (
+      <NewTabLink href={singleUrl} className="focus:outline-none">
+        <p class="p-2 focus:outline-none">{singleUrl}</p>
+      </NewTabLink>
+    ))
+  }
+</Modal>
 
 <style>
   p (min-width: 640px) {
