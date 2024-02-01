@@ -107,6 +107,7 @@ const { triggerId } = Astro.props
       modal.close()
       trapFocusController?.abort()
       keydownController?.abort()
+      document.body.style.overflow = 'auto';
     })
   }
 
