@@ -2,16 +2,17 @@
 import NewTabLink from "@components/NewTabLink.astro";
 import Modal from "@components/Modal.astro";
 import { SlugName } from '../../types/Utils';
+import type { ProjectUrl } from '../../types/ProjectTemplate';
 
 export interface Props {
   index: number;
   title: string;
   description: string;
   technologies?: string;
-  url: string[];
+  urls: ProjectUrl[];
 }
 
-const { index, title, description, technologies, url } = Astro.props;
+const { index, title, description, technologies, urls } = Astro.props;
 
 const numberDisplay = index < 10 ? `0${index}.` : `${index}.`;
 const triggerId = `modal-${SlugName(title)}`;
@@ -46,9 +47,9 @@ const triggerId = `modal-${SlugName(title)}`;
 
 <Modal triggerId={triggerId}>
   {
-    url.map((singleUrl) => (
-      <NewTabLink href={singleUrl} className="focus:outline-none">
-        <p class="p-2 focus:outline-none">{singleUrl}</p>
+    urls.map((url) => (
+      <NewTabLink href={url.url} className="focus:outline-none">
+        <p class="p-2 focus:outline-none">{url.name}</p>
       </NewTabLink>
     ))
   }

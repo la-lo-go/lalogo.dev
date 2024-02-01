@@ -1,4 +1,4 @@
-import type { ProjectTemplate } from "./ProjectTemplate";
+import type { ProjectTemplate, ProjectUrl } from "./ProjectTemplate";
 import { SlugName } from "./Utils";
 
 export interface Manfred {
@@ -53,6 +53,7 @@ export interface Project {
   details: Organization;
   type: string;
   roles: Role[];
+  urls?: ProjectUrl[];
 }
 
 export interface PublicArtifact {
@@ -115,7 +116,7 @@ function getProjects(projects: Project[]) {
     return {
       title: project.details.name,
       description: formatDescription(project.details.description ?? ""),
-      url: getLinks(
+      urls: getLinks(
         project.details.URL ?? "",
         project.details.description ?? ""
       ),
@@ -140,20 +141,20 @@ export function formatDescription(text: string) {
   return firstSentence;
 }
 
-function getLinks(url: string, description: string): string[] {
-  const urls = [url];
-  const githubLinks = extractGitHubRepoLinks(description);
+function getLinks(url: string, description: string): ProjectUrl[] {
+  const urls = [{name: "Github repo", url: url}];
+  const descriptionUrls = extractDescriptionLinks(description);
 
-  return urls.concat(githubLinks);
+  return urls.concat(descriptionUrls);
 }
 
-function extractGitHubRepoLinks(description: string): Array<string> {
-  const regex = /\[Gitbuh repo]\(([^)]+)\)/g;
+function extractDescriptionLinks(description: string): Array<ProjectUrl> {
+  const regex = /\[(.*?)\]\(([^)]+)\)/g;
   let match;
   const links = [];
 
   while ((match = regex.exec(description)) !== null) {
-    links.push(match[1]);
+    links.push({name: match[1], url: match[2]});
   }
 
   return links;

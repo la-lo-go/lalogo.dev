@@ -2,12 +2,13 @@
 import NewTabLink from "@components/NewTabLink.astro";
 import Modal from "@components/Modal.astro";
 import { SlugName } from "../../types/Utils";
+import type { ProjectUrl } from '../../types/ProjectTemplate';
 
 type Props = {
   template: {
     title: string;
     description: string;
-    url: string[];
+    urls: ProjectUrl[];
   };
 };
 
@@ -35,9 +36,9 @@ const triggerId = `modal-${SlugName(template.title)}`;
 
 <Modal triggerId={triggerId}>
   {
-    template.url.map((singleUrl) => (
-      <NewTabLink href={singleUrl} className="focus:outline-none">
-        <p class="p-2 focus:outline-none">{singleUrl}</p>
+    template.urls.map((projectUrl) => (
+      <NewTabLink href={projectUrl.url} className="focus:outline-none">
+        <p class="p-2 focus:outline-none">{projectUrl.name}</p>
       </NewTabLink>
     ))
   }
