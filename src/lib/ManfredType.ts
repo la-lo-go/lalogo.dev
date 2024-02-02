@@ -1,5 +1,5 @@
 import type { ProjectTemplate, ProjectUrl } from "./ProjectTemplate";
-import { SlugName } from "./Utils";
+import { SlugName } from "@lib/Utils";
 
 export interface Manfred {
   experience: Experience;

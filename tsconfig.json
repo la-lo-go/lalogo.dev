@@ -7,7 +7,7 @@
 			"@data/*": ["src/data/*"],
       "@layouts/*": ["src/layouts/*"],
       "@pages/*": ["src/pages/*"],
-      "@types/*": ["src/types/*"],
+      "@lib/*": ["src/lib/*"],
       "@fonts/*": ["src/fonts/*"],
 		}
 	}

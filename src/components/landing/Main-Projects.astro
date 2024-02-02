@@ -2,7 +2,7 @@
 import MainProject from "@components/landing/Main-Project.astro";
 import Modal from "@components/Modal.astro";
 
-import { GetMainProjects } from "@types/ManfredType";
+import { GetMainProjects } from "@lib/ManfredType";
 
 import manfred from "@data/manfred/CV/MAC.json";
 const mainProjects = GetMainProjects(manfred.experience.projects);
