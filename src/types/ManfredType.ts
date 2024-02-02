@@ -142,7 +142,7 @@ export function formatDescription(text: string) {
 }
 
 function getLinks(url: string, description: string): ProjectUrl[] {
-  const urls = [{name: "Github repo", url: url}];
+  const urls = [{name: "GitHub repo", url: url}];
   const descriptionUrls = extractDescriptionLinks(description);
 
   return urls.concat(descriptionUrls);
