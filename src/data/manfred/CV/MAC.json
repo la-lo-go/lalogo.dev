@@ -69,43 +69,6 @@
       },
       {
         "details": {
-          "name": "Mangateca",
-          "description": "Web App (developed with [Astro](https://astro.build/) and hosted on Vercel) to read manga in spanish using my API \"Man-go\".\n\nYou can check the public repository [here](https://github.com/la-lo-go/mangateca).",
-          "URL": "https://mangateca.vercel.app",
-          "image": {
-            "link": "https://media-asgard.s3.eu-west-1.amazonaws.com/23/06/22/6fd4a909-2891-4fb8-9eb0-6a5e8e4f053b_icon-vector.svg",
-            "alt": "icon-vector.svg"
-          }
-        },
-        "type": "openSource",
-        "roles": [
-          {
-            "name": "Developer",
-            "startDate": "2023-03-01",
-            "competences": [
-              {
-                "name": "Github",
-                "type": "technology"
-              },
-              {
-                "name": "NodeJS",
-                "type": "technology"
-              },
-              {
-                "name": "Tailwind",
-                "type": "technology"
-              },
-              {
-                "name": "TypeScript",
-                "type": "technology"
-              }
-            ],
-            "finishDate": "2023-06-01"
-          }
-        ]
-      },
-      {
-        "details": {
           "name": "Man-go",
           "description": "RESTful API for search mangas, their chapters and pages from different websites simultaneously.\n\nWith Github Actions, when committing to the main branch, it creates the Docker image and is automatically updated on the [DockerHub page](https://hub.docker.com/r/lalogo/man-go). ",
           "URL": "https://github.com/la-lo-go/man-go",
@@ -138,6 +101,43 @@
               },
               {
                 "name": "SQL",
+                "type": "technology"
+              }
+            ],
+            "finishDate": "2023-06-01"
+          }
+        ]
+      },
+      {
+        "details": {
+          "name": "Mangateca",
+          "description": "Web App (developed with [Astro](https://astro.build/) and hosted on Vercel) to read manga in spanish using my API \"Man-go\".\n\nYou can check the public repository [here](https://github.com/la-lo-go/mangateca).",
+          "URL": "https://mangateca.vercel.app",
+          "image": {
+            "link": "https://media-asgard.s3.eu-west-1.amazonaws.com/23/06/22/6fd4a909-2891-4fb8-9eb0-6a5e8e4f053b_icon-vector.svg",
+            "alt": "icon-vector.svg"
+          }
+        },
+        "type": "openSource",
+        "roles": [
+          {
+            "name": "Developer",
+            "startDate": "2023-03-01",
+            "competences": [
+              {
+                "name": "Github",
+                "type": "technology"
+              },
+              {
+                "name": "NodeJS",
+                "type": "technology"
+              },
+              {
+                "name": "Tailwind",
+                "type": "technology"
+              },
+              {
+                "name": "TypeScript",
                 "type": "technology"
               }
             ],
@@ -181,7 +181,7 @@
       {
         "details": {
           "name": " the PHPoly",
-          "description": "Monopoly web port with vanilla JavaScript ",
+          "description": "Monopoly web port with vanilla JavaScript. [Demo](https://la-lo-go.github.io/the-PHPoly/index_html.html)",
           "URL": "https://github.com/la-lo-go/the-PHPoly",
           "image": {
             "link": "https://media-asgard.s3.eu-west-1.amazonaws.com/22/10/13/918c57cc-6bf3-4786-8c08-160eae67dbfc_32e7c59b-17d6-4e1d-9.png",
@@ -194,22 +194,6 @@
             "name": "Developer",
             "startDate": "2022-05-01",
             "competences": [
-              {
-                "name": "CSS",
-                "type": "technology"
-              },
-              {
-                "name": "Git",
-                "type": "technology"
-              },
-              {
-                "name": "Github",
-                "type": "technology"
-              },
-              {
-                "name": "HTML",
-                "type": "technology"
-              },
               {
                 "name": "JavaScript",
                 "type": "technology"
