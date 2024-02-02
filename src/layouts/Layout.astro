@@ -1,6 +1,16 @@
 ---
+import { AstroSeo } from "@astrolib/seo";
+
+export interface Props {
+  title: string;
+  description: string;
+}
+const { title, description } = Astro.props;
+
 import Footer from "@components/Footer.astro";
 import Header from "@components/Header.astro";
+
+const url = "https://lalogo.dev";
 ---
 
 <html lang="en" class="selection:bg-secondary selection:text-secondary">
@@ -40,6 +50,34 @@ import Header from "@components/Header.astro";
   </head>
 
   <body class="bg-primary p-8 mx-auto max-w-6xl">
+    <AstroSeo
+      title={title}
+      description={description}
+      canonical={url}
+      openGraph={{
+        url: url,
+        title: title,
+        description: description,
+        images: [
+          {
+            url: `${url}/opengraph/openGraphMiniature.png`,
+            width: 4096,
+            height: 4096,
+            alt: "Twitter open graph",
+            type: "image/jpeg",
+          },
+          { url: `${url}/opengraph/openGraphMiniature.png` },
+          { url: `${url}/opengraph/openGraphMiniature.png` },
+        ],
+        site_name: title,
+      }}
+      twitter={{
+        handle: "@la_lo_go",
+        site: "@la_lo_go",
+        cardType: "summary_large_image",
+      }}
+    />
+
     <Header />
 
     <main>

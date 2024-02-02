@@ -1,6 +1,4 @@
 ---
-import { AstroSeo } from "@astrolib/seo";
-
 import Layout from "@layouts/Layout.astro";
 import Biography from "@components/landing/Biography.astro";
 import MainProjects from "@components/landing/Main-Projects.astro";
@@ -8,41 +6,12 @@ import OtherProjects from "@components/landing/Other-Projects.astro";
 
 const title = `La-lo-go`;
 const description = `La-lo-go | Full-stack developer | If it doesn't exist, code it!`;
-const url = "https://lalogo.dev";
 ---
 
-<AstroSeo
-  title={title}
-  description={description}
-  canonical={url}
-  openGraph={{
-    url: url,
-    title: title,
-    description: description,
-    images: [
-      {
-        url: `${url}/opengraph/openGraphMiniature.png`,
-        width: 4096,
-        height: 4096,
-        alt: "Twitter open graph",
-        type: "image/jpeg",
-      },
-      { url: `${url}/opengraph/openGraphMiniature.png` },
-      { url: `${url}/opengraph/openGraphMiniature.png` },
-    ],
-    site_name: title,
-  }}
-  twitter={{
-    handle: "@la_lo_go",
-    site: "@la_lo_go",
-    cardType: "summary_large_image",
-  }}
-/>
-
-<Layout>
+<Layout title={title} description={description}>
   <Biography />
 
   <MainProjects />
 
-  <OtherProjects/>
+  <OtherProjects />
 </Layout>
