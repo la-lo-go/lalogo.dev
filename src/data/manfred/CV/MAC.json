@@ -3,6 +3,32 @@
     "jobs": [
       {
         "organization": {
+          "name": "Axazure"
+        },
+        "roles": [
+          {
+            "name": "CRM CE & PP Junior Technical Consultant",
+            "startDate": "2023-07-01",
+            "finishDate": "2024-01-01",
+            "competences": [
+              {
+                "name": ".NET",
+                "type": "technology"
+              },
+              {
+                "name": "Azure Functions",
+                "type": "technology"
+              },
+              {
+                "name": "Microsoft Dynamics 365",
+                "type": "technology"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "organization": {
           "name": "Axazure",
           "image": {
             "link": "https://media-asgard.s3.eu-west-1.amazonaws.com/23/11/06/4bb168b4-14a2-4190-b17c-3cfbf4908ac9_axz-avvale-azul-y-ne.png",
@@ -39,6 +65,39 @@
       }
     ],
     "projects": [
+      {
+        "details": {
+          "name": "Mega wrapped",
+          "description": "Merge all your Spotify's wrapped in one playlist. [Preview (pending Spotify’s approval)](https://mega-wrapped.vercel.app)",
+          "URL": "https://github.com/la-lo-go/mega-wrapped",
+          "image": {
+            "link": "https://media-asgard.s3.eu-west-1.amazonaws.com/24/02/10/22e28510-0d97-4145-87af-d6bdec636dc5_06bcd02a-603d-4d95-8.jpeg",
+            "alt": "06BCD02A-603D-4D95-8AC4-5AAD18E03972.jpeg"
+          }
+        },
+        "type": "openSource",
+        "roles": [
+          {
+            "name": "Developer",
+            "startDate": "2023-11-01",
+            "competences": [
+              {
+                "name": "NextJS",
+                "type": "technology"
+              },
+              {
+                "name": "Tailwind",
+                "type": "technology"
+              },
+              {
+                "name": "TypeScript",
+                "type": "technology"
+              }
+            ],
+            "finishDate": "2023-11-01"
+          }
+        ]
+      },
       {
         "details": {
           "name": "qBitTelegram",
@@ -111,8 +170,8 @@
       {
         "details": {
           "name": "Mangateca",
-          "description": "Web App (developed with [Astro](https://astro.build/) and hosted on Vercel) to read manga in spanish using my API \"Man-go\".\n\nYou can check the public repository [here](https://github.com/la-lo-go/mangateca).",
-          "URL": "https://mangateca.vercel.app",
+          "description": "Progressive Web App to read manga in spanish from different sources using my API \"Man-go\". [Preview](https://mangateca.vercel.app/).",
+          "URL": "https://github.com/la-lo-go/mangateca",
           "image": {
             "link": "https://media-asgard.s3.eu-west-1.amazonaws.com/23/06/22/6fd4a909-2891-4fb8-9eb0-6a5e8e4f053b_icon-vector.svg",
             "alt": "icon-vector.svg"
@@ -125,11 +184,7 @@
             "startDate": "2023-03-01",
             "competences": [
               {
-                "name": "Github",
-                "type": "technology"
-              },
-              {
-                "name": "NodeJS",
+                "name": "Astro",
                 "type": "technology"
               },
               {
@@ -180,8 +235,32 @@
       },
       {
         "details": {
+          "name": "Shingeki no Infinite",
+          "description": "Futuristic 3D FPS and platform videogame with inspiration in the movement system of the \"Attack on Titan\" series. [Live Demo](https://youtu.be/Bvf-zJWYepI?t=8727)",
+          "image": {
+            "link": "https://media-asgard.s3.eu-west-1.amazonaws.com/24/02/10/87ca60ef-c542-48fc-9bc5-b885d5b3089f_9a686c47-b099-4c7b-8.png",
+            "alt": "9A686C47-B099-4C7B-80E1-D8B0A87B4D62.png"
+          }
+        },
+        "type": "openSource",
+        "roles": [
+          {
+            "name": "Developer",
+            "startDate": "2022-11-01",
+            "competences": [
+              {
+                "name": "Unity3D",
+                "type": "technology"
+              }
+            ],
+            "finishDate": "2023-03-01"
+          }
+        ]
+      },
+      {
+        "details": {
           "name": " the PHPoly",
-          "description": "Monopoly web port with vanilla JavaScript. [Demo](https://la-lo-go.github.io/the-PHPoly/index_html.html)",
+          "description": "Monopoly web port with vanilla JavaScript. [Preview](https://la-lo-go.github.io/the-PHPoly/index_html.html)",
           "URL": "https://github.com/la-lo-go/the-PHPoly",
           "image": {
             "link": "https://media-asgard.s3.eu-west-1.amazonaws.com/22/10/13/918c57cc-6bf3-4786-8c08-160eae67dbfc_32e7c59b-17d6-4e1d-9.png",
