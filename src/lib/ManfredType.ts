@@ -1,5 +1,6 @@
 import type { ProjectTemplate, ProjectUrl } from "./ProjectTemplate";
 import { SlugName } from "@lib/Utils";
+import dotenv from "dotenv";
 
 export interface Manfred {
   experience: Experience;
@@ -64,8 +65,8 @@ export interface PublicArtifact {
   relatedCompetences: Competence[];
 }
 
-// TODO: this should be in a config file
-const mainProjects = "mangateca;man-go;qbittelegram;the-phpoly";
+// get the main projects from the .env file
+const mainProjects = dotenv.config().parsed?.MAIN_PROJECTS ?? "";
 
 export function GetMainProjects(projects: Project[]) {
   const mainProjectsNames = mainProjects.split(";");
@@ -138,11 +139,12 @@ export function formatDescription(text: string) {
   const firstSentence =
     noMultipleSpaces.match(firstSentenceRegex)?.[1] ?? noMultipleSpaces;
 
+  console.log("firstSentence", firstSentence);
   return firstSentence;
 }
 
 function getLinks(url: string, description: string): ProjectUrl[] {
-  const urls = [{name: "GitHub repo", url: url}];
+  const urls = url ? [{name: "GitHub repo", url: url}] : [];
   const descriptionUrls = extractDescriptionLinks(description);
 
   return urls.concat(descriptionUrls);
