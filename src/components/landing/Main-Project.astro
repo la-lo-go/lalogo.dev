@@ -21,11 +21,11 @@ const triggerId = `modal-${SlugName(title)}`;
 <li class="flow-root cursor-pointer select-none">
   <div id={triggerId} class="group">
     <div class="h-full flex flex-col justify-between">
-      <p
-        class="group-hover:text-secondary/90 text-9xl font-bold lg:rotate-90 lg:-translate-x-16 lg:mb-8 transition-color duration-200 ease-in number"
+      <div
+        class="group-hover:text-secondary/90 text-9xl font-bold lg:rotate-90 lg:-translate-x-16 lg:mb-4 transition-color duration-200 ease-in number"
       >
         {numberDisplay}
-      </p>
+      </div>
       <h3
         class="group-hover:text-secondary/90 font-semibold group-hover:underline shrink-0"
       >
@@ -37,7 +37,7 @@ const triggerId = `modal-${SlugName(title)}`;
         {description}
       </p>
       <p
-        class="group-hover:text-secondary/90 group-hover:underline text-xs italic mt-1 leading-relaxed"
+        class="group-hover:text-secondary/90 group-hover:underline text-xs italic leading-relaxed"
       >
         {technologies}
       </p>
