@@ -18,6 +18,7 @@
     "tailwindcss": "^3.3.3"
   },
   "devDependencies": {
+    "@types/node": "^20.11.17",
     "sass": "^1.70.0"
   }
 }

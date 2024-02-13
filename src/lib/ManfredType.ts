@@ -66,7 +66,8 @@ export interface PublicArtifact {
 }
 
 // get the main projects from the .env file
-const mainProjects = dotenv.config().parsed?.MAIN_PROJECTS ?? "";
+dotenv.config();
+const mainProjects = process.env.MAIN_PROJECTS ?? "";
 
 export function GetMainProjects(projects: Project[]) {
   const mainProjectsNames = mainProjects.split(";");
