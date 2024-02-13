@@ -10,6 +10,11 @@
             "name": "CRM CE & PP Junior Technical Consultant",
             "startDate": "2023-07-01",
             "finishDate": "2024-01-01",
+            "challenges": [
+              {
+                "description": "- Designed and deployed AI solutions using Azure OpenAI Service and Azure AI.\n- Implemented solutions using Azure Functions.\n- Developed Plugins and Custom APIs for Dynamics 365 with unit testing using FakeXRMEasy.\n- Collaborated effectively with cross-functional teams."
+              }
+            ],
             "competences": [
               {
                 "name": ".NET",
@@ -43,7 +48,7 @@
             "finishDate": "2023-06-01",
             "challenges": [
               {
-                "description": "- Worked on various projects involving Power Apps, Power Automate, and Azure Functions. \n- Project management with Azure DevOps.\n- Actively collaborated with cross-functional teams."
+                "description": "- Power Apps, Power Automate, and Azure Functions. \n- Project management with Azure DevOps.\n"
               }
             ],
             "competences": [
@@ -101,7 +106,7 @@
       {
         "details": {
           "name": "qBitTelegram",
-          "description": "BitTorrent's client for Telegram to manage easily and securely from anywhere torrent downloading from your server",
+          "description": "BitTorrent's client for Telegram to manage easily and securely from anywhere torrent downloading from your server.\n\n[DockerHub page](https://hub.docker.com/r/lalogo/qbittelegram)",
           "URL": "https://github.com/la-lo-go/qBitTelegram",
           "image": {
             "link": "https://media-asgard.s3.eu-west-1.amazonaws.com/23/06/22/0adf048a-5be5-411b-859c-3abc2bddbf4d_cover.png",
@@ -119,6 +124,10 @@
                 "type": "technology"
               },
               {
+                "name": "Github Actions",
+                "type": "technology"
+              },
+              {
                 "name": "Python",
                 "type": "technology"
               }
@@ -128,50 +137,8 @@
       },
       {
         "details": {
-          "name": "Man-go",
-          "description": "RESTful API for search mangas, their chapters and pages from different websites simultaneously.\n\nWith Github Actions, when committing to the main branch, it creates the Docker image and is automatically updated on the [DockerHub page](https://hub.docker.com/r/lalogo/man-go). ",
-          "URL": "https://github.com/la-lo-go/man-go",
-          "image": {
-            "link": "https://media-asgard.s3.eu-west-1.amazonaws.com/23/06/22/3f37d38a-b7d5-4cb3-843e-9dec61c6073b_gopher(1).png",
-            "alt": "gopher(1).png"
-          }
-        },
-        "type": "openSource",
-        "roles": [
-          {
-            "name": "Developer",
-            "startDate": "2023-03-01",
-            "competences": [
-              {
-                "name": "Azure",
-                "type": "technology"
-              },
-              {
-                "name": "Docker",
-                "type": "technology"
-              },
-              {
-                "name": "Github Actions",
-                "type": "technology"
-              },
-              {
-                "name": "Go",
-                "type": "technology"
-              },
-              {
-                "name": "SQL",
-                "type": "technology"
-              }
-            ],
-            "finishDate": "2023-06-01"
-          }
-        ]
-      },
-      {
-        "details": {
-          "name": "Mangateca",
-          "description": "Progressive Web App to read manga in spanish from different sources using my API \"Man-go\". [Preview](https://mangateca.vercel.app/).",
-          "URL": "https://github.com/la-lo-go/mangateca",
+          "name": "Mangateca + Man-go",
+          "description": "Progressive Web App to read manga in spanish from various third-party sources using my API \"Man-go\", a Go microservice for searching mangas, chapters, and pages from multiple websites simultaneously. \n[Mangateca preview](https://mangateca.vercel.app/)\n[Mangateca repo](https://github.com/la-lo-go/mangateca)\n[Man-go repo](https://github.com/la-lo-go/man-go)\n[Man-go DockerHub page](https://hub.docker.com/r/lalogo/man-go)",
           "image": {
             "link": "https://media-asgard.s3.eu-west-1.amazonaws.com/23/06/22/6fd4a909-2891-4fb8-9eb0-6a5e8e4f053b_icon-vector.svg",
             "alt": "icon-vector.svg"
@@ -188,7 +155,19 @@
                 "type": "technology"
               },
               {
-                "name": "Tailwind",
+                "name": "Azure",
+                "type": "technology"
+              },
+              {
+                "name": "Docker",
+                "type": "technology"
+              },
+              {
+                "name": "Go",
+                "type": "technology"
+              },
+              {
+                "name": "SQL",
                 "type": "technology"
               },
               {
@@ -278,19 +257,15 @@
                 "type": "technology"
               },
               {
-                "name": "MariaDB",
-                "type": "technology"
-              },
-              {
                 "name": "PHP",
                 "type": "technology"
               },
               {
-                "name": "Sass",
+                "name": "SQL",
                 "type": "technology"
               },
               {
-                "name": "jQuery",
+                "name": "Sass",
                 "type": "technology"
               }
             ],
