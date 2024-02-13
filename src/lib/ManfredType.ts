@@ -1,5 +1,5 @@
 import type { ProjectTemplate, ProjectUrl } from "./ProjectTemplate";
-import { SlugName } from "@lib/Utils";
+import { GetTechnologiesFromRoles, SlugName } from "@lib/Utils";
 import dotenv from "dotenv";
 
 export interface Manfred {
@@ -121,7 +121,7 @@ function getProjects(projects: Project[]) {
         project.details.URL ?? "",
         project.details.description ?? ""
       ),
-      technologies: getTechnologiesFromRoles(project.roles),
+      technologies: GetTechnologiesFromRoles(project.roles),
     } as ProjectTemplate;
   });
 }
@@ -139,12 +139,11 @@ export function formatDescription(text: string) {
   const firstSentence =
     noMultipleSpaces.match(firstSentenceRegex)?.[1] ?? noMultipleSpaces;
 
-  console.log("firstSentence", firstSentence);
   return firstSentence;
 }
 
 function getLinks(url: string, description: string): ProjectUrl[] {
-  const urls = url ? [{name: "GitHub repo", url: url}] : [];
+  const urls = url ? [{ name: "GitHub repo", url: url }] : [];
   const descriptionUrls = extractDescriptionLinks(description);
 
   return urls.concat(descriptionUrls);
@@ -156,21 +155,8 @@ function extractDescriptionLinks(description: string): Array<ProjectUrl> {
   const links = [];
 
   while ((match = regex.exec(description)) !== null) {
-    links.push({name: match[1], url: match[2]});
+    links.push({ name: match[1], url: match[2] });
   }
 
   return links;
-}
-
-function getTechnologiesFromRoles(roles: Role[]) {
-  const techList = roles.flatMap((role) =>
-    role.competences
-      .filter((competence) => competence.type === Type.Technology)
-      .map((competence) => competence.name)
-  );
-
-  const joined = techList.join(", ");
-  const enclosed = `(${joined})`;
-
-  return enclosed;
 }
