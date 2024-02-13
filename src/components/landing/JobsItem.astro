@@ -1,0 +1,71 @@
+---
+import LinkInline from "@components/LinkInline.astro";
+import { FormatDates } from "@lib/Utils";
+import { marked } from "marked";
+
+interface Props {
+  title: string;
+  company: string;
+  description: string;
+  link?: string;
+  dates: {
+    start: Date;
+    finish: Date;
+  };
+}
+
+const { title, company, description, link, dates } = Astro.props;
+
+const markedDescription = marked(description);
+---
+
+<div
+  class="relative ml-12 pb-8 grid before:absolute before:left-[-34px] before:block before:h-full before:border-l-4 before:border-secondary before:content-[''] md:grid-cols-6 md:gap-10 md:[space-x-4]"
+>
+  <div class="relative pb-8 md:col-span-2">
+    <div class="sticky top-0">
+      <span class="text-secondary -left-[44px] absolute rounded-full text-6xl"
+        >&bull;</span
+      >
+      <h3 class="text-xl font-bold underline">{title}</h3>
+      <h4 class="font-semibold text-lg text-gray-600">
+        > {company}
+      </h4>
+      <time class="p-0 m-0 text-sm text-gray-600/80"
+        >{FormatDates(dates.start, dates.finish)}</time
+      >
+    </div>
+  </div>
+  <div class="relative flex flex-col gap-2 pl-4 pb-4 md:col-span-4">
+    <article class="description-list" set:html={markedDescription} />
+    {
+      link && (
+        <LinkInline href={"https://www.google.com"}>
+          Learn more{" "}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            stroke-width="2"
+            stroke="currentColor"
+            fill="none"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <>
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M9 6l6 6l-6 6" />
+            </>
+          </svg>
+        </LinkInline>
+      )
+    }
+  </div>
+</div>
+
+<style is:global>
+  .description-list > ul {
+    list-style-type: "• ";
+  }
+</style>
