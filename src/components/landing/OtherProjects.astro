@@ -1,5 +1,5 @@
 ---
-import OtherProject from "@components/landing/Other-Project.astro";
+import OtherProjectsItem from "@components/landing/OtherProjectsItem.astro";
 
 import { GetOtherProjects } from "@lib/ProjectPortfolio";
 
@@ -21,7 +21,7 @@ const otherProjects = GetOtherProjects(manfred.experience.projects);
     {
       otherProjects.map((template) => (
         <>
-          <OtherProject template={template} />
+          <OtherProjectsItem template={template} />
         </>
       ))
     }

@@ -1,5 +1,5 @@
 ---
-import MainProject from "@components/landing/Main-Project.astro";
+import MainProjectsItem from "@components/landing/MainProjectsItem.astro";
 
 import { GetMainProjects } from "@lib/ProjectPortfolio";
 
@@ -21,7 +21,7 @@ const mainProjects = GetMainProjects(manfred.experience.projects);
     {
       mainProjects.map((template, index) => (
         <>
-          <MainProject
+          <MainProjectsItem
             index={index}
             title={template.title}
             description={template.description}
