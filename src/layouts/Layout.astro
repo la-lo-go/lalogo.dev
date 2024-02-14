@@ -1,5 +1,6 @@
 ---
 import { AstroSeo } from "@astrolib/seo";
+import { ViewTransitions, fade, slide } from 'astro:transitions';
 
 export interface Props {
   title: string;
@@ -47,6 +48,8 @@ const url = "https://lalogo.dev";
     />
     <meta name="msapplication-TileColor" content="#ffffff" />
     <meta name="theme-color" content="#ffffff" />
+
+    <ViewTransitions />
   </head>
 
   <body class="bg-primary p-8 mx-auto max-w-6xl">
@@ -78,13 +81,13 @@ const url = "https://lalogo.dev";
       }}
     />
 
-    <Header />
+    <Header transition:animate="none"/>
 
-    <main>
+    <main transition:animate={fade({ duration: '0.15s' })}>
       <slot />
     </main>
 
-    <Footer />
+    <Footer transition:animate="none"/>
 
     <!-- External scripts -->
     <script src="https://unpkg.com/mailgo@0.12.2/dist/mailgo.min.js"></script>
