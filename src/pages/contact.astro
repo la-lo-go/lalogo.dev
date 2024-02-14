@@ -1,9 +1,5 @@
 ---
 import Layout from "@layouts/Layout.astro";
-import Biography from "@components/landing/Biography.astro";
-import MainProjects from "@components/landing/Main-Projects.astro";
-import OtherProjects from "@components/landing/Other-Projects.astro";
-
 const title = `Contact | La-lo-go`;
 const description = `Contact | La-lo-go`;
 ---
@@ -11,10 +7,10 @@ const description = `Contact | La-lo-go`;
 <Layout title={title} description={description}>
   <form
     class="max-w-3xl mx-auto py-6 flex flex-col items-center justify-center"
-    action="https://formsubmit.co/botsarcastic@gmail.com"
+    action="https://formsubmit.co/contact@lalogo.dev"
     method="POST"
   >
-    <h1 class="-mt-8 mb-4 font-bold text-3xl">Contact</h1>
+    <h1 class="-mt-8 mb-4 font-bold text-3xl text-secondary">Contact</h1>
 
     <div class="mb-4 w-full">
       <label class="block mb-2" for="email"> Your email*:</label>
@@ -23,6 +19,16 @@ const description = `Contact | La-lo-go`;
         id="email"
         type="email"
         name="email"
+        required
+      />
+    </div>
+    <div class="mb-4 w-full">
+      <label class="block mb-2" for="name"> Your name*:</label>
+      <input
+        class="w-full leading-relaxed focus:outline-none focus:border-2 focus:border-gray"
+        id="name"
+        type="text"
+        name="name"
         required
       />
     </div>
