@@ -1,4 +1,4 @@
-import type { Job } from "@lib/ManfredType";
+import type { Job } from "@lib/Manfred";
 import { GetTechnologiesFromRoles } from "@lib/Utils";
 
 export interface JobTemplate {
