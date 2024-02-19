@@ -73,7 +73,7 @@
       {
         "details": {
           "name": "Lalogo.dev + relay",
-          "description": "This website and a set of TypeScript Azure Functions for the management of the GitHub Webhooks and cron jobs for sync lalogo.dev with Manfred for the resume and projects and, soon, Notion for the blog.\n[How does it work?](https://github.com/la-lo-go/lalogo.dev)\n[lalogo.dev repo](https://github.com/la-lo-go/lalogo.dev)\n[lalogo.dev-relay repo](https://github.com/la-lo-go/lalogo.dev-relay)",
+          "description": "This website and a set of TypeScript Azure Functions for the management of the GitHub Webhooks and cron jobs for sync lalogo.dev with Manfred for the resume and projects and, soon, Notion for the blog.\n[How does it work?](https://github.com/la-lo-go/lalogo.dev?tab=readme-ov-file#how-does-it-work)\n[lalogo.dev repo](https://github.com/la-lo-go/lalogo.dev)\n[lalogo.dev-relay repo](https://github.com/la-lo-go/lalogo.dev-relay)",
           "image": {
             "link": "https://media-asgard.s3.eu-west-1.amazonaws.com/24/02/19/759b4c4e-00dc-4891-8677-fe1662d5ad6d_opengraphminiature.png",
             "alt": "openGraphMiniature.png"
