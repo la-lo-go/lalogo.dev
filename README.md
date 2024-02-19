@@ -4,7 +4,7 @@ My personal website, integrated with [Manfred](https://www.getmanfred.com) via G
 ![](./public/opengraph/openGraphMiniature.png)
 
 ## How does it work?
-This website works thanks for [lalogo.dev-relay](https://github.com/la-lo-go/lalogo.dev-relay), a conjunction of Azure Functions that allows to update the website's content by changing the content inside [Manfred](https://www.getmanfred.com/) for the resume and projects and, soon, Notion for the blog.
+This website works thanks for [lalogo.dev-relay](https://github.com/la-lo-go/lalogo.dev-relay), a conjunction of Azure Functions that allows to update the website's content by changing the informartion inside [Manfred](https://www.getmanfred.com/) for the resume and projects and, soon, Notion for the blog.
 
 ![lalogo.dev-relay diagram](https://raw.githubusercontent.com/la-lo-go/lalogo.dev-relay/main/docs/relay-diagram.gif)
 
