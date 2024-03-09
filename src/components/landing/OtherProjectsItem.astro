@@ -8,6 +8,7 @@ type Props = {
   template: {
     title: string;
     description: string;
+    technologies?: string;
     urls: ProjectUrl[];
   };
 };
@@ -21,15 +22,20 @@ const triggerId = `modal-${SlugName(template.title)}`;
 >
   <div
     id={triggerId}
-    class="flex flex-col sm:flex-row justify-between gap-6 max-sm:gap-2 h-full align-middle sm:items-center"
+    class="flex flex-col md:flex-row justify-between gap-2 h-full align-middle md:items-center"
   >
     <div class="p-3">
       <h3 class="italic shrink-0">{template.title}</h3>
     </div>
-    <div class="p-3 sm:max-w-[65%]">
-      <p class="text-xs leading-relaxed sm:text-right">
+    <div class="p-3 text-balance md:max-w-[65%] md:text-right">
+      <p class="text-xs leading-relaxed">
         {template.description}
       </p>
+      {template.technologies && (
+        <p class="text-xs leading-relaxed mt-1">
+          {`${template.technologies}`}
+        </p>
+      )}
     </div>
   </div>
 </li>
