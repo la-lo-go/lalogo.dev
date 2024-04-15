@@ -3,21 +3,29 @@
     "jobs": [
       {
         "organization": {
-          "name": "Axazure"
+          "name": "Axazure",
+          "image": {
+            "link": "https://media-asgard.s3.eu-west-1.amazonaws.com/24/04/15/7e2bf75b-002b-413c-b07f-3f33019a9e8b_images.jpeg",
+            "alt": "images.jpeg"
+          }
         },
         "roles": [
           {
             "name": "CRM CE & PP Junior Technical Consultant",
-            "startDate": "2023-07-01",
+            "startDate": "2023-06-01",
             "finishDate": "2024-01-01",
             "challenges": [
               {
-                "description": "- Designed and deployed Artificial Intelligence solutions using Azure OpenAI Service and Azure AI.\n- Implemented Azure Functions for serverless CRM integrations.\n- Developed Plugins and Custom APIs for Dynamics 365 with unit testing using FakeXRMEasy.\n- Collaborated effectively with cross-functional teams."
+                "description": "- Creation of a custom Azure OpenAIService C# SDK to improve the reliability of the responses of the GPT models.\n- Designed and deployed Artificial Intelligence solutions using Azure OpenAI Service and Azure AI.\n- Developed C#(.Net) Plugins and Custom APIs for Dynamics 365 with unit testing using FakeXRMEasy.\n- Implemented Azure Functions for serverless CRM integrations.\n- Collaborated effectively with cross-functional teams."
               }
             ],
             "competences": [
               {
                 "name": ".NET",
+                "type": "technology"
+              },
+              {
+                "name": "Azure",
                 "type": "technology"
               },
               {
@@ -404,7 +412,7 @@
         ],
         "relatedCompetences": [
           {
-            "name": "JAVA",
+            "name": "Java",
             "type": "technology"
           }
         ]
