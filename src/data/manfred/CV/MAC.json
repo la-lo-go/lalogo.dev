@@ -39,42 +39,6 @@
             ]
           }
         ]
-      },
-      {
-        "organization": {
-          "name": "Axazure",
-          "image": {
-            "link": "https://media-asgard.s3.eu-west-1.amazonaws.com/24/04/15/f29e2fd1-ea37-4ea0-8236-32281f53be90_images.jpeg",
-            "alt": "images.jpeg"
-          },
-          "URL": "https://axazure.com"
-        },
-        "roles": [
-          {
-            "name": "Power Platform Trainee",
-            "startDate": "2023-03-01",
-            "finishDate": "2023-06-01",
-            "challenges": [
-              {
-                "description": "- Power Apps, Power Automate, and Azure Functions. \n- Project management with Azure DevOps.\n"
-              }
-            ],
-            "competences": [
-              {
-                "name": ".NET",
-                "type": "technology"
-              },
-              {
-                "name": "Azure Functions",
-                "type": "technology"
-              },
-              {
-                "name": "Microsoft Dynamics 365",
-                "type": "technology"
-              }
-            ]
-          }
-        ]
       }
     ],
     "projects": [
