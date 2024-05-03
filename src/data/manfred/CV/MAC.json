@@ -48,6 +48,30 @@
     "projects": [
       {
         "details": {
+          "name": "Tv Series RenAImer",
+          "description": "GPT powered CLI tool for renaming TV series files for better recognition by media players such as Plex, Jellyfin, etc.",
+          "URL": "https://github.com/la-lo-go/tv-series-renaimer",
+          "image": {
+            "link": "https://media-asgard.s3.eu-west-1.amazonaws.com/24/05/03/31389d20-7a27-45c3-af03-baf7ca534e40_png-transparent-rust.png",
+            "alt": "png-transparent-rust-programming-language-logo-machine-learning-haskell-crab-animals-cartoon-crab.png"
+          }
+        },
+        "type": "openSource",
+        "roles": [
+          {
+            "name": "Developer",
+            "startDate": "2024-04-01",
+            "competences": [
+              {
+                "name": "Rust",
+                "type": "technology"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "details": {
           "name": "Lalogo.dev + relay",
           "description": "This website and a set of TypeScript Azure Functions for the management of the GitHub Webhooks and cron jobs for sync lalogo.dev with Manfred for the resume and projects and, soon, Notion for the blog.\n[How does it work?](https://github.com/la-lo-go/lalogo.dev?tab=readme-ov-file#how-does-it-work)\n[lalogo.dev repo](https://github.com/la-lo-go/lalogo.dev)\n[lalogo.dev-relay repo](https://github.com/la-lo-go/lalogo.dev-relay)",
           "image": {
