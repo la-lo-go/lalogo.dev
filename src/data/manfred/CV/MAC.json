@@ -25,6 +25,10 @@
                 "type": "technology"
               },
               {
+                "name": "API",
+                "type": "technology"
+              },
+              {
                 "name": "Azure",
                 "type": "technology"
               },
@@ -33,11 +37,19 @@
                 "type": "technology"
               },
               {
+                "name": "C#",
+                "type": "technology"
+              },
+              {
                 "name": "JavaScript",
                 "type": "technology"
               },
               {
                 "name": "Microsoft Dynamics 365",
+                "type": "technology"
+              },
+              {
+                "name": "SQL",
                 "type": "technology"
               }
             ]
