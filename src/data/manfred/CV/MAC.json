@@ -60,6 +60,34 @@
     "projects": [
       {
         "details": {
+          "name": "Whatsgraph",
+          "description": "Insightful charts and analytics based on WhatsApp chat history files. [Try the demo!](whatsgraph.lalogo.dev/demo)",
+          "URL": "https://github.com/la-lo-go/whatsgraph"
+        },
+        "type": "openSource",
+        "roles": [
+          {
+            "name": "Developer",
+            "startDate": "2024-08-01",
+            "competences": [
+              {
+                "name": "NextJS",
+                "type": "technology"
+              },
+              {
+                "name": "Tailwind",
+                "type": "technology"
+              },
+              {
+                "name": "TypeScript",
+                "type": "technology"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "details": {
           "name": "Tv Series RenAImer",
           "description": "GPT powered CLI tool for renaming TV series files for better recognition by media players such as Plex, Jellyfin, etc.",
           "URL": "https://github.com/la-lo-go/tv-series-renaimer",
