@@ -61,7 +61,7 @@
       {
         "details": {
           "name": "Whatsgraph",
-          "description": "Insightful charts and analytics based on WhatsApp chat history files. [Try the demo!](whatsgraph.lalogo.dev/demo)",
+          "description": "Isightful charts and analytics based on WhatsApp chat history files. [Try the demo!](https://whatsgraph.lalogo.dev/demo)",
           "URL": "https://github.com/la-lo-go/whatsgraph"
         },
         "type": "openSource",
