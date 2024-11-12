@@ -3,6 +3,49 @@
     "jobs": [
       {
         "organization": {
+          "name": "Abast",
+          "image": {
+            "link": "https://media-asgard.s3.eu-west-1.amazonaws.com/24/11/12/33f3b7c5-6d04-4710-9460-071d9f1734cf_unnamed.jpg",
+            "alt": "unnamed.jpg"
+          },
+          "URL": "https://www.abast.es/"
+        },
+        "roles": [
+          {
+            "name": "Backend Engineer - Dynamics365 CRM",
+            "startDate": "2024-09-01",
+            "challenges": [
+              {
+                "description": "- Lead developer of the integration system between Microsoft Dynamics 365 CRM and Business Central, implementing a scalable architecture based on Template Method pattern for automatic business data synchronization.\nDeveloped a configurable mapping system for REST API endpoints, enabling integration adaptations without code modifications, significantly reducing maintenance time and facilitating the incorporation of new entities.\n- Implemented a robust error handling and logging system using C# .NET and JavaScript, ensuring complete operation traceability and optimizing data synchronization processing times."
+              }
+            ],
+            "competences": [
+              {
+                "name": ".NET",
+                "type": "technology"
+              },
+              {
+                "name": "C#",
+                "type": "technology"
+              },
+              {
+                "name": "JavaScript",
+                "type": "technology"
+              },
+              {
+                "name": "Microsoft Dynamics 365",
+                "type": "technology"
+              },
+              {
+                "name": "Microsoft Power Plataform",
+                "type": "technology"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "organization": {
           "name": "Axazure",
           "image": {
             "link": "https://media-asgard.s3.eu-west-1.amazonaws.com/24/04/15/7e2bf75b-002b-413c-b07f-3f33019a9e8b_images.jpeg",
