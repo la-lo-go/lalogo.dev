@@ -50,11 +50,12 @@
           "image": {
             "link": "https://media-asgard.s3.eu-west-1.amazonaws.com/24/04/15/7e2bf75b-002b-413c-b07f-3f33019a9e8b_images.jpeg",
             "alt": "images.jpeg"
-          }
+          },
+          "URL": "https://www.axazure.com/"
         },
         "roles": [
           {
-            "name": "CRM CE & Power Platform Junior Technical Consultant",
+            "name": "Junior Backend Engineer - Dynamics365 CRM",
             "startDate": "2023-03-01",
             "finishDate": "2024-01-01",
             "challenges": [
