@@ -16,7 +16,7 @@
             "startDate": "2024-09-01",
             "challenges": [
               {
-                "description": "- Lead developer of the integration system between Microsoft Dynamics 365 CRM and Business Central, implementing a scalable architecture based on Template Method pattern for automatic business data synchronization.\n- Developed a configurable mapping system for REST API endpoints, enabling integration adaptations without code modifications, significantly reducing maintenance time and facilitating the incorporation of new entities.\n- Implemented a robust error handling and logging system using C# .NET and JavaScript, ensuring complete operation traceability and optimizing data synchronization processing times."
+                "description": "- Lead developer of the integration system between Microsoft Dynamics 365 CRM and Business Central, implementing a scalable architecture based on Template Method pattern for automatic business data synchronization.\n- Developed a configurable mapping system for REST API endpoints, enabling integration adaptations without code modifications, significantly reducing maintenance time and facilitating the incorporation of new entities.\n- Implemented a robust error handling and logging system using C# .NET and JavaScript, ensuring complete operation traceability and optimizing data synchronization processing times.\n- Collaborated effectively with other departments to understand business requirements and deliver technical solutions, participating in cross-functional meetings and maintaining clear communication channels between IT and business stakeholders."
               }
             ],
             "competences": [
