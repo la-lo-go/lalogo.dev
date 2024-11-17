@@ -12,11 +12,11 @@
         },
         "roles": [
           {
-            "name": "Backend Engineer - Dynamics365 CRM",
+            "name": "Backend Engineer - Microsoft Dynamics 365 ",
             "startDate": "2024-09-01",
             "challenges": [
               {
-                "description": "- Lead developer of the integration system between Microsoft Dynamics 365 CRM and Business Central, implementing a scalable architecture based on Template Method pattern for automatic business data synchronization.\n- Developed a configurable mapping system for REST API endpoints, enabling integration adaptations without code modifications, significantly reducing maintenance time and facilitating the incorporation of new entities.\n- Implemented a robust error handling and logging system using C# .NET and JavaScript, ensuring complete operation traceability and optimizing data synchronization processing times.\n- Collaborated effectively with other departments to understand business requirements and deliver technical solutions, participating in cross-functional meetings and maintaining clear communication channels between IT and business stakeholders."
+                "description": "- Lead developer of a robust enterprise integration solution connecting Microsoft Dynamics 365 Sales with Business Central, architecting a scalable synchronization framework using C# .NET and JavaScript with Template Method design pattern implementation.\n- Engineered a dynamic REST API mapping system for seamless entity integration, reducing maintenance overhead through zero-code configurations and accelerating new business object onboarding.\n- Designed and implemented a comprehensive monitoring system with advanced error handling and logging capabilities, optimizing synchronization performance while ensuring end-to-end operation traceability.\n- Drove cross-functional collaboration between technical and business teams, translating complex requirements into effective solutions while maintaining clear stakeholder communication channels."
               }
             ],
             "competences": [
