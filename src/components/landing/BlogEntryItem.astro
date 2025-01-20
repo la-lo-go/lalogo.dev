@@ -1,0 +1,10 @@
+---
+const { slug, post } = Astro.props;
+---
+
+<li class="mb-2 list-disc list-inside text-lg">
+  <a class="hover:text-secondary transition-colors" href={`/blog/${slug}`}>
+    {(post as any).frontmatter.title}
+  </a>
+  <p class="text-gray-500 text-sm">{(post as any).frontmatter.description}</p>
+</li>

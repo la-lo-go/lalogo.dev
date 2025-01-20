@@ -1,0 +1,18 @@
+---
+import WebSection from "@components/WebSection.astro";
+import BlogEntry from './BlogEntryItem.astro';
+
+const posts = import.meta.glob("../../pages/blog/*.md", { eager: true });
+---
+
+<WebSection title="Blog" id="blog" class="bg-gray-100">
+  <h2 class="text-secondary font-bold text-2xl">
+    Blog Entries
+  </h2>
+  <ul>
+    {Object.entries(posts).map(([path, post]) => {
+      const slug = path.split('/').pop()?.replace('.md','');
+      return <BlogEntry post={post} slug={slug} />;
+    })}
+  </ul>
+</WebSection>
