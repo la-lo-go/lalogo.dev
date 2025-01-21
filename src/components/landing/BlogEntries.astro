@@ -9,7 +9,7 @@ const posts = import.meta.glob("../../pages/blog/*.md", { eager: true });
   <h2 class="text-secondary font-bold text-2xl">
     Blog Entries
   </h2>
-  <ul>
+  <ul class="list-none pl-0">
     {Object.entries(posts).map(([path, post]) => {
       const slug = path.split('/').pop()?.replace('.md','');
       return <BlogEntry post={post} slug={slug} />;

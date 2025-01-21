@@ -56,9 +56,24 @@ const ogImage = `${url}/opengraph/openGraphMiniature.png`;
       sizes="192x192"
       href="favicons/android-icon-192x192.png"
     />
-    <link rel="icon" type="image/png" sizes="32x32" href="favicons/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="96x96" href="favicons/favicon-96x96.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="favicons/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="96x96"
+      href="favicons/favicon-96x96.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="favicons/favicon-16x16.png"
+    />
 
     <!-- Theme color -->
     <meta name="theme-color" content="#ccece9" />
@@ -155,6 +170,7 @@ const ogImage = `${url}/opengraph/openGraphMiniature.png`;
 
       /* Thanks to https://blog.stephaniestimac.com for the idea */
       a.cool-link,
+      a.cool-link-animated,
       :is(p) > a {
         font-weight: bold;
         background: linear-gradient(#e5fffd, #e5fffd);
@@ -165,6 +181,8 @@ const ogImage = `${url}/opengraph/openGraphMiniature.png`;
         text-decoration: none;
       }
 
+      a.cool-link-animated:hover,
+      .group:hover a.cool-link-animated,
       :is(p) a:hover {
         background-size: 100% 100%;
       }
