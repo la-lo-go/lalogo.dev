@@ -3,7 +3,7 @@ import Layout from "@layouts/Layout.astro";
 const { frontmatter } = Astro.props;
 ---
 
-<Layout title={frontmatter.title} description={frontmatter.description}>
+<Layout title={frontmatter.title} description={frontmatter.description} articleOgImage="">
   <article>
     <slot />
   </article>

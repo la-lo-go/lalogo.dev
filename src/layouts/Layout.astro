@@ -4,17 +4,18 @@ import { ViewTransitions, fade } from "astro:transitions";
 export interface Props {
   title: string;
   description: string;
+  articleOgImage?: string;
 }
-const { title, description } = Astro.props;
+const { title, description, articleOgImage } = Astro.props;
 
 import Footer from "@components/Footer.astro";
 import Header from "@components/Header.astro";
 
 const url = "https://lalogo.dev";
-const ogImage = `${url}/opengraph/openGraphMiniature.png`;
+const ogImage = articleOgImage ? `${url}/opengraph/{articleOgImage}` : `${url}/opengraph/openGraphMiniature.png`;
 ---
 
-<html lang="en" class="selection:bg-secondary selection:text-secondary">
+<html lang="en" class="selection:bg-secondary selection:text-primary">
   <head>
     <title>{title}</title>
     <meta name="description" content={description} />
