@@ -15,7 +15,7 @@ const url = "https://lalogo.dev";
 const ogImage = articleOgImage ? `${url}/opengraph/{articleOgImage}` : `${url}/opengraph/openGraphMiniature.png`;
 ---
 
-<html lang="en" class="selection:bg-secondary selection:text-primary">
+<html lang="en">
   <head>
     <title>{title}</title>
     <meta name="description" content={description} />
@@ -148,6 +148,11 @@ const ogImage = articleOgImage ? `${url}/opengraph/{articleOgImage}` : `${url}/o
 
       :root {
         font-family: "IBM Plex Sans", sans-serif;
+      }
+
+      ::selection {
+        background-color: #232727;
+        color: #e5fffd;
       }
 
       @supports (font-variation-settings: normal) {
