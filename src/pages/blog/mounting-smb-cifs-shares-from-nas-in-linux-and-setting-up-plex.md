@@ -5,7 +5,7 @@ description: "A step-by-step guide for mounting SMB/CIFS shares from a NAS in Li
 slug: "mounting-smb-cifs-shares-from-nas-in-linux-and-setting-up-plex"
 ---
 
-# Mounting SMB/CIFS Shares from your NAS in Linux and Setting Up Plex
+# Mounting SMB/CIFS Shares from a NAS in Linux and Setting Up Plex
 
 Struggling with network storage in Linux and not sure where to begin? You're not alone! In this step-by-step guide, we'll walk you through the complete process of mounting SMB shares in Linux and configuring a Plex Media Server using external NAS storage. 
 
