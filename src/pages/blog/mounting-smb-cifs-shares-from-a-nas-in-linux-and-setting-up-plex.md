@@ -2,7 +2,7 @@
 layout: "@layouts/BlogLayout.astro"
 title: "Mounting SMB/CIFS Shares from a NAS in Linux and Setting Up Plex"
 description: "A step-by-step guide for mounting SMB/CIFS shares from a NAS in Linux and setting up Plex Media Server with Docker - Learn how to securely connect your network storage and stream your media library."
-slug: "mounting-smb-cifs-shares-from-nas-in-linux-and-setting-up-plex"
+slug: "mounting-smb-cifs-shares-from-a-nas-in-linux-and-setting-up-plex"
 ---
 
 # Mounting SMB/CIFS Shares from a NAS in Linux and Setting Up Plex
