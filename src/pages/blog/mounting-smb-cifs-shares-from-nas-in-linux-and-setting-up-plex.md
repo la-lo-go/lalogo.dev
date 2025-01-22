@@ -6,15 +6,34 @@ description: "A step-by-step guide for mounting SMB/CIFS shares from your NAS in
 
 # Mounting SMB/CIFS Shares from your NAS in Linux and Setting Up Plex
 
-Ever found yourself wrestling with network storage in Linux? You're not alone! This comprehensive guide will walk you through the process of mounting SMB shares in Linux and setting up Plex Media Server with an external NAS storage.
+Struggling with network storage in Linux and not sure where to begin? You're not alone! In this step-by-step guide, we'll walk you through the complete process of mounting SMB shares in Linux and configuring a Plex Media Server using external NAS storage. 
 
 ## Getting Your System Ready
 
-First things first - let's create a cozy home for your NAS shares:
+First, let's install the necessary packages for SMB/CIFS support:
+
+```bash
+sudo apt update
+sudo apt install cifs-utils
+```
+
+Next, we'll need to know your user ID (UID) and group ID (GID) for proper permissions. Get these with:
+
+```bash
+id -u $USER    # Usually 1000 both for the first user
+id -g $USER    # Usually 1000 for the first user
+```
+
+Now, let's create a cozy home for your NAS shares:
 
 ```bash
 sudo mkdir -p /mnt/nas/{series,movies,config}
 ```
+
+Understanding the permissions we'll use:
+
+- 644 for files (owner can read/write, group and others can read)
+- 755 for directories (owner can read/write/execute, group and others can read/execute)
 
 ### The Secret Vault: Setting Up Credentials
 
@@ -26,12 +45,12 @@ sudo nano /root/.credentials
 
 Inside, store your credentials like this:
 
-```
+```bash
 username=your_username
 password=your_password
 ```
 
-Lock down that vault with the proper permissions:
+Lock down that vault with the proper permissions (600 means only root can read and write):
 
 ```bash
 sudo chmod 600 /root/.credentials
@@ -45,14 +64,21 @@ Now comes the exciting part - telling your system how to connect to your NAS. We
 sudo nano /etc/fstab
 ```
 
-Add these magical incantations (adjust IP address, `UID` and `GID` as needed):
+Add these magical incantations (adjust IP address, UID and GID as needed). Note how we set specific permissions for optimal security:
 
 ```bash
 #SMB/CIFS Folders
-//192.168.1.119/series    /mnt/nas/series    cifs    credentials=/root/.credentials,iocharset=utf8,vers=3.0,_netdev,uid=1000,gid=1000,file_mode=0644,dir_mode=0755    0    0
-//192.168.1.119/movies    /mnt/nas/movies    cifs    credentials=/root/.credentials,iocharset=utf8,vers=3.0,_netdev,uid=1000,gid=1000,file_mode=0644,dir_mode=0755    0    0
-//192.168.1.119/config    /mnt/nas/config    cifs    credentials=/root/.credentials,iocharset=utf8,vers=3.0,_netdev,uid=1000,gid=1000,file_mode=0644,dir_mode=0755    0    0
+//192.168.1.119/series    /mnt/nas/series    cifs    credentials=/root/.credentials,iocharset=utf8,vers=3.1.1,_netdev,uid=1000,gid=1000,file_mode=0644,dir_mode=0755    0    0
+//192.168.1.119/movies    /mnt/nas/movies    cifs    credentials=/root/.credentials,iocharset=utf8,vers=3.1.1,_netdev,uid=1000,gid=1000,file_mode=0644,dir_mode=0755    0    0
+//192.168.1.119/config    /mnt/nas/config    cifs    credentials=/root/.credentials,iocharset=utf8,vers=3.1.1,_netdev,uid=1000,gid=1000,file_mode=0644,dir_mode=0755    0    0
 ```
+
+Understanding the mount options:
+
+- uid/gid: Sets the owner of the mounted files
+- file_mode/dir_mode: Sets default permissions
+- _netdev: Ensures mounting after network is available
+- vers=3.1.1: Sets [SMB protocol version](https://cifs.com/)
 
 ## Bringing It All Together
 
@@ -77,13 +103,13 @@ mkdir ~/plex-docker
 cd ~/plex-docker
 ```
 
-Create the `docker-compose.yml` file:
+Create the docker-compose.yml file:
 
 ```bash
 nano docker-compose.yml
 ```
 
-Add this configuration:
+Add this configuration (notice how we match the UID/GID from earlier):
 
 ```yaml
 ---
@@ -93,8 +119,8 @@ services:
     container_name: plex
     network_mode: host
     environment:
-      - PUID=1000
-      - PGID=1000
+      - PUID=1000    # Use the UID we found earlier
+      - PGID=1000    # Use the GID we found earlier
       - TZ=Europe/Madrid
       - VERSION=docker
       - PLEX_CLAIM=    # Optional - get from plex.tv/claim
@@ -105,7 +131,7 @@ services:
     restart: unless-stopped
 ```
 
-Deploy the container using *Docker Compose*:
+Deploy the container using Docker Compose:
 
 ```bash
 docker-compose up -d
@@ -124,9 +150,7 @@ docker logs plex
 
 ## Accessing Plex
 
-Once everything is up and running, access your Plex server at:
-
-- `http://YOUR-SERVER-IP:32400/web`
+Once everything is up and running, access your Plex server at `http://YOUR-SERVER-IP:32400/web`
 
 ## Troubleshooting Tips
 
