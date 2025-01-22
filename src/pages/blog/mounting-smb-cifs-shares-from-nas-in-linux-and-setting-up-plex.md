@@ -73,12 +73,13 @@ Add these magical incantations (adjust IP address, UID and GID as needed). Note 
 //192.168.1.119/config    /mnt/nas/config    cifs    credentials=/root/.credentials,iocharset=utf8,vers=3.1.1,_netdev,uid=1000,gid=1000,file_mode=0644,dir_mode=0755    0    0
 ```
 
-Understanding the mount options:
-
-- uid/gid: Sets the owner of the mounted files
-- file_mode/dir_mode: Sets default permissions
-- _netdev: Ensures mounting after network is available
-- vers=3.1.1: Sets [SMB protocol version](https://cifs.com/)
+> - uid/gid: Sets the owner of the mounted files
+> 
+> - file_mode/dir_mode: Sets default permissions
+> 
+> - _netdev: Ensures mounting after network is available
+> 
+> - vers=3.1.1: Sets [SMB protocol version](https://cifs.com/)
 
 ## Bringing It All Together
 
