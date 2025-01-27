@@ -1,2 +1,4 @@
 User-agent: *
 Disallow: 
+
+Sitemap: https://lalogo.dev/sitemap-index.xml
