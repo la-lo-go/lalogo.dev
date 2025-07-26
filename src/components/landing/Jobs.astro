@@ -5,20 +5,47 @@ import { GetJobs } from "@lib/JobPortfolio";
 
 import manfred from "@data/manfred/CV/MAC.json";
 const jobs = GetJobs(manfred.experience.jobs);
+
+// Check environment variable SHOW_JOBS (defaults to true if not set)
+const showJobsEnv = import.meta.env.SHOW_JOBS;
+const showJobsByDefault = showJobsEnv === undefined || showJobsEnv === null || showJobsEnv === 'true';
+
+// Since Astro might not capture URL params in SSG, we use client-side JS for URL parameter handling
 ---
 
-<WebSection>
-  <h2 class="text-secondary font-bold text-2xl">
-    Work experience
-  </h2>
+<div id="jobs-section" style={showJobsByDefault ? "" : "display: none;"}>
+  <WebSection>
+    <h2 class="text-secondary font-bold text-2xl">
+      Work experience
+    </h2>
 
-  <ol class="relative mt-3">
-    {
-      jobs.map((job) => (
-        <li class="">
-          <JobItem {...job} />
-        </li>
-      ))
-    }
-  </ol>
-</WebSection>
+    <ol class="relative mt-3">
+      {
+        jobs.map((job) => (
+          <li class="">
+            <JobItem {...job} />
+          </li>
+        ))
+      }
+    </ol>
+  </WebSection>
+</div>
+
+<script define:vars={{ showJobsByDefault }}>
+  // Check URL parameter on client side (parameter has priority over environment variable)
+  const urlParams = new URLSearchParams(window.location.search);
+  const showJobsParam = urlParams.get('showjobs');
+  
+  let shouldShowJobs;
+  
+  if (showJobsParam !== null) {
+    shouldShowJobs = showJobsParam === 'true';
+  } else {
+    shouldShowJobs = showJobsByDefault;
+  }
+  
+  const jobsSection = document.getElementById('jobs-section');
+  if (jobsSection) {
+    jobsSection.style.display = shouldShowJobs ? '' : 'none';
+  }
+</script>
