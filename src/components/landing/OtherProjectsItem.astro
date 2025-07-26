@@ -11,14 +11,15 @@ type Props = {
     technologies?: string;
     urls: ProjectUrl[];
   };
+  class?: string;
 };
 
-const { template } = Astro.props;
+const { template, class: className } = Astro.props;
 const triggerId = `modal-${SlugName(template.title)}`;
 ---
 
 <li
-  class="flow-root col-span-full h-full hover:bg-secondary/90 hover:text-gray bg-secondary transition-colors duration-200 select-none cursor-pointer"
+  class={`flow-root col-span-full h-full hover:bg-secondary/90 hover:text-gray bg-secondary transition-colors duration-200 select-none cursor-pointer ${className || ''}`}
 >
   <div
     id={triggerId}

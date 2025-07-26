@@ -5,6 +5,8 @@ import { GetOtherProjects } from "@lib/ProjectPortfolio";
 
 import manfred from "@data/manfred/CV/MAC.json";
 const otherProjects = GetOtherProjects(manfred.experience.projects);
+const initialCount = 4;
+const totalProjects = otherProjects.length;
 ---
 
 <section class="mb-4">
@@ -15,15 +17,70 @@ const otherProjects = GetOtherProjects(manfred.experience.projects);
   </h2>
 
   <ul
+    id="other-projects-list"
     class="mx-auto grid grid-cols-1 sm:grid-cols-2 text-left divide-y-2 gap-1 divide-primary lg:grid-cols-4 items-start text-primary mt-3"
     role="list"
   >
     {
-      otherProjects.map((template) => (
-        <>
-          <OtherProjectsItem template={template} />
-        </>
+      otherProjects.map((template, index) => (
+        <OtherProjectsItem 
+          template={template} 
+          class={`project-item ${index >= initialCount ? 'hidden' : ''}`}
+        />
       ))
     }
   </ul>
+
+  {totalProjects > initialCount && (
+    <div class="mt-4">
+      <button
+        id="show-more-btn"
+        class="bg-secondary text-primary px-4 py-2 hover:bg-secondary/90 hover:text-gray transition-colors duration-200 font-medium select-none cursor-pointer"
+        data-total-projects={totalProjects}
+        data-initial-count={initialCount}
+      >
+        {totalProjects - initialCount > 4 
+          ? 'Show 4 More Projects!' 
+          : `Show ${totalProjects - initialCount} More Projects!`
+        }
+      </button>
+    </div>
+  )}
 </section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const showMoreBtn = document.getElementById('show-more-btn');
+    const projectItems = document.querySelectorAll('.project-item');
+    
+    if (!showMoreBtn) return;
+    
+    const totalProjects = parseInt(showMoreBtn.dataset.totalProjects || '0');
+    const initialCount = parseInt(showMoreBtn.dataset.initialCount || '4');
+    let currentlyShown = initialCount;
+    
+    showMoreBtn.addEventListener('click', function() {
+      const remaining = totalProjects - currentlyShown;
+      const toShow = Math.min(4, remaining);
+      
+      for (let i = currentlyShown; i < currentlyShown + toShow; i++) {
+        if (projectItems[i]) {
+          projectItems[i].classList.remove('hidden');
+        }
+      }
+      
+      currentlyShown += toShow;
+      
+      if (currentlyShown >= totalProjects) {
+        showMoreBtn.style.display = 'none';
+      } else {
+        const stillRemaining = totalProjects - currentlyShown;
+        if (stillRemaining > 4) {
+          showMoreBtn.textContent = 'Show 4 More Projects!';
+        } else {
+          showMoreBtn.textContent = `Show ${stillRemaining} More Projects!`;
+        }
+      }
+    });
+  });
+</script>
