@@ -1,0 +1,36 @@
+---
+import Lines from "@components/Lines.astro";
+import PersonalLogo from "@components/Personal-Logo.astro";
+import SocialIcons from "@components/Social-Icons.astro";
+---
+
+<header
+  class="mb-6 w-full flex gap-x-4 sm:justify-between max-sm:flex-col md:flex-col max-md:items-end max-sm:gap-y-2"
+>
+  <a href="/" aria-label="Volver al inicio" class="grow max-sm:w-full">
+    <PersonalLogo />
+  </a>
+
+  <div class="space-y-2 max-sm:w-full max-sm:order-last">
+    <div class="text-right text-3xl font-bold leading-none max-sm:hidden">
+      cook.
+    </div>
+
+    <div
+      class="flex flex-col gap-3 justify-between items-center text-lg text-secondary md:flex-row"
+    >
+      <div class="text-center font-normal max-sm:hidden">
+        <i>"Si no existe, ¡cocínalo!"</i>
+      </div>
+
+      <SocialIcons />
+    </div>
+
+    <Lines />
+  </div>
+
+  <div class="text-center text-lg w-full sm:hidden">
+    <span class="font-bold">cook.</span>
+    <i>"Si no existe, ¡cocínalo!"</i>
+  </div>
+</header>

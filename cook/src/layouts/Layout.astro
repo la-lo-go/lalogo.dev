@@ -1,0 +1,117 @@
+---
+import { ClientRouter, fade } from "astro:transitions";
+
+import "../styles/global.css";
+
+export interface Props {
+  title: string;
+  description: string;
+  slug?: string;
+}
+const { title, description, slug } = Astro.props;
+
+import Footer from "@components/Footer.astro";
+import Header from "@components/Header.astro";
+
+const url = "https://cook.lalogo.dev";
+const ogImage = slug
+  ? `${url}/og/${slug}.png`
+  : `${url}/opengraph/openGraphMiniature.png`;
+---
+
+<html lang="es">
+  <head>
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <meta name="viewport" content="width=device-width" />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="Lalogo" />
+    <meta
+      name="keywords"
+      content="Lalogo la-lo-go recetas cocina cook recipes"
+    />
+
+    <!-- Sitemap -->
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <!-- Favicon -->
+    <link
+      rel="apple-touch-icon"
+      sizes="120x120"
+      href="/favicons/apple-icon-120x120.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="144x144"
+      href="/favicons/apple-icon-144x144.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="152x152"
+      href="/favicons/apple-icon-152x152.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/favicons/apple-icon-180x180.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="/favicons/android-icon-192x192.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/favicons/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="96x96"
+      href="/favicons/favicon-96x96.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/favicons/favicon-16x16.png"
+    />
+
+    <!-- Theme color -->
+    <meta name="theme-color" content="#ccece9" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={url} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:site_name" content={title} />
+    <meta property="og:type" content="website" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:url" content={url} />
+    <meta name="twitter:site" content="@la_lo_go" />
+
+    <ClientRouter />
+  </head>
+
+  <body class="bg-primary p-8 mx-auto max-w-6xl text-secondary">
+    <Header transition:animate="none" />
+
+    <main transition:animate={fade({ duration: "0.15s" })}>
+      <slot />
+    </main>
+
+    <Footer transition:animate="none" />
+  </body>
+</html>

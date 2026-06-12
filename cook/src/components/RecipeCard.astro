@@ -1,0 +1,88 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import { NormalizeText, SlugifyTag } from "@lib/Text";
+
+export interface Props {
+  recipe: CollectionEntry<"recipes">;
+}
+
+const { recipe } = Astro.props;
+const data = recipe.data;
+const href = `/recetas/${recipe.id}/`;
+
+const searchText = NormalizeText(
+  [data.title, data.description ?? "", ...data.tags].join(" ")
+);
+const tagData = data.tags.map(NormalizeText).join("|");
+
+const servingsLabel = data.servings === 1 ? "ración" : "raciones";
+---
+
+<li
+  class="group recipe-card flow-root"
+  data-search={searchText}
+  data-tags={tagData}
+>
+  <a href={href} aria-hidden="true" tabindex="-1" class="block">
+    {
+      data.cover ? (
+        <Image
+          src={data.cover}
+          alt={data.title}
+          widths={[400, 800]}
+          sizes="(min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw"
+          class="w-full aspect-[4/3] object-cover border-2 border-secondary"
+        />
+      ) : (
+        <div class="w-full aspect-[4/3] bg-gray border-2 border-secondary flex items-center justify-center p-10 text-secondary/30">
+          <svg
+            viewBox="0 0 1721 574"
+            class="w-full max-h-full"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M0.333,0.333l114.667,0l-0,458.667l286.667,0l-0,-458.667l516,0l-0,458.667l286.666,0l0,-458.667l516,0l0,573.334l-286.666,-0l-0,-114.667l172,-0l-0,-344l-286.667,-0l-0,458.667l-516,-0l-0,-229.334l-172,0l-0,-114.666l172,-0l-0,-114.667l-286.667,-0l0,458.667l-516,-0l0,-573.334Z"
+              fill="currentColor"></path>
+          </svg>
+        </div>
+      )
+    }
+  </a>
+
+  <h3 class="mt-3 text-lg font-semibold leading-snug">
+    <a href={href} class="cool-link-animated">{data.title}</a>
+  </h3>
+
+  {
+    (data.time || data.servings) && (
+      <p class="text-sm mt-1">
+        {data.time && <span>{data.time} min</span>}
+        {data.time && data.servings && <span> · </span>}
+        {data.servings && (
+          <span>
+            {data.servings} {servingsLabel}
+          </span>
+        )}
+      </p>
+    )
+  }
+
+  {
+    data.tags.length > 0 && (
+      <ul class="flex flex-wrap gap-1.5 mt-2">
+        {data.tags.map((tag) => (
+          <li>
+            <a
+              href={`/etiquetas/${SlugifyTag(tag)}/`}
+              class="block border border-secondary px-1.5 py-0.5 text-xs font-medium transition-colors hover:bg-secondary hover:text-primary"
+            >
+              {tag}
+            </a>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</li>

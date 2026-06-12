@@ -1,0 +1,163 @@
+---
+import { getCollection, render } from "astro:content";
+import { Image } from "astro:assets";
+
+import Layout from "@layouts/Layout.astro";
+import { SlugifyTag } from "@lib/Text";
+
+export async function getStaticPaths() {
+  const recipes = await getCollection("recipes");
+  return recipes.map((recipe) => ({
+    params: { slug: recipe.id },
+    props: { recipe },
+  }));
+}
+
+const { recipe } = Astro.props;
+const data = recipe.data;
+const { Content } = await render(recipe);
+
+const servingsLabel = data.servings === 1 ? "ración" : "raciones";
+const updatedLabel = data.updatedAt.toLocaleDateString("es-ES", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+});
+---
+
+<Layout
+  title={`${data.title} | cook.`}
+  description={data.description ?? `Receta de ${data.title}`}
+  slug={recipe.id}
+>
+  <article class="max-w-3xl mx-auto">
+    <a href="/" class="cool-link-animated text-sm">← Volver a las recetas</a>
+
+    <h1 class="text-3xl font-bold leading-tight pt-6">{data.title}</h1>
+
+    {data.description && <p class="italic mt-2">{data.description}</p>}
+
+    <div class="flex flex-wrap items-center gap-x-4 gap-y-2 mt-4 text-sm">
+      {data.time && <span class="font-medium">⏱ {data.time} min</span>}
+      {
+        data.servings && (
+          <span class="font-medium">
+            🍽 {data.servings} {servingsLabel}
+          </span>
+        )
+      }
+      {
+        data.tags.length > 0 && (
+          <ul class="flex flex-wrap gap-1.5">
+            {data.tags.map((tag) => (
+              <li>
+                <a
+                  href={`/etiquetas/${SlugifyTag(tag)}/`}
+                  class="block border border-secondary px-1.5 py-0.5 text-xs font-medium transition-colors hover:bg-secondary hover:text-primary"
+                >
+                  {tag}
+                </a>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </div>
+
+    {
+      data.cover && (
+        <Image
+          src={data.cover}
+          alt={data.title}
+          widths={[480, 800, 1200]}
+          sizes="(min-width: 768px) 48rem, 100vw"
+          class="w-full mt-6 border-2 border-secondary"
+        />
+      )
+    }
+
+    <div class="h-0.5 bg-secondary mt-6"></div>
+
+    <div class="recipe-body pb-4">
+      <Content />
+    </div>
+
+    <p class="text-xs italic text-secondary/70">
+      Actualizada el {updatedLabel}
+    </p>
+  </article>
+</Layout>
+
+<style is:global>
+  .recipe-body h1 {
+    font-size: 2rem;
+    line-height: 2.5rem;
+    font-weight: 700;
+    padding-top: 1rem;
+  }
+
+  .recipe-body h2 {
+    font-weight: 700;
+    font-size: 1.5rem;
+    line-height: 2rem;
+    padding-top: 1.25rem;
+  }
+
+  .recipe-body h3 {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    font-weight: 700;
+    padding-top: 0.5rem;
+  }
+
+  .recipe-body p {
+    margin-top: 0.75rem;
+  }
+
+  .recipe-body ul {
+    list-style-type: square;
+    padding-left: 1.5rem;
+    margin-top: 0.75rem;
+  }
+
+  .recipe-body ol {
+    list-style-type: decimal;
+    padding-left: 1.5rem;
+    margin-top: 0.75rem;
+  }
+
+  .recipe-body li {
+    line-height: 1.75rem;
+  }
+
+  .recipe-body img {
+    margin-top: 1rem;
+    border: 2px solid #232727;
+  }
+
+  .recipe-body blockquote {
+    border-left: 4px solid #232727;
+    padding-left: 1rem;
+    font-style: italic;
+    margin-top: 0.75rem;
+  }
+
+  .recipe-body code:not(pre code) {
+    font-style: oblique;
+    background-color: #e5fffd;
+    padding: 0 0.25rem;
+  }
+
+  .recipe-body pre {
+    font-size: 0.9em;
+    padding: 0.5em;
+    margin-top: 0.75rem;
+  }
+
+  .recipe-body hr {
+    border: 0;
+    height: 2px;
+    background-color: #232727;
+    margin: 1.5rem 0;
+  }
+</style>

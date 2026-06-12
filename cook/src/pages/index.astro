@@ -1,0 +1,49 @@
+---
+import { getCollection } from "astro:content";
+
+import Layout from "@layouts/Layout.astro";
+import WebSection from "@components/WebSection.astro";
+import FilterBar from "@components/FilterBar.astro";
+import RecipeCard from "@components/RecipeCard.astro";
+
+const title = "cook. | Recetas de Lalogo";
+const description =
+  "Recetario personal de Lalogo: las recetas de siempre y los experimentos que salieron bien.";
+
+const recipes = (await getCollection("recipes")).sort(
+  (a, b) => b.data.createdAt.getTime() - a.data.createdAt.getTime()
+);
+
+const allTags = [...new Set(recipes.flatMap((r) => r.data.tags))].sort((a, b) =>
+  a.localeCompare(b, "es")
+);
+---
+
+<Layout title={title} description={description}>
+  <WebSection>
+    <span slot="title">Recetas</span>
+
+    {
+      recipes.length > 0 ? (
+        <>
+          <FilterBar tags={allTags} />
+
+          <ul
+            id="recipe-grid"
+            class="grid gap-x-8 gap-y-10 sm:grid-cols-2 md:grid-cols-3 mt-8"
+          >
+            {recipes.map((recipe) => (
+              <RecipeCard recipe={recipe} />
+            ))}
+          </ul>
+
+          <p id="no-results" class="hidden mt-8 italic">
+            No hay recetas que coincidan con la búsqueda.
+          </p>
+        </>
+      ) : (
+        <p class="mt-8 italic">Aún no hay recetas. ¡El horno está precalentando!</p>
+      )
+    }
+  </WebSection>
+</Layout>

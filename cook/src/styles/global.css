@@ -1,0 +1,87 @@
+@import "tailwindcss";
+
+@theme {
+  --color-secondary: #232727;
+  --color-primary: #ccece9;
+  --color-gray: #e5fffd;
+  --font-sans: "IBM Plex Sans", -apple-system, "Segoe UI", sans-serif;
+}
+
+@font-face {
+  font-family: "IBM Plex Sans";
+  src: url("../fonts/IBM_Plex_Sans/IBMPlexSans-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "IBM Plex Sans";
+  src: url("../fonts/IBM_Plex_Sans/IBMPlexSans-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "IBM Plex Sans";
+  src: url("../fonts/IBM_Plex_Sans/IBMPlexSans-Italic.ttf") format("truetype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "IBM Plex Sans";
+  src: url("../fonts/IBM_Plex_Sans/IBMPlexSans-BoldItalic.ttf") format("truetype");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+:root {
+  font-family: "IBM Plex Sans", sans-serif;
+}
+
+::selection {
+  background-color: #232727;
+  color: #e5fffd;
+}
+
+@supports (font-variation-settings: normal) {
+  :root {
+    font-family:
+      "IBM Plex Sans",
+      -apple-system,
+      "Segoe UI",
+      sans-serif;
+  }
+}
+
+h2 {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+p {
+  line-height: 1.75rem;
+}
+
+/* Thanks to https://blog.stephaniestimac.com for the idea */
+a.cool-link,
+a.cool-link-animated,
+:is(p) > a {
+  font-weight: bold;
+  background: linear-gradient(#e5fffd, #e5fffd);
+  background-size: 100% 0.5rem;
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  transition: all 0.1s linear 0s;
+  text-decoration: none;
+}
+
+a.cool-link-animated:hover,
+.group:hover a.cool-link-animated,
+:is(p) a:hover {
+  background-size: 100% 100%;
+}

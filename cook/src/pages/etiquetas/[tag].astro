@@ -1,0 +1,57 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+
+import Layout from "@layouts/Layout.astro";
+import WebSection from "@components/WebSection.astro";
+import RecipeCard from "@components/RecipeCard.astro";
+import { SlugifyTag } from "@lib/Text";
+
+export async function getStaticPaths() {
+  const recipes = await getCollection("recipes");
+
+  const tagMap = new Map<
+    string,
+    { name: string; recipes: CollectionEntry<"recipes">[] }
+  >();
+
+  for (const recipe of recipes) {
+    for (const tag of recipe.data.tags) {
+      const slug = SlugifyTag(tag);
+      const entry = tagMap.get(slug) ?? { name: tag, recipes: [] };
+      entry.recipes.push(recipe);
+      tagMap.set(slug, entry);
+    }
+  }
+
+  return [...tagMap.entries()].map(([slug, { name, recipes }]) => ({
+    params: { tag: slug },
+    props: { name, recipes },
+  }));
+}
+
+const { name, recipes } = Astro.props;
+
+const sorted = [...recipes].sort(
+  (a, b) => b.data.createdAt.getTime() - a.data.createdAt.getTime()
+);
+
+const countLabel = sorted.length === 1 ? "receta" : "recetas";
+---
+
+<Layout
+  title={`cook. | Etiqueta: ${name}`}
+  description={`Recetas con la etiqueta ${name}`}
+>
+  <WebSection>
+    <span slot="title">Etiqueta: {name}</span>
+
+    <p class="mt-2 text-sm italic">
+      {sorted.length}
+      {countLabel} · <a href="/" class="cool-link">Todas las recetas</a>
+    </p>
+
+    <ul class="grid gap-x-8 gap-y-10 sm:grid-cols-2 md:grid-cols-3 mt-8">
+      {sorted.map((recipe) => <RecipeCard recipe={recipe} />)}
+    </ul>
+  </WebSection>
+</Layout>
