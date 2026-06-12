@@ -51,7 +51,10 @@ const { tags } = Astro.props;
       "recipe-search"
     ) as HTMLInputElement | null;
     const grid = document.getElementById("recipe-grid");
-    if (!search || !grid) return;
+    // The bound flag prevents double listeners when both the immediate call
+    // and astro:page-load run on the same DOM (a double toggle would no-op).
+    if (!search || !grid || search.dataset.bound === "1") return;
+    search.dataset.bound = "1";
 
     const cards = Array.from(grid.querySelectorAll<HTMLElement>("[data-search]"));
     const toggles = Array.from(
@@ -101,5 +104,6 @@ const { tags } = Astro.props;
     }
   }
 
+  setupFilters();
   document.addEventListener("astro:page-load", setupFilters);
 </script>
