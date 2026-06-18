@@ -4,7 +4,7 @@ import { Image } from "astro:assets";
 
 import Layout from "@layouts/Layout.astro";
 import ServingsScaler from "@components/ServingsScaler.astro";
-import CookingMode from "@components/CookingMode.astro";
+import GuidedMode from "@components/GuidedMode.astro";
 import Timers from "@components/Timers.astro";
 import { SlugifyTag } from "@lib/Text";
 
@@ -81,7 +81,7 @@ const updatedLabel = data.updatedAt.toLocaleDateString("es-ES", {
 
     {data.servings && <ServingsScaler baseServings={data.servings} />}
 
-    <CookingMode />
+    <GuidedMode />
 
     <div class="h-0.5 bg-secondary mt-6"></div>
 

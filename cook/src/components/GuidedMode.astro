@@ -1,5 +1,5 @@
 ---
-// Modo cocina: muestra los pasos en grande a pantalla completa, se avanza
+// Modo guiado: muestra los pasos en grande a pantalla completa, se avanza
 // uno a uno y mantiene la pantalla encendida con la Wake Lock API.
 ---
 
@@ -8,7 +8,7 @@
   class="cooking-open cursor-pointer w-full mt-6 border-2 border-secondary py-3 font-bold text-lg transition-colors hover:bg-secondary hover:text-white flex items-center justify-center gap-2"
   hidden
 >
-  👨‍🍳 Modo cocina
+  👨‍🍳 Modo guiado
 </button>
 
 <div
@@ -16,7 +16,7 @@
   style="display: none;"
   role="dialog"
   aria-modal="true"
-  aria-label="Modo cocina"
+  aria-label="Modo guiado"
 >
   <div class="cm-progress h-2 bg-gray">
     <div class="cm-progress-bar h-full bg-secondary transition-all" style="width:0%"></div>
