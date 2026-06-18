@@ -116,6 +116,27 @@ a.cool-link-animated:hover,
   opacity: 0.45;
 }
 
+/* Temporizador que ha sonado: destacado y parpadeante, se descarta tocándolo */
+.timer-done {
+  background: #232727;
+  color: #fff;
+  cursor: pointer;
+  animation: timerPulse 0.8s ease-in-out infinite;
+}
+@keyframes timerPulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+.timers-inc-active {
+  background: #232727;
+  color: #fff;
+}
+
 /* Modo guiado: zonas táctiles laterales (como un ebook) y ocultar el FAB
    de temporizadores mientras está abierto. */
 .cm-tap {

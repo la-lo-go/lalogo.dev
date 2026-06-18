@@ -28,15 +28,15 @@
     <p class="timers-empty text-sm italic text-secondary/60 mb-3">No hay temporizadores.</p>
 
     <div class="flex gap-1.5 mb-2">
-      <button type="button" class="timers-preset cursor-pointer flex-1 border-2 border-secondary py-1 text-sm font-medium transition-colors hover:bg-secondary hover:text-white" data-min="1">1 min</button>
-      <button type="button" class="timers-preset cursor-pointer flex-1 border-2 border-secondary py-1 text-sm font-medium transition-colors hover:bg-secondary hover:text-white" data-min="5">5 min</button>
+      <button type="button" class="timers-inc cursor-pointer flex-1 border-2 border-secondary py-1 text-sm font-medium transition-colors hover:bg-secondary hover:text-white">+1 min</button>
       <button type="button" class="timers-preset cursor-pointer flex-1 border-2 border-secondary py-1 text-sm font-medium transition-colors hover:bg-secondary hover:text-white" data-min="10">10 min</button>
+      <button type="button" class="timers-preset cursor-pointer flex-1 border-2 border-secondary py-1 text-sm font-medium transition-colors hover:bg-secondary hover:text-white" data-min="30">½ hora</button>
     </div>
 
     <form class="timers-form flex items-end gap-1.5">
       <label class="flex flex-col text-xs font-medium flex-1">
         min
-        <input class="timers-min border-2 border-secondary px-2 py-1 w-full" type="number" min="0" max="180" value="0" inputmode="numeric" />
+        <input class="timers-min border-2 border-secondary px-2 py-1 w-full" type="number" min="0" max="600" value="0" inputmode="numeric" />
       </label>
       <label class="flex flex-col text-xs font-medium flex-1">
         seg
@@ -49,13 +49,12 @@
 
 <script>
   type Timer = {
-    id: number;
-    total: number;
     endAt: number;
     remaining: number;
     paused: boolean;
     done: boolean;
     li: HTMLLIElement;
+    alarm?: number;
   };
 
   function setupTimers() {
@@ -72,10 +71,10 @@
     const form = root.querySelector<HTMLFormElement>(".timers-form")!;
     const minInput = root.querySelector<HTMLInputElement>(".timers-min")!;
     const secInput = root.querySelector<HTMLInputElement>(".timers-sec")!;
+    const incBtn = root.querySelector<HTMLButtonElement>(".timers-inc")!;
 
     const timers: Timer[] = [];
     let audioCtx: AudioContext | null = null;
-    let nextId = 1;
 
     const unlockAudio = () => {
       try {
@@ -97,39 +96,21 @@
       o.start(t); o.stop(t + 0.4);
     };
 
+    // H:MM:SS cuando hay horas, MM:SS en otro caso.
     const fmt = (ms: number) => {
       const s = Math.max(0, Math.ceil(ms / 1000));
-      return `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(s % 60).padStart(2, "0")}`;
+      const h = Math.floor(s / 3600);
+      const m = Math.floor((s % 3600) / 60);
+      const sec = s % 60;
+      const pad = (n: number) => String(n).padStart(2, "0");
+      return h > 0 ? `${h}:${pad(m)}:${pad(sec)}` : `${pad(m)}:${pad(sec)}`;
     };
 
     const updateBadge = () => {
-      const active = timers.filter((t) => !t.done).length;
+      const active = timers.length;
       badge.textContent = String(active);
       badge.classList.toggle("hidden", active === 0);
       badge.classList.toggle("flex", active > 0);
-    };
-
-    const ring = (timer: Timer) => {
-      timer.done = true;
-      timer.li.classList.add("timer-done");
-      let beeps = 0;
-      const interval = setInterval(() => {
-        beep();
-        if (navigator.vibrate) navigator.vibrate(200);
-        if (++beeps >= 6 || !document.body.contains(timer.li)) clearInterval(interval);
-      }, 700);
-      timer.li.dataset.alarm = String(interval);
-      panel.hidden = false; // mostrar el panel al sonar
-      updateBadge();
-    };
-
-    const removeTimer = (timer: Timer) => {
-      const alarm = timer.li.dataset.alarm;
-      if (alarm) clearInterval(Number(alarm));
-      timer.li.remove();
-      timers.splice(timers.indexOf(timer), 1);
-      empty.hidden = timers.length > 0;
-      updateBadge();
     };
 
     const renderTimer = (timer: Timer) => {
@@ -140,6 +121,28 @@
       pause.hidden = timer.done;
     };
 
+    const removeTimer = (timer: Timer) => {
+      if (timer.alarm) clearInterval(timer.alarm);
+      timer.li.remove();
+      const i = timers.indexOf(timer);
+      if (i >= 0) timers.splice(i, 1);
+      empty.hidden = timers.length > 0;
+      updateBadge();
+    };
+
+    const ring = (timer: Timer) => {
+      timer.done = true;
+      timer.li.classList.add("timer-done");
+      renderTimer(timer);
+      let beeps = 0;
+      timer.alarm = window.setInterval(() => {
+        beep();
+        if (navigator.vibrate) navigator.vibrate([300, 150, 300]);
+        if (++beeps >= 8) { clearInterval(timer.alarm); timer.alarm = undefined; }
+      }, 800);
+      panel.hidden = false; // mostrar el panel al sonar
+    };
+
     const addTimer = (seconds: number) => {
       if (seconds <= 0) return;
       unlockAudio();
@@ -147,19 +150,29 @@
       li.className = "timer-item flex items-center gap-2 border-2 border-secondary px-2 py-1";
       li.innerHTML = `
         <span class="timer-time font-bold tabular-nums text-lg flex-1"></span>
-        <button type="button" class="timer-pause cursor-pointer text-lg" aria-label="Pausar"></button>
+        <button type="button" class="timer-pause cursor-pointer text-lg" aria-label="Pausar/Reanudar"></button>
         <button type="button" class="timer-cancel cursor-pointer text-lg font-bold" aria-label="Quitar">✕</button>`;
       const timer: Timer = {
-        id: nextId++, total: seconds * 1000, endAt: Date.now() + seconds * 1000,
-        remaining: seconds * 1000, paused: false, done: false, li,
+        endAt: Date.now() + seconds * 1000,
+        remaining: seconds * 1000,
+        paused: false,
+        done: false,
+        li,
       };
-      li.querySelector(".timer-pause")!.addEventListener("click", () => {
+      li.querySelector(".timer-pause")!.addEventListener("click", (e) => {
+        e.stopPropagation();
         if (timer.done) return;
         timer.paused = !timer.paused;
         if (!timer.paused) timer.endAt = Date.now() + timer.remaining;
         renderTimer(timer);
       });
-      li.querySelector(".timer-cancel")!.addEventListener("click", () => removeTimer(timer));
+      li.querySelector(".timer-cancel")!.addEventListener("click", (e) => {
+        e.stopPropagation();
+        removeTimer(timer);
+      });
+      // Cuando ha sonado, un toque en cualquier parte del timer lo descarta.
+      li.addEventListener("click", () => { if (timer.done) removeTimer(timer); });
+
       timers.push(timer);
       list.append(li);
       empty.hidden = true;
@@ -172,12 +185,32 @@
       for (const timer of timers) {
         if (timer.paused || timer.done) continue;
         timer.remaining = timer.endAt - now;
-        if (timer.remaining <= 0) { timer.remaining = 0; renderTimer(timer); ring(timer); }
+        if (timer.remaining <= 0) { timer.remaining = 0; ring(timer); }
         else renderTimer(timer);
       }
     }, 250);
 
-    fab.addEventListener("click", () => { unlockAudio(); panel.hidden = !panel.hidden; });
+    // Botón incremental: cada toque suma 1 minuto y, tras una breve pausa sin
+    // tocar, crea el temporizador automáticamente (como un microondas).
+    let incSeconds = 0;
+    let incTimer: number | undefined;
+    const incLabel = () => {
+      incBtn.textContent = incSeconds === 0 ? "+1 min" : fmt(incSeconds * 1000);
+      incBtn.classList.toggle("timers-inc-active", incSeconds > 0);
+    };
+    incBtn.addEventListener("click", () => {
+      unlockAudio();
+      incSeconds += 60;
+      incLabel();
+      if (incTimer) clearTimeout(incTimer);
+      incTimer = window.setTimeout(() => {
+        addTimer(incSeconds);
+        incSeconds = 0;
+        incLabel();
+      }, 1500);
+    });
+
+    fab.addEventListener("click", (e) => { e.stopPropagation(); unlockAudio(); panel.hidden = !panel.hidden; });
     closeBtn.addEventListener("click", () => { panel.hidden = true; });
     for (const preset of root.querySelectorAll<HTMLButtonElement>(".timers-preset")) {
       preset.addEventListener("click", () => addTimer(Number(preset.dataset.min) * 60));
@@ -188,7 +221,12 @@
       minInput.value = "0"; secInput.value = "0";
     });
 
-    // API para que otras partes (modo cocina, pasos) creen timers.
+    // Tocar fuera del panel lo cierra.
+    document.addEventListener("click", (e) => {
+      if (!panel.hidden && !root.contains(e.target as Node)) panel.hidden = true;
+    });
+
+    // API para que otras partes (modo guiado, pasos) creen timers.
     (window as any).cookAddTimer = addTimer;
   }
 
