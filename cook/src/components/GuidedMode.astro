@@ -30,8 +30,10 @@
     </div>
   </header>
 
-  <div class="cm-body flex-1 overflow-y-auto flex items-center justify-center p-6 sm:p-10">
-    <p class="cm-step-text text-2xl sm:text-4xl leading-snug max-w-3xl text-center"></p>
+  <div class="cm-body relative flex-1 overflow-y-auto flex items-center justify-center p-6 sm:p-10">
+    <button type="button" class="cm-tap cm-tap-prev" aria-label="Paso anterior"></button>
+    <button type="button" class="cm-tap cm-tap-next" aria-label="Paso siguiente"></button>
+    <p class="cm-step-text relative text-2xl sm:text-4xl leading-snug max-w-3xl text-center"></p>
   </div>
 
   <footer class="flex gap-3 p-4 border-t-2 border-secondary">
@@ -70,6 +72,8 @@
     const prevEl = overlay.querySelector<HTMLButtonElement>(".cm-prev")!;
     const nextEl = overlay.querySelector<HTMLButtonElement>(".cm-next")!;
     const closeEl = overlay.querySelector<HTMLButtonElement>(".cm-close")!;
+    const tapPrev = overlay.querySelector<HTMLButtonElement>(".cm-tap-prev")!;
+    const tapNext = overlay.querySelector<HTMLButtonElement>(".cm-tap-next")!;
 
     let steps: RecipeStep[] = [];
     let index = 0;
@@ -102,12 +106,14 @@
       index = 0;
       overlay.style.display = "flex";
       document.body.style.overflow = "hidden";
+      document.body.classList.add("guided-open"); // oculta el FAB de timers
       render();
       requestWake();
     };
     const close = () => {
       overlay.style.display = "none";
       document.body.style.overflow = "";
+      document.body.classList.remove("guided-open");
       releaseWake();
     };
     const next = () => {
@@ -120,6 +126,8 @@
     closeEl.addEventListener("click", close);
     nextEl.addEventListener("click", next);
     prevEl.addEventListener("click", prev);
+    tapNext.addEventListener("click", next);
+    tapPrev.addEventListener("click", prev);
 
     document.addEventListener("keydown", (e) => {
       if (overlay.style.display === "none") return;

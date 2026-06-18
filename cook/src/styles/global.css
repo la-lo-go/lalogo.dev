@@ -116,6 +116,30 @@ a.cool-link-animated:hover,
   opacity: 0.45;
 }
 
+/* Modo guiado: zonas táctiles laterales (como un ebook) y ocultar el FAB
+   de temporizadores mientras está abierto. */
+.cm-tap {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 28%;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  z-index: 5;
+}
+.cm-tap-prev {
+  left: 0;
+}
+.cm-tap-next {
+  right: 0;
+}
+body.guided-open .timers-fab,
+body.guided-open .timers-panel {
+  display: none !important;
+}
+
 /* Tiempos de los pasos clicables para crear un temporizador */
 .step-time {
   font-weight: bold;
