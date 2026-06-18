@@ -173,9 +173,9 @@ body.guided-open .timers-panel {
   border-bottom: 2px dotted #232727;
   transition: background-size 0.1s linear;
 }
-.step-time::after {
-  content: " ⏱";
-  font-size: 0.85em;
+.step-time svg {
+  display: inline;
+  vertical-align: -0.15em;
 }
 .step-time:hover {
   background-size: 100% 100%;

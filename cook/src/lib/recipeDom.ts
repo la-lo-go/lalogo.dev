@@ -56,6 +56,8 @@ export function findRecipeSteps(): RecipeStep[] {
   return steps;
 }
 
+import { icons } from "./icons";
+
 // Hace clicables las menciones de tiempo de los pasos ("40 minutos", "1 hora",
 // "35-40 min") para crear un temporizador con ese tiempo. Usa la función global
 // cookAddTimer que expone el componente Timers.
@@ -97,7 +99,8 @@ export function enhanceStepTimes(): void {
         const btn = document.createElement("button");
         btn.type = "button";
         btn.className = "step-time";
-        btn.textContent = m[0];
+        btn.append(m[0]);
+        btn.insertAdjacentHTML("beforeend", " " + icons.timer);
         btn.title = "Crear temporizador";
         btn.dataset.seconds = String(seconds);
         btn.addEventListener("click", () => {

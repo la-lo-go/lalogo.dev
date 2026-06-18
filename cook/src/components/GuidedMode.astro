@@ -1,6 +1,7 @@
 ---
 // Modo guiado: muestra los pasos en grande a pantalla completa, se avanza
 // uno a uno y mantiene la pantalla encendida con la Wake Lock API.
+import { Icon } from "astro-icon/components";
 ---
 
 <button
@@ -8,7 +9,7 @@
   class="cooking-open cursor-pointer w-full mt-3 border-2 border-secondary py-3 font-bold text-lg transition-colors hover:bg-secondary hover:text-white flex items-center justify-center gap-2"
   hidden
 >
-  👨‍🍳 Modo guiado
+  <Icon name="lucide:chef-hat" class="w-5 h-5" /> Modo guiado
 </button>
 
 <div
@@ -26,7 +27,7 @@
     <span class="cm-section font-bold text-sm uppercase tracking-wide truncate"></span>
     <div class="flex items-center gap-3 shrink-0">
       <span class="cm-counter text-sm font-medium tabular-nums"></span>
-      <button type="button" class="cm-close cursor-pointer text-2xl leading-none font-bold" aria-label="Cerrar modo cocina">✕</button>
+      <button type="button" class="cm-close cursor-pointer leading-none" aria-label="Cerrar modo guiado"><Icon name="lucide:x" class="w-6 h-6" /></button>
     </div>
   </header>
 
@@ -39,15 +40,16 @@
   <footer class="flex gap-3 p-4 border-t-2 border-secondary">
     <button
       type="button"
-      class="cm-prev cursor-pointer flex-1 border-2 border-secondary py-4 font-bold text-lg transition-colors enabled:hover:bg-secondary enabled:hover:text-white disabled:opacity-30 disabled:cursor-not-allowed"
+      class="cm-prev cursor-pointer flex-1 border-2 border-secondary py-4 font-bold text-lg transition-colors enabled:hover:bg-secondary enabled:hover:text-white disabled:opacity-30 disabled:cursor-not-allowed flex items-center justify-center gap-2"
     >
-      ← Anterior
+      <Icon name="lucide:chevron-left" class="w-5 h-5" /> Anterior
     </button>
     <button
       type="button"
-      class="cm-next cursor-pointer flex-1 border-2 border-secondary bg-secondary text-white py-4 font-bold text-lg transition-colors"
+      class="cm-next cursor-pointer flex-1 border-2 border-secondary bg-secondary text-white py-4 font-bold text-lg transition-colors flex items-center justify-center gap-2"
     >
-      Siguiente →
+      <span class="cm-next-label">Siguiente</span>
+      <Icon name="lucide:chevron-right" class="cm-next-icon w-5 h-5" />
     </button>
   </footer>
 </div>
@@ -71,6 +73,8 @@
     const barEl = overlay.querySelector<HTMLElement>(".cm-progress-bar")!;
     const prevEl = overlay.querySelector<HTMLButtonElement>(".cm-prev")!;
     const nextEl = overlay.querySelector<HTMLButtonElement>(".cm-next")!;
+    const nextLabel = overlay.querySelector<HTMLElement>(".cm-next-label")!;
+    const nextIcon = overlay.querySelector<HTMLElement>(".cm-next-icon")!;
     const closeEl = overlay.querySelector<HTMLButtonElement>(".cm-close")!;
     const tapPrev = overlay.querySelector<HTMLButtonElement>(".cm-tap-prev")!;
     const tapNext = overlay.querySelector<HTMLButtonElement>(".cm-tap-next")!;
@@ -96,7 +100,9 @@
       textEl.textContent = step.text;
       barEl.style.width = `${((index + 1) / steps.length) * 100}%`;
       prevEl.disabled = index === 0;
-      nextEl.textContent = index === steps.length - 1 ? "¡Listo! ✓" : "Siguiente →";
+      const last = index === steps.length - 1;
+      nextLabel.textContent = last ? "¡Listo!" : "Siguiente";
+      nextIcon.hidden = last;
       overlay.querySelector(".cm-body")!.scrollTop = 0;
     };
 

@@ -3,6 +3,7 @@
 // varios temporizadores. Al terminar suenan, vibran (Android) y avisan
 // visualmente. No hay API web para crear timers nativos del sistema, así que
 // esto funciona dentro del navegador en Android e iOS.
+import { Icon } from "astro-icon/components";
 ---
 
 <div class="timers-root">
@@ -11,7 +12,7 @@
     class="timers-fab fixed bottom-5 right-5 z-[60] w-14 h-14 rounded-full bg-secondary text-white text-2xl shadow-lg cursor-pointer flex items-center justify-center"
     aria-label="Temporizadores"
   >
-    ⏱
+    <Icon name="lucide:timer" class="w-6 h-6" />
     <span class="timers-badge hidden absolute -top-1 -right-1 min-w-5 h-5 px-1 rounded-full bg-white text-secondary text-xs font-bold border-2 border-secondary items-center justify-center"></span>
   </button>
 
@@ -21,7 +22,7 @@
   >
     <div class="flex items-center justify-between mb-2">
       <span class="font-bold">Temporizadores</span>
-      <button type="button" class="timers-close cursor-pointer text-xl leading-none font-bold" aria-label="Cerrar">✕</button>
+      <button type="button" class="timers-close cursor-pointer leading-none" aria-label="Cerrar"><Icon name="lucide:x" class="w-5 h-5" /></button>
     </div>
 
     <ul class="timers-list space-y-2 mb-3 max-h-64 overflow-y-auto"></ul>
@@ -42,12 +43,14 @@
         seg
         <input class="timers-sec border-2 border-secondary px-2 py-1 w-full" type="number" min="0" max="59" value="0" inputmode="numeric" />
       </label>
-      <button type="submit" class="timers-add cursor-pointer border-2 border-secondary bg-secondary text-white px-3 py-1 font-bold">+</button>
+      <button type="submit" class="timers-add cursor-pointer border-2 border-secondary bg-secondary text-white px-3 py-2 font-bold flex items-center" aria-label="Crear temporizador"><Icon name="lucide:plus" class="w-4 h-4" /></button>
     </form>
   </div>
 </div>
 
 <script>
+  import { icons } from "@lib/icons";
+
   type Timer = {
     endAt: number;
     remaining: number;
@@ -117,7 +120,7 @@
       const display = timer.li.querySelector<HTMLElement>(".timer-time")!;
       const pause = timer.li.querySelector<HTMLButtonElement>(".timer-pause")!;
       display.textContent = timer.done ? "¡Listo!" : fmt(timer.remaining);
-      pause.textContent = timer.paused ? "▶" : "⏸";
+      pause.innerHTML = timer.paused ? icons.play : icons.pause;
       pause.hidden = timer.done;
     };
 
@@ -150,8 +153,8 @@
       li.className = "timer-item flex items-center gap-2 border-2 border-secondary px-2 py-1";
       li.innerHTML = `
         <span class="timer-time font-bold tabular-nums text-lg flex-1"></span>
-        <button type="button" class="timer-pause cursor-pointer text-lg" aria-label="Pausar/Reanudar"></button>
-        <button type="button" class="timer-cancel cursor-pointer text-lg font-bold" aria-label="Quitar">✕</button>`;
+        <button type="button" class="timer-pause cursor-pointer" aria-label="Pausar/Reanudar"></button>
+        <button type="button" class="timer-cancel cursor-pointer" aria-label="Quitar">${icons.x}</button>`;
       const timer: Timer = {
         endAt: Date.now() + seconds * 1000,
         remaining: seconds * 1000,
