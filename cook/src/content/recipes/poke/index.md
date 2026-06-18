@@ -19,4 +19,3 @@ cover: ./2a3d58ec-ddf9-4ffc-a56f-6d852da989dc.jpg
 - Sésamo 
 - Mayonesa
 - Siracha
-<empty-block/>

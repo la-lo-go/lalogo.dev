@@ -31,5 +31,5 @@ cover: ./ec0769db-ebf7-4dd7-ac39-767048490455.jpg
 10. Sacar del horno y dejar reposar media hora.
 11. Gozarlo 🤠
 ## Ejemplos
-	![](./7270604d-c188-4664-9833-d96794446076.jpg)
-	![](./701a47e0-3f01-4331-885d-21649f3a3a66.jpg)
+![](./7270604d-c188-4664-9833-d96794446076.jpg)
+![](./701a47e0-3f01-4331-885d-21649f3a3a66.jpg)

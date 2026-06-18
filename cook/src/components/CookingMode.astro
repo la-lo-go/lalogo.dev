@@ -1,0 +1,140 @@
+---
+// Modo cocina: muestra los pasos en grande a pantalla completa, se avanza
+// uno a uno y mantiene la pantalla encendida con la Wake Lock API.
+---
+
+<button
+  type="button"
+  class="cooking-open cursor-pointer w-full mt-6 border-2 border-secondary py-3 font-bold text-lg transition-colors hover:bg-secondary hover:text-white flex items-center justify-center gap-2"
+  hidden
+>
+  👨‍🍳 Modo cocina
+</button>
+
+<div
+  class="cooking-overlay fixed inset-0 z-50 bg-white text-secondary flex-col"
+  style="display: none;"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Modo cocina"
+>
+  <div class="cm-progress h-2 bg-gray">
+    <div class="cm-progress-bar h-full bg-secondary transition-all" style="width:0%"></div>
+  </div>
+
+  <header class="flex items-center justify-between gap-3 px-5 py-3 border-b-2 border-secondary">
+    <span class="cm-section font-bold text-sm uppercase tracking-wide truncate"></span>
+    <div class="flex items-center gap-3 shrink-0">
+      <span class="cm-counter text-sm font-medium tabular-nums"></span>
+      <button type="button" class="cm-close cursor-pointer text-2xl leading-none font-bold" aria-label="Cerrar modo cocina">✕</button>
+    </div>
+  </header>
+
+  <div class="cm-body flex-1 overflow-y-auto flex items-center justify-center p-6 sm:p-10">
+    <p class="cm-step-text text-2xl sm:text-4xl leading-snug max-w-3xl text-center"></p>
+  </div>
+
+  <footer class="flex gap-3 p-4 border-t-2 border-secondary">
+    <button
+      type="button"
+      class="cm-prev cursor-pointer flex-1 border-2 border-secondary py-4 font-bold text-lg transition-colors enabled:hover:bg-secondary enabled:hover:text-white disabled:opacity-30 disabled:cursor-not-allowed"
+    >
+      ← Anterior
+    </button>
+    <button
+      type="button"
+      class="cm-next cursor-pointer flex-1 border-2 border-secondary bg-secondary text-white py-4 font-bold text-lg transition-colors"
+    >
+      Siguiente →
+    </button>
+  </footer>
+</div>
+
+<script>
+  import { findRecipeSteps, type RecipeStep } from "@lib/recipeDom";
+
+  function setupCookingMode() {
+    const openBtn = document.querySelector<HTMLButtonElement>(".cooking-open");
+    const overlay = document.querySelector<HTMLElement>(".cooking-overlay");
+    if (!openBtn || !overlay || openBtn.dataset.bound === "1") return;
+
+    // Sin pasos detectables no ofrecemos el modo cocina.
+    if (findRecipeSteps().length === 0) return;
+    openBtn.dataset.bound = "1";
+    openBtn.hidden = false;
+
+    const sectionEl = overlay.querySelector<HTMLElement>(".cm-section")!;
+    const counterEl = overlay.querySelector<HTMLElement>(".cm-counter")!;
+    const textEl = overlay.querySelector<HTMLElement>(".cm-step-text")!;
+    const barEl = overlay.querySelector<HTMLElement>(".cm-progress-bar")!;
+    const prevEl = overlay.querySelector<HTMLButtonElement>(".cm-prev")!;
+    const nextEl = overlay.querySelector<HTMLButtonElement>(".cm-next")!;
+    const closeEl = overlay.querySelector<HTMLButtonElement>(".cm-close")!;
+
+    let steps: RecipeStep[] = [];
+    let index = 0;
+    let wakeLock: any = null;
+
+    const requestWake = async () => {
+      try {
+        if ("wakeLock" in navigator) wakeLock = await (navigator as any).wakeLock.request("screen");
+      } catch {}
+    };
+    const releaseWake = async () => {
+      try { await wakeLock?.release(); } catch {}
+      wakeLock = null;
+    };
+
+    const render = () => {
+      const step = steps[index];
+      sectionEl.textContent = step.section;
+      counterEl.textContent = `Paso ${index + 1} de ${steps.length}`;
+      textEl.textContent = step.text;
+      barEl.style.width = `${((index + 1) / steps.length) * 100}%`;
+      prevEl.disabled = index === 0;
+      nextEl.textContent = index === steps.length - 1 ? "¡Listo! ✓" : "Siguiente →";
+      overlay.querySelector(".cm-body")!.scrollTop = 0;
+    };
+
+    const open = () => {
+      steps = findRecipeSteps();
+      if (steps.length === 0) return;
+      index = 0;
+      overlay.style.display = "flex";
+      document.body.style.overflow = "hidden";
+      render();
+      requestWake();
+    };
+    const close = () => {
+      overlay.style.display = "none";
+      document.body.style.overflow = "";
+      releaseWake();
+    };
+    const next = () => {
+      if (index < steps.length - 1) { index++; render(); }
+      else close();
+    };
+    const prev = () => { if (index > 0) { index--; render(); } };
+
+    openBtn.addEventListener("click", open);
+    closeEl.addEventListener("click", close);
+    nextEl.addEventListener("click", next);
+    prevEl.addEventListener("click", prev);
+
+    document.addEventListener("keydown", (e) => {
+      if (overlay.style.display === "none") return;
+      if (e.key === "ArrowRight") next();
+      else if (e.key === "ArrowLeft") prev();
+      else if (e.key === "Escape") close();
+    });
+
+    // Reactivar el wake lock al volver a la pestaña si seguimos en modo cocina.
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "visible" && overlay.style.display !== "none") requestWake();
+    });
+  }
+
+  if (document.readyState !== "loading") setupCookingMode();
+  else document.addEventListener("DOMContentLoaded", setupCookingMode);
+  document.addEventListener("astro:page-load", setupCookingMode);
+</script>

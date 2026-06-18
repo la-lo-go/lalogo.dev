@@ -28,4 +28,4 @@ cover: ./9b98e91c-9b3b-4d44-a20f-fb77402feadc.jpg
 9. Hornear a 180° en la posición media durante unos 20 minutos o hasta que estén doradas y un poco blandas al tacto
 ¡Disfruta de las Pastas de la Agustina!
 ## Ejemplos
-	\[Aquí hay imagenes de las obras de arte\]
+\[Aquí hay imagenes de las obras de arte\]

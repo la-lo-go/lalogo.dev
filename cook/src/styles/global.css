@@ -85,3 +85,50 @@ a.cool-link-animated:hover,
 :is(p) a:hover {
   background-size: 100% 100%;
 }
+
+/* Mise en place: checkbox por ingrediente (la clase ing-li la añade el JS) */
+.recipe-body li.ing-li {
+  list-style: none;
+  margin-left: -1.25rem;
+}
+.ing-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  cursor: pointer;
+}
+.ing-check {
+  margin-top: 0.4rem;
+  width: 1.05rem;
+  height: 1.05rem;
+  accent-color: #232727;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.ing-li.ing-done .ing-text {
+  text-decoration: line-through;
+  opacity: 0.45;
+}
+
+/* Tiempos de los pasos clicables para crear un temporizador */
+.step-time {
+  font-weight: bold;
+  cursor: pointer;
+  color: inherit;
+  background: linear-gradient(#ccece9, #ccece9);
+  background-size: 100% 0.4rem;
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  border-bottom: 2px dotted #232727;
+  transition: background-size 0.1s linear;
+}
+.step-time::after {
+  content: " ⏱";
+  font-size: 0.85em;
+}
+.step-time:hover {
+  background-size: 100% 100%;
+}
+.step-time-fired {
+  background-size: 100% 100% !important;
+}

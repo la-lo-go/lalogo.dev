@@ -4,6 +4,8 @@ import { Image } from "astro:assets";
 
 import Layout from "@layouts/Layout.astro";
 import ServingsScaler from "@components/ServingsScaler.astro";
+import CookingMode from "@components/CookingMode.astro";
+import Timers from "@components/Timers.astro";
 import { SlugifyTag } from "@lib/Text";
 
 export async function getStaticPaths() {
@@ -34,9 +36,9 @@ const updatedLabel = data.updatedAt.toLocaleDateString("es-ES", {
   <article class="max-w-3xl mx-auto">
     <a href="/" class="cool-link-animated text-sm">← Volver a las recetas</a>
 
-    <h1 class="text-3xl font-bold leading-tight pt-6">{data.title}</h1>
+    <h1 class="text-3xl font-bold leading-tight mt-3">{data.title}</h1>
 
-    {data.description && <p class="italic mt-2">{data.description}</p>}
+    {data.description && <p class="italic mt-1">{data.description}</p>}
 
     <div class="flex flex-wrap items-center gap-x-4 gap-y-2 mt-4 text-sm">
       {data.time && <span class="font-medium">⏱ {data.time} min</span>}
@@ -72,12 +74,14 @@ const updatedLabel = data.updatedAt.toLocaleDateString("es-ES", {
           alt={data.title}
           widths={[480, 800, 1200]}
           sizes="(min-width: 768px) 48rem, 100vw"
-          class="w-full mt-6 border-2 border-secondary"
+          class="w-full aspect-[4/3] object-cover mt-4 border-2 border-secondary"
         />
       )
     }
 
     {data.servings && <ServingsScaler baseServings={data.servings} />}
+
+    <CookingMode />
 
     <div class="h-0.5 bg-secondary mt-6"></div>
 
@@ -89,6 +93,8 @@ const updatedLabel = data.updatedAt.toLocaleDateString("es-ES", {
       Actualizada el {updatedLabel}
     </p>
   </article>
+
+  <Timers />
 </Layout>
 
 <style is:global>
@@ -164,3 +170,16 @@ const updatedLabel = data.updatedAt.toLocaleDateString("es-ES", {
     margin: 1.5rem 0;
   }
 </style>
+
+<script>
+  import { ensureIngredientsProcessed, enhanceStepTimes } from "@lib/recipeDom";
+
+  function initRecipe() {
+    ensureIngredientsProcessed();
+    enhanceStepTimes();
+  }
+
+  if (document.readyState !== "loading") initRecipe();
+  else document.addEventListener("DOMContentLoaded", initRecipe);
+  document.addEventListener("astro:page-load", initRecipe);
+</script>

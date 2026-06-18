@@ -32,8 +32,7 @@ Basado en la receta ["Air fryer Ciabatta Bread Recipe. No Knead Soft Artisan bre
 14. Dar la vuelta y hornear otros 15 minutos
 15. Deja enfriar
 16. Disfruta!!
-<empty-block/>
 ## Congelación
 1.
 ## Ejemplos
-	\[Aquí hay imagenes de las obras de arte\]
+\[Aquí hay imagenes de las obras de arte\]

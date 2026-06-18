@@ -18,4 +18,3 @@ cover: ./243b2cc2-3098-4b3a-b51d-166b991222cb.jpg
 - Levadura
 - Harina (la que admita)
 - Aceite para freir
-<empty-block/>

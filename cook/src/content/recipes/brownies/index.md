@@ -32,5 +32,4 @@ Basada en la [receta de Gonzalo D’Ambrosio](https://www.gonzalodambrosio.com/s
 10. Tapamos con papel de horno y dejamos enfriar completamente para que se ponga un poco más firme
 11. Disfrutar!
 ## Ejemplos
-	![](./c0bf89db-d9f0-45cd-bb68-10dd57245527.jpg)
-<empty-block/>
+![](./c0bf89db-d9f0-45cd-bb68-10dd57245527.jpg)

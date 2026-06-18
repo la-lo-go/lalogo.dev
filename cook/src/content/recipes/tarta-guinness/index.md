@@ -30,4 +30,4 @@ cover: ./e6df268b-b6f5-41e0-ac51-0f11014bfa36.jpg
 7. Para el frosting, bate el queso de untar con la nata y el azúcar glas hasta conseguir una textura suave. Refrigera 30 minutos.
 8. Cubre la tarta con el frosting y ¡disfruta! (Guarda las sobras en la nevera, si es que quedan)
 ## Ejemplos
-	\[Aquí hay imagenes de las obras de arte\]
+\[Aquí hay imagenes de las obras de arte\]

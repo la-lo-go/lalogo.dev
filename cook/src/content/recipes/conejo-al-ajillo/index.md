@@ -36,4 +36,4 @@ Sacado de [Conejo al ajillo con patatas de Arguiñano](https://www.hogarmania.co
 12. Incorpora las patatas a la sartén del conejo y mezcla bien.
 13. Disfruta!!!
 ## Ejemplos
-	\[Aquí hay imagenes de las obras de arte\]
+\[Aquí hay imagenes de las obras de arte\]

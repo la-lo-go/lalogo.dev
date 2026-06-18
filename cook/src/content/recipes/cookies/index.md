@@ -34,4 +34,3 @@ De Soul in the Kitchen
 7. Precalienta el horno a 180ºC con calor arriba y abajo. Coloca las bolas en una bandeja con papel de horno, separadas 10cm entre sí.
 8. Después de 15 minutos de horneado, saca la bandeja y deja enfriar las galletas completamente antes de manipularlas.
 9. ¡Disfruta de tus cookies! (Y escóndelas si quieres que duren más de 24 horas)
-<empty-block/>

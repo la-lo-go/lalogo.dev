@@ -1,0 +1,198 @@
+---
+// Temporizadores en-página: un botón flotante abre un panel donde crear
+// varios temporizadores. Al terminar suenan, vibran (Android) y avisan
+// visualmente. No hay API web para crear timers nativos del sistema, así que
+// esto funciona dentro del navegador en Android e iOS.
+---
+
+<div class="timers-root">
+  <button
+    type="button"
+    class="timers-fab fixed bottom-5 right-5 z-[60] w-14 h-14 rounded-full bg-secondary text-white text-2xl shadow-lg cursor-pointer flex items-center justify-center"
+    aria-label="Temporizadores"
+  >
+    ⏱
+    <span class="timers-badge hidden absolute -top-1 -right-1 min-w-5 h-5 px-1 rounded-full bg-white text-secondary text-xs font-bold border-2 border-secondary items-center justify-center"></span>
+  </button>
+
+  <div
+    class="timers-panel fixed bottom-24 right-5 z-[60] w-72 max-w-[calc(100vw-2.5rem)] bg-white border-2 border-secondary p-3"
+    hidden
+  >
+    <div class="flex items-center justify-between mb-2">
+      <span class="font-bold">Temporizadores</span>
+      <button type="button" class="timers-close cursor-pointer text-xl leading-none font-bold" aria-label="Cerrar">✕</button>
+    </div>
+
+    <ul class="timers-list space-y-2 mb-3 max-h-64 overflow-y-auto"></ul>
+    <p class="timers-empty text-sm italic text-secondary/60 mb-3">No hay temporizadores.</p>
+
+    <div class="flex gap-1.5 mb-2">
+      <button type="button" class="timers-preset cursor-pointer flex-1 border-2 border-secondary py-1 text-sm font-medium transition-colors hover:bg-secondary hover:text-white" data-min="1">1 min</button>
+      <button type="button" class="timers-preset cursor-pointer flex-1 border-2 border-secondary py-1 text-sm font-medium transition-colors hover:bg-secondary hover:text-white" data-min="5">5 min</button>
+      <button type="button" class="timers-preset cursor-pointer flex-1 border-2 border-secondary py-1 text-sm font-medium transition-colors hover:bg-secondary hover:text-white" data-min="10">10 min</button>
+    </div>
+
+    <form class="timers-form flex items-end gap-1.5">
+      <label class="flex flex-col text-xs font-medium flex-1">
+        min
+        <input class="timers-min border-2 border-secondary px-2 py-1 w-full" type="number" min="0" max="180" value="0" inputmode="numeric" />
+      </label>
+      <label class="flex flex-col text-xs font-medium flex-1">
+        seg
+        <input class="timers-sec border-2 border-secondary px-2 py-1 w-full" type="number" min="0" max="59" value="0" inputmode="numeric" />
+      </label>
+      <button type="submit" class="timers-add cursor-pointer border-2 border-secondary bg-secondary text-white px-3 py-1 font-bold">+</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  type Timer = {
+    id: number;
+    total: number;
+    endAt: number;
+    remaining: number;
+    paused: boolean;
+    done: boolean;
+    li: HTMLLIElement;
+  };
+
+  function setupTimers() {
+    const root = document.querySelector<HTMLElement>(".timers-root");
+    if (!root || root.dataset.bound === "1") return;
+    root.dataset.bound = "1";
+
+    const fab = root.querySelector<HTMLButtonElement>(".timers-fab")!;
+    const badge = root.querySelector<HTMLElement>(".timers-badge")!;
+    const panel = root.querySelector<HTMLElement>(".timers-panel")!;
+    const closeBtn = root.querySelector<HTMLButtonElement>(".timers-close")!;
+    const list = root.querySelector<HTMLUListElement>(".timers-list")!;
+    const empty = root.querySelector<HTMLElement>(".timers-empty")!;
+    const form = root.querySelector<HTMLFormElement>(".timers-form")!;
+    const minInput = root.querySelector<HTMLInputElement>(".timers-min")!;
+    const secInput = root.querySelector<HTMLInputElement>(".timers-sec")!;
+
+    const timers: Timer[] = [];
+    let audioCtx: AudioContext | null = null;
+    let nextId = 1;
+
+    const unlockAudio = () => {
+      try {
+        audioCtx = audioCtx || new (window.AudioContext || (window as any).webkitAudioContext)();
+        if (audioCtx.state === "suspended") audioCtx.resume();
+      } catch {}
+    };
+
+    const beep = () => {
+      if (!audioCtx) return;
+      const o = audioCtx.createOscillator();
+      const g = audioCtx.createGain();
+      o.connect(g); g.connect(audioCtx.destination);
+      o.type = "sine"; o.frequency.value = 880;
+      const t = audioCtx.currentTime;
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(0.3, t + 0.01);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.4);
+      o.start(t); o.stop(t + 0.4);
+    };
+
+    const fmt = (ms: number) => {
+      const s = Math.max(0, Math.ceil(ms / 1000));
+      return `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(s % 60).padStart(2, "0")}`;
+    };
+
+    const updateBadge = () => {
+      const active = timers.filter((t) => !t.done).length;
+      badge.textContent = String(active);
+      badge.classList.toggle("hidden", active === 0);
+      badge.classList.toggle("flex", active > 0);
+    };
+
+    const ring = (timer: Timer) => {
+      timer.done = true;
+      timer.li.classList.add("timer-done");
+      let beeps = 0;
+      const interval = setInterval(() => {
+        beep();
+        if (navigator.vibrate) navigator.vibrate(200);
+        if (++beeps >= 6 || !document.body.contains(timer.li)) clearInterval(interval);
+      }, 700);
+      timer.li.dataset.alarm = String(interval);
+      panel.hidden = false; // mostrar el panel al sonar
+      updateBadge();
+    };
+
+    const removeTimer = (timer: Timer) => {
+      const alarm = timer.li.dataset.alarm;
+      if (alarm) clearInterval(Number(alarm));
+      timer.li.remove();
+      timers.splice(timers.indexOf(timer), 1);
+      empty.hidden = timers.length > 0;
+      updateBadge();
+    };
+
+    const renderTimer = (timer: Timer) => {
+      const display = timer.li.querySelector<HTMLElement>(".timer-time")!;
+      const pause = timer.li.querySelector<HTMLButtonElement>(".timer-pause")!;
+      display.textContent = timer.done ? "¡Listo!" : fmt(timer.remaining);
+      pause.textContent = timer.paused ? "▶" : "⏸";
+      pause.hidden = timer.done;
+    };
+
+    const addTimer = (seconds: number) => {
+      if (seconds <= 0) return;
+      unlockAudio();
+      const li = document.createElement("li");
+      li.className = "timer-item flex items-center gap-2 border-2 border-secondary px-2 py-1";
+      li.innerHTML = `
+        <span class="timer-time font-bold tabular-nums text-lg flex-1"></span>
+        <button type="button" class="timer-pause cursor-pointer text-lg" aria-label="Pausar"></button>
+        <button type="button" class="timer-cancel cursor-pointer text-lg font-bold" aria-label="Quitar">✕</button>`;
+      const timer: Timer = {
+        id: nextId++, total: seconds * 1000, endAt: Date.now() + seconds * 1000,
+        remaining: seconds * 1000, paused: false, done: false, li,
+      };
+      li.querySelector(".timer-pause")!.addEventListener("click", () => {
+        if (timer.done) return;
+        timer.paused = !timer.paused;
+        if (!timer.paused) timer.endAt = Date.now() + timer.remaining;
+        renderTimer(timer);
+      });
+      li.querySelector(".timer-cancel")!.addEventListener("click", () => removeTimer(timer));
+      timers.push(timer);
+      list.append(li);
+      empty.hidden = true;
+      renderTimer(timer);
+      updateBadge();
+    };
+
+    setInterval(() => {
+      const now = Date.now();
+      for (const timer of timers) {
+        if (timer.paused || timer.done) continue;
+        timer.remaining = timer.endAt - now;
+        if (timer.remaining <= 0) { timer.remaining = 0; renderTimer(timer); ring(timer); }
+        else renderTimer(timer);
+      }
+    }, 250);
+
+    fab.addEventListener("click", () => { unlockAudio(); panel.hidden = !panel.hidden; });
+    closeBtn.addEventListener("click", () => { panel.hidden = true; });
+    for (const preset of root.querySelectorAll<HTMLButtonElement>(".timers-preset")) {
+      preset.addEventListener("click", () => addTimer(Number(preset.dataset.min) * 60));
+    }
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      addTimer(Number(minInput.value || 0) * 60 + Number(secInput.value || 0));
+      minInput.value = "0"; secInput.value = "0";
+    });
+
+    // API para que otras partes (modo cocina, pasos) creen timers.
+    (window as any).cookAddTimer = addTimer;
+  }
+
+  if (document.readyState !== "loading") setupTimers();
+  else document.addEventListener("DOMContentLoaded", setupTimers);
+  document.addEventListener("astro:page-load", setupTimers);
+</script>

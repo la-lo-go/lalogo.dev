@@ -23,4 +23,4 @@ cover: ./58372db7-cdbc-4135-a4cf-adc293af8ecf.jpg
 6. Pintar con huevo y azúcar por encima 
 7. Hornear a 180
 ## Ejemplos
-	\[Aquí hay imagenes de las obras de arte\]
+\[Aquí hay imagenes de las obras de arte\]

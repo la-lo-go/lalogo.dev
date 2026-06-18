@@ -33,4 +33,4 @@ cover: ./bcd3b862521ac48e.jpg
 ## Congelación
 1.
 ## Ejemplos
-	\[Aquí hay imagenes de las obras de arte\]
+\[Aquí hay imagenes de las obras de arte\]

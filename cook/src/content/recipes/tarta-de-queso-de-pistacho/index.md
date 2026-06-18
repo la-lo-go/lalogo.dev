@@ -35,5 +35,4 @@ cover: ./5378ec92-8427-42ff-a8bf-e80bb9f561bd.jpg
 ## ¿Se puede hacer de más sabores?
 Sí! Puedes cambiar el pistacho por crema de avellanas, turrón, vainilla, whisky….. lo que quieras!!!
 ## Ejemplos
-	![](./da3b73e6-7a25-4b9c-935f-f5c73775683e.jpg)
-	<empty-block/>
+![](./da3b73e6-7a25-4b9c-935f-f5c73775683e.jpg)

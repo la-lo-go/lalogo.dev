@@ -28,6 +28,6 @@ Esta **no** es una pasta tradicional italiana™ pero si que intenta asemejarse 
 9. Emplatar con más queso, pimienta recién molida y la panceta.
 10. ¡Gozarlo!
 ## Ejemplos
-	![](./58190165-2360-4b18-bb71-85048de3267c.jpg)
-	![](./620d882f-236b-4a79-b251-3d2305f18d29.jpg)
-	![](./6209e911-0f03-45b1-80bb-5234ed9d163a.jpg)
+![](./58190165-2360-4b18-bb71-85048de3267c.jpg)
+![](./620d882f-236b-4a79-b251-3d2305f18d29.jpg)
+![](./6209e911-0f03-45b1-80bb-5234ed9d163a.jpg)

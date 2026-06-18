@@ -33,4 +33,4 @@ cover: ./98cffe1a-24c9-4d12-9060-ebdad8a1a7e7.jpg
 ## Congelación
 Mejor congelar la masa del falafel ya con forma pero no frita!!
 ## Ejemplos
-	![](./5d0efd4f-bc5a-49f7-9c07-5c2b532a2de8.jpg)
+![](./5d0efd4f-bc5a-49f7-9c07-5c2b532a2de8.jpg)

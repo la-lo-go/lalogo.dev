@@ -16,4 +16,4 @@ De: [https://mxriyum.com/fluffiest-garlic-naan/](https://mxriyum.com/fluffiest-g
 ## Congelación
 1.
 ## Ejemplos
-	\[Aquí hay imagenes de las obras de arte\]
+\[Aquí hay imagenes de las obras de arte\]

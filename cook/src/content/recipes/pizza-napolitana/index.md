@@ -38,7 +38,7 @@ Basado en la receta ["NEAPOLITAN STYLE PIZZA"](https://www.youtube.com/watch?v=x
 4. Congelar encima de una superficie plana.
 5. Para descongelar sacar 3 horas antes y preferiblemente ponerla dentro de un contendor con forma circular para que no se desparrame.
 ## Ejemplos
-	![](./644b8c3e-d60a-4956-9c0e-09fa2e70ad88.jpg)
-	![](./7dcd46e3-e564-4429-a3bd-6b9cbf33d9a3.jpg)
-	![](./ebabc706-da59-4359-bd64-c4dbe6cc2a30.jpg)
-	![](./0b176bd2-ee25-4c6e-8469-dea14417aabe.jpg)
+![](./644b8c3e-d60a-4956-9c0e-09fa2e70ad88.jpg)
+![](./7dcd46e3-e564-4429-a3bd-6b9cbf33d9a3.jpg)
+![](./ebabc706-da59-4359-bd64-c4dbe6cc2a30.jpg)
+![](./0b176bd2-ee25-4c6e-8469-dea14417aabe.jpg)
