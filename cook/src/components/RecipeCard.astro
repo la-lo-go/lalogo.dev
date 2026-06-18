@@ -33,6 +33,7 @@ const servingsLabel = data.servings === 1 ? "ración" : "raciones";
           widths={[400, 800]}
           sizes="(min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw"
           class="w-full aspect-[4/3] object-cover border-2 border-secondary"
+          style={`view-transition-name: cover-${recipe.id}`}
         />
       ) : (
         <div class="w-full aspect-[4/3] bg-primary border-2 border-secondary flex items-center justify-center p-10 text-secondary/30">
@@ -51,7 +52,10 @@ const servingsLabel = data.servings === 1 ? "ración" : "raciones";
     }
   </a>
 
-  <h3 class="mt-3 text-lg font-semibold leading-snug">
+  <h3
+    class="mt-3 text-lg font-semibold leading-snug"
+    style={`view-transition-name: title-${recipe.id}`}
+  >
     <a href={href} class="cool-link-animated">{data.title}</a>
   </h3>
 

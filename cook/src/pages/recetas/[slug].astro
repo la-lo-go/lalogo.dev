@@ -36,7 +36,12 @@ const updatedLabel = data.updatedAt.toLocaleDateString("es-ES", {
   <article class="max-w-3xl mx-auto">
     <a href="/" class="cool-link-animated text-sm">← Volver a las recetas</a>
 
-    <h1 class="text-3xl font-bold leading-tight mt-3">{data.title}</h1>
+    <h1
+      class="text-3xl font-bold leading-tight mt-3"
+      style={`view-transition-name: title-${recipe.id}`}
+    >
+      {data.title}
+    </h1>
 
     {data.description && <p class="italic mt-1">{data.description}</p>}
 
@@ -75,6 +80,7 @@ const updatedLabel = data.updatedAt.toLocaleDateString("es-ES", {
           widths={[480, 800, 1200]}
           sizes="(min-width: 768px) 48rem, 100vw"
           class="w-full aspect-[4/3] object-cover mt-4 border-2 border-secondary"
+          style={`view-transition-name: cover-${recipe.id}`}
         />
       )
     }
