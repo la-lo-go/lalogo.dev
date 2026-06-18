@@ -3,6 +3,7 @@ import { getCollection, render } from "astro:content";
 import { Image } from "astro:assets";
 
 import Layout from "@layouts/Layout.astro";
+import ServingsScaler from "@components/ServingsScaler.astro";
 import { SlugifyTag } from "@lib/Text";
 
 export async function getStaticPaths() {
@@ -75,6 +76,8 @@ const updatedLabel = data.updatedAt.toLocaleDateString("es-ES", {
         />
       )
     }
+
+    {data.servings && <ServingsScaler baseServings={data.servings} />}
 
     <div class="h-0.5 bg-secondary mt-6"></div>
 

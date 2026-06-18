@@ -1,0 +1,128 @@
+---
+// Selector de raciones que multiplica las cantidades de la sección
+// "Ingredientes". La base son las raciones de la propiedad de Notion.
+export interface Props {
+  baseServings: number;
+}
+const { baseServings } = Astro.props;
+---
+
+<div
+  class="servings-scaler border-2 border-secondary p-3 mt-6 flex items-center gap-3 flex-wrap"
+  data-base={baseServings}
+  hidden
+>
+  <span class="font-bold">Raciones</span>
+
+  <div class="flex items-center gap-2">
+    <button
+      type="button"
+      class="servings-step w-8 h-8 border-2 border-secondary font-bold text-xl leading-none transition-colors hover:bg-secondary hover:text-white disabled:opacity-30 disabled:cursor-not-allowed"
+      data-step="-1"
+      aria-label="Menos raciones"
+    >
+      −
+    </button>
+    <output class="servings-value min-w-8 text-center text-lg font-bold tabular-nums"
+      >{baseServings}</output
+    >
+    <button
+      type="button"
+      class="servings-step w-8 h-8 border-2 border-secondary font-bold text-xl leading-none transition-colors hover:bg-secondary hover:text-white"
+      data-step="1"
+      aria-label="Más raciones"
+    >
+      +
+    </button>
+  </div>
+
+  <button
+    type="button"
+    class="servings-reset cool-link text-sm"
+    hidden
+    aria-label="Restablecer raciones"
+  >
+    restablecer
+  </button>
+</div>
+
+<script>
+  import { scaleIngredientText } from "@lib/scaleIngredients";
+
+  function normalize(text: string): string {
+    return text.toLowerCase().normalize("NFD").replace(/\p{Diacritic}/gu, "");
+  }
+
+  // Listas <ul>/<ol> que siguen a un encabezado de "Ingredientes".
+  function findIngredientLists(): HTMLLIElement[] {
+    const body = document.querySelector(".recipe-body");
+    if (!body) return [];
+    const items: HTMLLIElement[] = [];
+    const headings = body.querySelectorAll("h1, h2, h3, h4, h5, h6");
+    for (const heading of headings) {
+      if (!normalize(heading.textContent ?? "").includes("ingrediente")) continue;
+      let el = heading.nextElementSibling;
+      while (el && el.tagName !== "UL" && el.tagName !== "OL") {
+        if (/^H[1-6]$/.test(el.tagName)) break; // otra sección, paramos
+        el = el.nextElementSibling;
+      }
+      if (el && (el.tagName === "UL" || el.tagName === "OL")) {
+        items.push(...el.querySelectorAll("li"));
+      }
+    }
+    return items;
+  }
+
+  function setupServingsScaler() {
+    const scaler = document.querySelector<HTMLElement>(".servings-scaler");
+    if (!scaler) return;
+
+    const base = Number(scaler.dataset.base);
+    const items = findIngredientLists();
+    // Sin raciones válidas o sin ingredientes detectados: no mostramos nada.
+    if (!base || base <= 0 || items.length === 0) {
+      scaler.hidden = true;
+      return;
+    }
+
+    // Guardamos el texto original de cada ingrediente una sola vez.
+    for (const li of items) {
+      if (li.dataset.qtyOriginal === undefined) {
+        li.dataset.qtyOriginal = li.textContent ?? "";
+      }
+    }
+
+    const valueEl = scaler.querySelector<HTMLOutputElement>(".servings-value")!;
+    const resetEl = scaler.querySelector<HTMLButtonElement>(".servings-reset")!;
+    const minusEl = scaler.querySelector<HTMLButtonElement>('[data-step="-1"]')!;
+    let current = base;
+
+    const render = () => {
+      const factor = current / base;
+      for (const li of items) {
+        li.textContent = scaleIngredientText(li.dataset.qtyOriginal ?? "", factor);
+      }
+      valueEl.textContent = String(current);
+      resetEl.hidden = current === base;
+      minusEl.disabled = current <= 1;
+    };
+
+    for (const btn of scaler.querySelectorAll<HTMLButtonElement>(".servings-step")) {
+      btn.addEventListener("click", () => {
+        const step = Number(btn.dataset.step);
+        current = Math.max(1, current + step);
+        render();
+      });
+    }
+    resetEl.addEventListener("click", () => {
+      current = base;
+      render();
+    });
+
+    render();
+    scaler.hidden = false;
+  }
+
+  // Se ejecuta en la carga inicial y en cada navegación con ClientRouter.
+  document.addEventListener("astro:page-load", setupServingsScaler);
+</script>

@@ -72,7 +72,7 @@ a.cool-link,
 a.cool-link-animated,
 :is(p) > a {
   font-weight: bold;
-  background: linear-gradient(#e5fffd, #e5fffd);
+  background: linear-gradient(#ccece9, #ccece9);
   background-size: 100% 0.5rem;
   background-repeat: no-repeat;
   background-position: left bottom;
