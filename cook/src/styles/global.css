@@ -43,6 +43,12 @@
   font-family: "IBM Plex Sans", sans-serif;
 }
 
+/* Evita el doble-tap-to-zoom de iOS (así tocar la barra de estado lleva
+   arriba en vez de hacer zoom) sin desactivar el pinch-zoom. */
+html {
+  touch-action: manipulation;
+}
+
 ::selection {
   background-color: #232727;
   color: #e5fffd;
