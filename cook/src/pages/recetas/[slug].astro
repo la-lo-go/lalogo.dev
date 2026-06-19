@@ -6,6 +6,7 @@ import Layout from "@layouts/Layout.astro";
 import ServingsScaler from "@components/ServingsScaler.astro";
 import GuidedMode from "@components/GuidedMode.astro";
 import Timers from "@components/Timers.astro";
+import { Icon } from "astro-icon/components";
 import { SlugifyTag } from "@lib/Text";
 
 export async function getStaticPaths() {
@@ -46,11 +47,17 @@ const updatedLabel = data.updatedAt.toLocaleDateString("es-ES", {
     {data.description && <p class="italic mt-1">{data.description}</p>}
 
     <div class="flex flex-wrap items-center gap-x-4 gap-y-2 mt-4 text-sm">
-      {data.time && <span class="font-medium">⏱ {data.time} min</span>}
+      {
+        data.time && (
+          <span class="font-medium flex items-center gap-1">
+            <Icon name="lucide:clock" class="w-4 h-4" /> {data.time} min
+          </span>
+        )
+      }
       {
         data.servings && (
-          <span class="font-medium">
-            🍽 {data.servings} {servingsLabel}
+          <span class="font-medium flex items-center gap-1">
+            <Icon name="lucide:users" class="w-4 h-4" /> {data.servings} {servingsLabel}
           </span>
         )
       }

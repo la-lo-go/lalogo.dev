@@ -1,5 +1,6 @@
 ---
 import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
 import type { CollectionEntry } from "astro:content";
 import { NormalizeText, SlugifyTag } from "@lib/Text";
 
@@ -61,12 +62,15 @@ const servingsLabel = data.servings === 1 ? "ración" : "raciones";
 
   {
     (data.time || data.servings) && (
-      <p class="text-sm mt-1">
-        {data.time && <span>{data.time} min</span>}
-        {data.time && data.servings && <span> · </span>}
+      <p class="text-sm mt-1 flex items-center gap-x-3 gap-y-1 flex-wrap">
+        {data.time && (
+          <span class="flex items-center gap-1">
+            <Icon name="lucide:clock" class="w-3.5 h-3.5" /> {data.time} min
+          </span>
+        )}
         {data.servings && (
-          <span>
-            {data.servings} {servingsLabel}
+          <span class="flex items-center gap-1">
+            <Icon name="lucide:users" class="w-3.5 h-3.5" /> {data.servings} {servingsLabel}
           </span>
         )}
       </p>
