@@ -55,10 +55,10 @@ const servingsLabel = data.servings === 1 ? "ración" : "raciones";
 
     <div class="absolute inset-x-0 bottom-0 px-3 pb-3 pt-8" style="background:linear-gradient(to top,rgba(255,255,255,0.95) 0%,rgba(255,255,255,0.6) 55%,transparent 100%)">
       <h3
-        class="card-title text-lg font-semibold leading-snug text-secondary"
+        class="text-lg font-semibold leading-snug text-secondary"
         transition:name={`title-${recipe.id}`}
       >
-        {data.title}
+        <span class="card-title">{data.title}</span>
       </h3>
       {
         (data.time || data.servings) && (
