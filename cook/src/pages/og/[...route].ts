@@ -15,7 +15,7 @@ const fontRegular = readFileSync("./src/fonts/IBM_Plex_Sans/IBMPlexSans-Regular.
 const LOGO_PATH =
   "M0.333,0.333l114.667,0l-0,458.667l286.667,0l-0,-458.667l516,0l-0,458.667l286.666,0l0,-458.667l516,0l0,573.334l-286.666,-0l-0,-114.667l172,-0l-0,-344l-286.667,-0l-0,458.667l-516,-0l-0,-229.334l-172,0l-0,-114.666l172,-0l-0,-114.667l-286.667,-0l0,458.667l-516,-0l0,-573.334Z";
 
-// Lucide icon paths (stroke, no fill).
+// Lucide clock y users como data URIs (mismo patrón que el logo).
 const CLOCK_INNER =
   '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 12"/>';
 const USERS_INNER =
@@ -32,7 +32,8 @@ function logoDataUri(color: string): string {
 function iconDataUri(inner: string, color: string): string {
   const svg =
     `<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24"` +
-    ` fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${inner}</svg>`;
+    ` fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">` +
+    inner + `</svg>`;
   return `data:image/svg+xml;base64,${Buffer.from(svg).toString("base64")}`;
 }
 
@@ -52,65 +53,90 @@ function escapeHtml(s: string): string {
   return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
-const logoBadge = (logoColor: string, bg: string) => `
-  <div style="position:absolute; top:44px; right:44px; display:flex; padding:14px 20px; background:${bg}; border:5px solid #232727;">
-    <img src="${logoDataUri(logoColor)}" style="width:128px; height:43px;" />
-  </div>`;
+// Satori exige display:flex en todo <div> con más de un hijo. Para evitar que
+// los saltos de línea de los template literals se cuenten como text-nodes hijos,
+// todas las cadenas de hijos se concatenan con + (sin espacios entre etiquetas).
+
+// Pastilla con el logotipo arriba a la derecha.
+function logoBadge(logoColor: string, bg: string): string {
+  return (
+    `<div style="position:absolute;top:44px;right:44px;display:flex;` +
+    `padding:14px 20px;background:${bg};border:5px solid #232727;">` +
+    `<img src="${logoDataUri(logoColor)}" style="width:128px;height:43px;" />` +
+    `</div>`
+  );
+}
 
 type Meta = { time?: number; servings?: number };
 
+// Fila de iconos + texto: "⏱ 25 min  👥 4 raciones".
 function metaRow(meta: Meta, color: string): string {
   const parts: string[] = [];
   if (meta.time)
-    parts.push(`
-      <div style="display:flex; align-items:center; gap:10px;">
-        <img src="${iconDataUri(CLOCK_INNER, color)}" style="width:36px; height:36px;" />
-        <span>${meta.time} min</span>
-      </div>`);
+    parts.push(
+      `<div style="display:flex;align-items:center;gap:10px;">` +
+        `<img src="${iconDataUri(CLOCK_INNER, color)}" style="width:36px;height:36px;" />` +
+        `<div style="display:flex;color:${color};font-size:34px;font-weight:400;">${meta.time} min</div>` +
+      `</div>`
+    );
   if (meta.servings) {
     const label = meta.servings === 1 ? "ración" : "raciones";
-    parts.push(`
-      <div style="display:flex; align-items:center; gap:10px;">
-        <img src="${iconDataUri(USERS_INNER, color)}" style="width:36px; height:36px;" />
-        <span>${meta.servings} ${label}</span>
-      </div>`);
+    parts.push(
+      `<div style="display:flex;align-items:center;gap:10px;">` +
+        `<img src="${iconDataUri(USERS_INNER, color)}" style="width:36px;height:36px;" />` +
+        `<div style="display:flex;color:${color};font-size:34px;font-weight:400;">${meta.servings} ${label}</div>` +
+      `</div>`
+    );
   }
   if (!parts.length) return "";
-  return `
-    <div style="display:flex; align-items:center; gap:28px; color:${color}; font-size:34px; font-weight:400; opacity:0.85;">
-      ${parts.join("")}
-    </div>`;
+  return (
+    `<div style="display:flex;align-items:center;gap:28px;opacity:0.85;">` +
+    parts.join("") +
+    `</div>`
+  );
 }
 
-// Bloque inferior: título + barra de subrayado cian + meta.
-// position:absolute bottom:56px fija el borde inferior del bloque y el contenido
-// crece hacia arriba (el título se expande hacia arriba si hace wrap).
-function bottomBlock(title: string, meta: Meta, textColor: string, accentColor: string): string {
+// Bloque inferior anclado a bottom:56px: título → barra cian → meta.
+// flex-direction:column + bottom:56px → el bloque crece hacia arriba.
+// Sin espacios entre etiquetas para no generar text-nodes que Satori cuente.
+function bottomBlock(
+  title: string,
+  meta: Meta,
+  textColor: string,
+  accentColor: string
+): string {
   const metaHtml = metaRow(meta, textColor);
-  return `
-  <div style="position:absolute; left:64px; right:64px; bottom:56px; display:flex; flex-direction:column; gap:12px; align-items:flex-start;">
-    <div style="display:flex; width:1072px; color:${textColor}; font-size:72px; font-weight:700; line-height:1.08; flex-wrap:wrap;">${escapeHtml(title)}</div>
-    <div style="width:96px; height:5px; background:${accentColor};"></div>
-    ${metaHtml}
-  </div>`;
+  // 1072 = 1200 - 64 (left) - 64 (right)
+  const inner =
+    `<div style="display:flex;width:1072px;color:${textColor};font-size:72px;font-weight:700;line-height:1.08;">${escapeHtml(title)}</div>` +
+    `<div style="display:flex;width:96px;height:5px;background:${accentColor};"></div>` +
+    metaHtml;
+  return (
+    `<div style="position:absolute;left:64px;right:64px;bottom:56px;display:flex;flex-direction:column;align-items:flex-start;gap:12px;">` +
+    inner +
+    `</div>`
+  );
 }
 
 function markupWithPhoto(cover: string, title: string, meta: Meta): string {
-  return `
-  <div style="display:flex; position:relative; width:1200px; height:630px; font-family:'IBM Plex Sans';">
-    <img src="${cover}" style="position:absolute; top:0; left:0; width:1200px; height:630px; object-fit:cover;" />
-    <div style="position:absolute; bottom:0; left:0; display:flex; width:1200px; height:420px; background:linear-gradient(to bottom, rgba(35,39,39,0) 0%, rgba(35,39,39,0.55) 45%, rgba(35,39,39,0.95) 100%);"></div>
-    ${logoBadge("#232727", "#ccece9")}
-    ${bottomBlock(title, meta, "#ffffff", "#ccece9")}
-  </div>`;
+  return (
+    `<div style="display:flex;position:relative;width:1200px;height:630px;font-family:'IBM Plex Sans';">` +
+      `<img src="${cover}" style="position:absolute;top:0;left:0;width:1200px;height:630px;object-fit:cover;" />` +
+      `<div style="position:absolute;bottom:0;left:0;display:flex;width:1200px;height:420px;` +
+        `background:linear-gradient(to bottom,rgba(35,39,39,0) 0%,rgba(35,39,39,0.55) 45%,rgba(35,39,39,0.95) 100%);"></div>` +
+      logoBadge("#232727", "#ccece9") +
+      bottomBlock(title, meta, "#ffffff", "#ccece9") +
+    `</div>`
+  );
 }
 
 function markupBrand(title: string, meta: Meta): string {
-  return `
-  <div style="display:flex; position:relative; width:1200px; height:630px; background:#ccece9; font-family:'IBM Plex Sans';">
-    ${logoBadge("#232727", "#ffffff")}
-    ${bottomBlock(title, meta, "#232727", "#232727")}
-  </div>`;
+  return (
+    `<div style="display:flex;position:relative;width:1200px;height:630px;background:#ccece9;font-family:'IBM Plex Sans';">` +
+      logoBadge("#232727", "#ffffff") +
+      bottomBlock(title, meta, "#232727", "#232727") +
+    `</div>`
+  );
 }
 
 export function getStaticPaths() {
@@ -122,11 +148,15 @@ export function getStaticPaths() {
 
 export const GET: APIRoute = async ({ props }) => {
   const recipe = (props as any).recipe;
-  const cover = await coverDataUri((recipe.data.cover as { fsPath?: string } | undefined)?.fsPath);
+  const cover = await coverDataUri(
+    (recipe.data.cover as { fsPath?: string } | undefined)?.fsPath
+  );
   const title = recipe.data.title.trim();
   const meta: Meta = { time: recipe.data.time, servings: recipe.data.servings };
 
-  const markup = cover ? markupWithPhoto(cover, title, meta) : markupBrand(title, meta);
+  const markup = cover
+    ? markupWithPhoto(cover, title, meta)
+    : markupBrand(title, meta);
 
   const svg = await satori(html(markup) as any, {
     width: 1200,
