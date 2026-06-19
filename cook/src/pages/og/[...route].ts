@@ -25,7 +25,9 @@ function logoDataUri(color: string): string {
 // incrustarlas.
 async function coverDataUri(fsPath?: string): Promise<string | null> {
   if (!fsPath) return null;
+  // .rotate() sin argumentos corrige la orientación EXIF antes de redimensionar.
   const resized = await sharp(fsPath)
+    .rotate()
     .resize(1200, 630, { fit: "cover" })
     .jpeg({ quality: 78 })
     .toBuffer();
@@ -41,21 +43,37 @@ const logoBadge = (logoColor: string, bg: string) => `
     <img src="${logoDataUri(logoColor)}" style="width:128px; height:43px;" />
   </div>`;
 
-function markupWithPhoto(cover: string, title: string): string {
+type Meta = { time?: number; servings?: number };
+
+function metaLine(meta: Meta, color: string): string {
+  const parts: string[] = [];
+  if (meta.time) parts.push(`${meta.time} min`);
+  if (meta.servings) parts.push(`${meta.servings} ${meta.servings === 1 ? "ración" : "raciones"}`);
+  if (!parts.length) return "";
+  return `<div style="position:absolute; left:64px; right:64px; bottom:60px; display:flex; color:${color}; font-size:34px; font-weight:400; opacity:0.85;">${parts.join("  ·  ")}</div>`;
+}
+
+function markupWithPhoto(cover: string, title: string, meta: Meta): string {
+  const hasMeta = meta.time || meta.servings;
+  const titleBottom = hasMeta ? "112px" : "56px";
   return `
   <div style="display:flex; position:relative; width:1200px; height:630px; font-family:'IBM Plex Sans';">
     <img src="${cover}" style="position:absolute; top:0; left:0; width:1200px; height:630px; object-fit:cover;" />
     <div style="position:absolute; bottom:0; left:0; display:flex; width:1200px; height:420px; background:linear-gradient(to bottom, rgba(35,39,39,0) 0%, rgba(35,39,39,0.55) 45%, rgba(35,39,39,0.95) 100%);"></div>
     ${logoBadge("#232727", "#ccece9")}
-    <div style="position:absolute; left:64px; right:64px; bottom:56px; display:flex; color:#ffffff; font-size:72px; font-weight:700; line-height:1.08;">${escapeHtml(title)}</div>
+    <div style="position:absolute; left:64px; right:64px; bottom:${titleBottom}; display:flex; color:#ffffff; font-size:72px; font-weight:700; line-height:1.08;">${escapeHtml(title)}</div>
+    ${metaLine(meta, "#ffffff")}
   </div>`;
 }
 
-function markupBrand(title: string): string {
+function markupBrand(title: string, meta: Meta): string {
+  const hasMeta = meta.time || meta.servings;
+  const titleBottom = hasMeta ? "112px" : "56px";
   return `
   <div style="display:flex; position:relative; width:1200px; height:630px; background:#ccece9; font-family:'IBM Plex Sans';">
     ${logoBadge("#232727", "#ffffff")}
-    <div style="position:absolute; left:64px; right:64px; bottom:56px; display:flex; color:#232727; font-size:72px; font-weight:700; line-height:1.08;">${escapeHtml(title)}</div>
+    <div style="position:absolute; left:64px; right:64px; bottom:${titleBottom}; display:flex; color:#232727; font-size:72px; font-weight:700; line-height:1.08;">${escapeHtml(title)}</div>
+    ${metaLine(meta, "#232727")}
   </div>`;
 }
 
@@ -70,8 +88,9 @@ export const GET: APIRoute = async ({ props }) => {
   const recipe = (props as any).recipe;
   const cover = await coverDataUri((recipe.data.cover as { fsPath?: string } | undefined)?.fsPath);
   const title = recipe.data.title.trim();
+  const meta: Meta = { time: recipe.data.time, servings: recipe.data.servings };
 
-  const markup = cover ? markupWithPhoto(cover, title) : markupBrand(title);
+  const markup = cover ? markupWithPhoto(cover, title, meta) : markupBrand(title, meta);
 
   const svg = await satori(html(markup) as any, {
     width: 1200,
