@@ -29,9 +29,14 @@ import { Icon } from "astro-icon/components";
     <p class="timers-empty text-sm italic text-secondary/60 mb-3">No hay temporizadores.</p>
 
     <div class="flex gap-1.5 mb-2">
-      <button type="button" class="timers-inc cursor-pointer flex-1 border-2 border-secondary py-1 text-sm font-medium transition-colors hover:bg-secondary hover:text-white">+1 min</button>
-      <button type="button" class="timers-preset cursor-pointer flex-1 border-2 border-secondary py-1 text-sm font-medium transition-colors hover:bg-secondary hover:text-white" data-min="10">10 min</button>
-      <button type="button" class="timers-preset cursor-pointer flex-1 border-2 border-secondary py-1 text-sm font-medium transition-colors hover:bg-secondary hover:text-white" data-min="30">½ hora</button>
+      <button type="button" class="timers-add-min cursor-pointer flex-1 border-2 border-secondary py-1 text-sm font-medium transition-colors hover:bg-secondary hover:text-white" data-min="1">+1 min</button>
+      <button type="button" class="timers-add-min cursor-pointer flex-1 border-2 border-secondary py-1 text-sm font-medium transition-colors hover:bg-secondary hover:text-white" data-min="10">+10 min</button>
+      <button type="button" class="timers-add-min cursor-pointer flex-1 border-2 border-secondary py-1 text-sm font-medium transition-colors hover:bg-secondary hover:text-white" data-min="30">+½ h</button>
+    </div>
+
+    <div class="timers-pending hidden items-center justify-between gap-2 mb-2 border-2 border-secondary bg-gray px-2 py-1">
+      <span class="text-sm font-bold">Nuevo: <span class="timers-pending-time tabular-nums">00:00</span></span>
+      <button type="button" class="timers-pending-start cursor-pointer border-2 border-secondary bg-secondary text-white px-2 py-0.5 text-sm font-bold">Iniciar</button>
     </div>
 
     <form class="timers-form flex items-end gap-1.5">
@@ -74,7 +79,9 @@ import { Icon } from "astro-icon/components";
     const form = root.querySelector<HTMLFormElement>(".timers-form")!;
     const minInput = root.querySelector<HTMLInputElement>(".timers-min")!;
     const secInput = root.querySelector<HTMLInputElement>(".timers-sec")!;
-    const incBtn = root.querySelector<HTMLButtonElement>(".timers-inc")!;
+    const pendingRow = root.querySelector<HTMLElement>(".timers-pending")!;
+    const pendingTime = root.querySelector<HTMLElement>(".timers-pending-time")!;
+    const pendingStart = root.querySelector<HTMLButtonElement>(".timers-pending-start")!;
 
     const timers: Timer[] = [];
     let audioCtx: AudioContext | null = null;
@@ -193,31 +200,36 @@ import { Icon } from "astro-icon/components";
       }
     }, 250);
 
-    // Botón incremental: cada toque suma 1 minuto y, tras una breve pausa sin
-    // tocar, crea el temporizador automáticamente (como un microondas).
-    let incSeconds = 0;
-    let incTimer: number | undefined;
-    const incLabel = () => {
-      incBtn.textContent = incSeconds === 0 ? "+1 min" : fmt(incSeconds * 1000);
-      incBtn.classList.toggle("timers-inc-active", incSeconds > 0);
+    // Cualquier preset suma su tiempo a un acumulador compartido. Tras una
+    // breve pausa sin pulsar se crea el temporizador (como un microondas);
+    // también se puede iniciar al momento con el botón "Iniciar".
+    let pendingSeconds = 0;
+    let pendingTimeout: number | undefined;
+    const updatePending = () => {
+      pendingTime.textContent = fmt(pendingSeconds * 1000);
+      pendingRow.classList.toggle("hidden", pendingSeconds <= 0);
+      pendingRow.classList.toggle("flex", pendingSeconds > 0);
     };
-    incBtn.addEventListener("click", () => {
-      unlockAudio();
-      incSeconds += 60;
-      incLabel();
-      if (incTimer) clearTimeout(incTimer);
-      incTimer = window.setTimeout(() => {
-        addTimer(incSeconds);
-        incSeconds = 0;
-        incLabel();
-      }, 1500);
-    });
+    const commitPending = () => {
+      if (pendingTimeout) clearTimeout(pendingTimeout);
+      pendingTimeout = undefined;
+      if (pendingSeconds > 0) addTimer(pendingSeconds);
+      pendingSeconds = 0;
+      updatePending();
+    };
+    for (const btn of root.querySelectorAll<HTMLButtonElement>(".timers-add-min")) {
+      btn.addEventListener("click", () => {
+        unlockAudio();
+        pendingSeconds += Number(btn.dataset.min) * 60;
+        updatePending();
+        if (pendingTimeout) clearTimeout(pendingTimeout);
+        pendingTimeout = window.setTimeout(commitPending, 1800);
+      });
+    }
+    pendingStart.addEventListener("click", commitPending);
 
     fab.addEventListener("click", (e) => { e.stopPropagation(); unlockAudio(); panel.hidden = !panel.hidden; });
     closeBtn.addEventListener("click", () => { panel.hidden = true; });
-    for (const preset of root.querySelectorAll<HTMLButtonElement>(".timers-preset")) {
-      preset.addEventListener("click", () => addTimer(Number(preset.dataset.min) * 60));
-    }
     form.addEventListener("submit", (e) => {
       e.preventDefault();
       addTimer(Number(minInput.value || 0) * 60 + Number(secInput.value || 0));

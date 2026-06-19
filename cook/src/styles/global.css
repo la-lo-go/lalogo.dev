@@ -140,11 +140,6 @@ a.cool-link-animated:hover,
     opacity: 0.5;
   }
 }
-.timers-inc-active {
-  background: #232727;
-  color: #fff;
-}
-
 /* Modo guiado: zonas táctiles laterales (como un ebook) y ocultar el FAB
    de temporizadores mientras está abierto. */
 .cm-tap {
