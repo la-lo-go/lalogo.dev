@@ -25,7 +25,7 @@ const servingsLabel = data.servings === 1 ? "ración" : "raciones";
   data-search={searchText}
   data-tags={tagData}
 >
-  <a href={href} aria-hidden="true" tabindex="-1" class="block">
+  <a href={href} class="block relative border-2 border-secondary overflow-hidden">
     {
       data.cover ? (
         <Image
@@ -33,11 +33,11 @@ const servingsLabel = data.servings === 1 ? "ración" : "raciones";
           alt={data.title}
           widths={[400, 800]}
           sizes="(min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw"
-          class="w-full aspect-[4/3] object-cover border-2 border-secondary"
+          class="w-full aspect-[4/3] object-cover block"
           transition:name={`cover-${recipe.id}`}
         />
       ) : (
-        <div class="w-full aspect-[4/3] bg-primary border-2 border-secondary flex items-center justify-center p-10 text-secondary/30">
+        <div class="w-full aspect-[4/3] bg-primary flex items-center justify-center p-10 text-secondary/30">
           <svg
             viewBox="0 0 1721 574"
             class="w-full max-h-full"
@@ -46,36 +46,40 @@ const servingsLabel = data.servings === 1 ? "ración" : "raciones";
           >
             <path
               d="M0.333,0.333l114.667,0l-0,458.667l286.667,0l-0,-458.667l516,0l-0,458.667l286.666,0l0,-458.667l516,0l0,573.334l-286.666,-0l-0,-114.667l172,-0l-0,-344l-286.667,-0l-0,458.667l-516,-0l-0,-229.334l-172,0l-0,-114.666l172,-0l-0,-114.667l-286.667,-0l0,458.667l-516,-0l0,-573.334Z"
-              fill="currentColor"></path>
+              fill="currentColor"
+            ></path>
           </svg>
         </div>
       )
     }
+
+    <div class="absolute inset-x-0 bottom-0 px-3 pb-3 pt-16 bg-gradient-to-t from-white via-white/95 to-transparent">
+      <h3
+        class="text-lg font-semibold leading-snug text-secondary"
+        transition:name={`title-${recipe.id}`}
+      >
+        {data.title}
+      </h3>
+      <div class="w-14 h-0.5 bg-primary mt-1"></div>
+      {
+        (data.time || data.servings) && (
+          <p class="flex items-center gap-x-3 flex-wrap text-sm text-secondary mt-1.5">
+            {data.time && (
+              <span class="flex items-center gap-1">
+                <Icon name="lucide:clock" class="w-3.5 h-3.5" /> {data.time} min
+              </span>
+            )}
+            {data.servings && (
+              <span class="flex items-center gap-1">
+                <Icon name="lucide:users" class="w-3.5 h-3.5" /> {data.servings}{" "}
+                {servingsLabel}
+              </span>
+            )}
+          </p>
+        )
+      }
+    </div>
   </a>
-
-  <h3
-    class="mt-3 text-lg font-semibold leading-snug"
-    transition:name={`title-${recipe.id}`}
-  >
-    <a href={href} class="cool-link-animated">{data.title}</a>
-  </h3>
-
-  {
-    (data.time || data.servings) && (
-      <p class="text-sm mt-1 flex items-center gap-x-3 gap-y-1 flex-wrap">
-        {data.time && (
-          <span class="flex items-center gap-1">
-            <Icon name="lucide:clock" class="w-3.5 h-3.5" /> {data.time} min
-          </span>
-        )}
-        {data.servings && (
-          <span class="flex items-center gap-1">
-            <Icon name="lucide:users" class="w-3.5 h-3.5" /> {data.servings} {servingsLabel}
-          </span>
-        )}
-      </p>
-    )
-  }
 
   {
     data.tags.length > 0 && (
