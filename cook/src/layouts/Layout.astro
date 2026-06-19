@@ -1,4 +1,6 @@
 ---
+import { ClientRouter } from "astro:transitions";
+
 import "../styles/global.css";
 
 export interface Props {
@@ -99,6 +101,7 @@ const ogImage = slug
     <meta name="twitter:url" content={url} />
     <meta name="twitter:site" content="@la_lo_go" />
 
+    <ClientRouter />
   </head>
 
   <body class="bg-white p-8 mx-auto max-w-6xl text-secondary">

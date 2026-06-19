@@ -106,6 +106,17 @@ import { Icon } from "astro-icon/components";
       overlay.querySelector(".cm-body")!.scrollTop = 0;
     };
 
+    // Listeners a nivel document, solo activos mientras el modo está abierto
+    // (así no se acumulan al navegar con el ClientRouter de Astro).
+    const onKeydown = (e: KeyboardEvent) => {
+      if (e.key === "ArrowRight") next();
+      else if (e.key === "ArrowLeft") prev();
+      else if (e.key === "Escape") close();
+    };
+    const onVisibility = () => {
+      if (document.visibilityState === "visible") requestWake();
+    };
+
     const open = () => {
       steps = findRecipeSteps();
       if (steps.length === 0) return;
@@ -115,12 +126,16 @@ import { Icon } from "astro-icon/components";
       document.body.classList.add("guided-open"); // oculta el FAB de timers
       render();
       requestWake();
+      document.addEventListener("keydown", onKeydown);
+      document.addEventListener("visibilitychange", onVisibility);
     };
     const close = () => {
       overlay.style.display = "none";
       document.body.style.overflow = "";
       document.body.classList.remove("guided-open");
       releaseWake();
+      document.removeEventListener("keydown", onKeydown);
+      document.removeEventListener("visibilitychange", onVisibility);
     };
     const next = () => {
       if (index < steps.length - 1) { index++; render(); }
@@ -134,18 +149,6 @@ import { Icon } from "astro-icon/components";
     prevEl.addEventListener("click", prev);
     tapNext.addEventListener("click", next);
     tapPrev.addEventListener("click", prev);
-
-    document.addEventListener("keydown", (e) => {
-      if (overlay.style.display === "none") return;
-      if (e.key === "ArrowRight") next();
-      else if (e.key === "ArrowLeft") prev();
-      else if (e.key === "Escape") close();
-    });
-
-    // Reactivar el wake lock al volver a la pestaña si seguimos en modo cocina.
-    document.addEventListener("visibilitychange", () => {
-      if (document.visibilityState === "visible" && overlay.style.display !== "none") requestWake();
-    });
   }
 
   if (document.readyState !== "loading") setupCookingMode();

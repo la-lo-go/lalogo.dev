@@ -49,13 +49,6 @@ html {
   touch-action: manipulation;
 }
 
-/* View transitions nativas entre páginas (foto y título de la lista al
-   detalle). Es la API del navegador, no el ClientRouter de Astro, así que
-   no reintroduce el bug del scroll en móvil. Navegadores sin soporte
-   (Firefox) hacen una navegación normal sin animación. */
-@view-transition {
-  navigation: auto;
-}
 
 ::selection {
   background-color: #232727;
