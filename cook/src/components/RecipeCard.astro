@@ -53,14 +53,13 @@ const servingsLabel = data.servings === 1 ? "ración" : "raciones";
       )
     }
 
-    <div class="absolute inset-x-0 bottom-0 px-3 pb-3 pt-16 bg-gradient-to-t from-white via-white/95 to-transparent">
+    <div class="absolute inset-x-0 bottom-0 px-3 pb-3 pt-8" style="background:linear-gradient(to top,rgba(255,255,255,0.95) 0%,rgba(255,255,255,0.6) 55%,transparent 100%)">
       <h3
-        class="text-lg font-semibold leading-snug text-secondary"
+        class="card-title text-lg font-semibold leading-snug text-secondary"
         transition:name={`title-${recipe.id}`}
       >
         {data.title}
       </h3>
-      <div class="w-14 h-0.5 bg-primary mt-1"></div>
       {
         (data.time || data.servings) && (
           <p class="flex items-center gap-x-3 flex-wrap text-sm text-secondary mt-1.5">

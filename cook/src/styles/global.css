@@ -93,6 +93,19 @@ a.cool-link-animated:hover,
   background-size: 100% 100%;
 }
 
+/* Título de la card de receta: mismo subrayado animado que cool-link-animated
+   pero aplicado a un h3 (no a un <a>) dentro de la card clicable. */
+.card-title {
+  background: linear-gradient(#ccece9, #ccece9);
+  background-size: 100% 0.5rem;
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  transition: all 0.1s linear 0s;
+}
+.recipe-card a:hover .card-title {
+  background-size: 100% 100%;
+}
+
 /* Mise en place: checkbox por ingrediente (la clase ing-li la añade el JS) */
 .recipe-body li.ing-li {
   list-style: none;
