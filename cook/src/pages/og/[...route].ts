@@ -15,17 +15,31 @@ const fontRegular = readFileSync("./src/fonts/IBM_Plex_Sans/IBMPlexSans-Regular.
 const LOGO_PATH =
   "M0.333,0.333l114.667,0l-0,458.667l286.667,0l-0,-458.667l516,0l-0,458.667l286.666,0l0,-458.667l516,0l0,573.334l-286.666,-0l-0,-114.667l172,-0l-0,-344l-286.667,-0l-0,458.667l-516,-0l-0,-229.334l-172,0l-0,-114.666l172,-0l-0,-114.667l-286.667,-0l0,458.667l-516,-0l0,-573.334Z";
 
+// Lucide icon paths (stroke, no fill).
+const CLOCK_INNER =
+  '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 12"/>';
+const USERS_INNER =
+  '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>' +
+  '<circle cx="9" cy="7" r="4"/>' +
+  '<path d="M22 21v-2a4 4 0 0 0-3-3.87"/>' +
+  '<path d="M16 3.13a4 4 0 0 1 0 7.75"/>';
+
 function logoDataUri(color: string): string {
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1721 574"><path d="${LOGO_PATH}" fill="${color}"/></svg>`;
   return `data:image/svg+xml;base64,${Buffer.from(svg).toString("base64")}`;
 }
 
+function iconDataUri(inner: string, color: string): string {
+  const svg =
+    `<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24"` +
+    ` fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${inner}</svg>`;
+  return `data:image/svg+xml;base64,${Buffer.from(svg).toString("base64")}`;
+}
+
 // Las portadas originales de Notion pesan varios MB y Satori se cuelga al
-// rasterizarlas, así que se reescalan al tamaño de la tarjeta antes de
-// incrustarlas.
+// rasterizarlas. .rotate() corrige la orientación EXIF antes del resize.
 async function coverDataUri(fsPath?: string): Promise<string | null> {
   if (!fsPath) return null;
-  // .rotate() sin argumentos corrige la orientación EXIF antes de redimensionar.
   const resized = await sharp(fsPath)
     .rotate()
     .resize(1200, 630, { fit: "cover" })
@@ -45,35 +59,57 @@ const logoBadge = (logoColor: string, bg: string) => `
 
 type Meta = { time?: number; servings?: number };
 
-function metaLine(meta: Meta, color: string): string {
+function metaRow(meta: Meta, color: string): string {
   const parts: string[] = [];
-  if (meta.time) parts.push(`${meta.time} min`);
-  if (meta.servings) parts.push(`${meta.servings} ${meta.servings === 1 ? "ración" : "raciones"}`);
+  if (meta.time)
+    parts.push(`
+      <div style="display:flex; align-items:center; gap:10px;">
+        <img src="${iconDataUri(CLOCK_INNER, color)}" style="width:36px; height:36px;" />
+        <span>${meta.time} min</span>
+      </div>`);
+  if (meta.servings) {
+    const label = meta.servings === 1 ? "ración" : "raciones";
+    parts.push(`
+      <div style="display:flex; align-items:center; gap:10px;">
+        <img src="${iconDataUri(USERS_INNER, color)}" style="width:36px; height:36px;" />
+        <span>${meta.servings} ${label}</span>
+      </div>`);
+  }
   if (!parts.length) return "";
-  return `<div style="position:absolute; left:64px; right:64px; bottom:60px; display:flex; color:${color}; font-size:34px; font-weight:400; opacity:0.85;">${parts.join("  ·  ")}</div>`;
+  return `
+    <div style="display:flex; align-items:center; gap:28px; color:${color}; font-size:34px; font-weight:400; opacity:0.85;">
+      ${parts.join("")}
+    </div>`;
+}
+
+// Bloque inferior: título + barra de subrayado cian + meta.
+// position:absolute bottom:56px fija el borde inferior del bloque y el contenido
+// crece hacia arriba (el título se expande hacia arriba si hace wrap).
+function bottomBlock(title: string, meta: Meta, textColor: string, accentColor: string): string {
+  const metaHtml = metaRow(meta, textColor);
+  return `
+  <div style="position:absolute; left:64px; right:64px; bottom:56px; display:flex; flex-direction:column; gap:12px; align-items:flex-start;">
+    <div style="display:flex; width:1072px; color:${textColor}; font-size:72px; font-weight:700; line-height:1.08; flex-wrap:wrap;">${escapeHtml(title)}</div>
+    <div style="width:96px; height:5px; background:${accentColor};"></div>
+    ${metaHtml}
+  </div>`;
 }
 
 function markupWithPhoto(cover: string, title: string, meta: Meta): string {
-  const hasMeta = meta.time || meta.servings;
-  const titleBottom = hasMeta ? "112px" : "56px";
   return `
   <div style="display:flex; position:relative; width:1200px; height:630px; font-family:'IBM Plex Sans';">
     <img src="${cover}" style="position:absolute; top:0; left:0; width:1200px; height:630px; object-fit:cover;" />
     <div style="position:absolute; bottom:0; left:0; display:flex; width:1200px; height:420px; background:linear-gradient(to bottom, rgba(35,39,39,0) 0%, rgba(35,39,39,0.55) 45%, rgba(35,39,39,0.95) 100%);"></div>
     ${logoBadge("#232727", "#ccece9")}
-    <div style="position:absolute; left:64px; right:64px; bottom:${titleBottom}; display:flex; color:#ffffff; font-size:72px; font-weight:700; line-height:1.08;">${escapeHtml(title)}</div>
-    ${metaLine(meta, "#ffffff")}
+    ${bottomBlock(title, meta, "#ffffff", "#ccece9")}
   </div>`;
 }
 
 function markupBrand(title: string, meta: Meta): string {
-  const hasMeta = meta.time || meta.servings;
-  const titleBottom = hasMeta ? "112px" : "56px";
   return `
   <div style="display:flex; position:relative; width:1200px; height:630px; background:#ccece9; font-family:'IBM Plex Sans';">
     ${logoBadge("#232727", "#ffffff")}
-    <div style="position:absolute; left:64px; right:64px; bottom:${titleBottom}; display:flex; color:#232727; font-size:72px; font-weight:700; line-height:1.08;">${escapeHtml(title)}</div>
-    ${metaLine(meta, "#232727")}
+    ${bottomBlock(title, meta, "#232727", "#232727")}
   </div>`;
 }
 
